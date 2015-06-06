@@ -36,6 +36,10 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".MainActivity" />
         </activity>
+        <activity
+            android:name=".CustomisationActivity"
+            android:label="@string/title_activity_customisation" >
+        </activity>
     </application>
 
 </manifest>

@@ -1,6 +1,7 @@
 package sg.com.yahoo.ryanlouck.orbital2015;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -8,15 +9,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.PopupWindow;
-import android.view.LayoutInflater;
-import android.content.Context;
-import android.view.Gravity;
 
 public class NewGameActivity extends Activity {
 	
 	private int numLevels;
 	private Button[] levelButtons;
+	private View.OnClickListener levelButtonLoader;
+	private int selectedLevel = 0;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -24,43 +23,52 @@ public class NewGameActivity extends Activity {
 		setContentView(R.layout.activity_new_game);
 		getActionBar().setDisplayHomeAsUpEnabled(true);
 		
-		ViewGroup levels = (ViewGroup) (findViewById(R.id.buttonScroller).findViewById(R.id.levelButtons));
+		final ViewGroup levels = (ViewGroup) (findViewById(R.id.buttonScroller).findViewById(R.id.levelButtons));
 		numLevels = levels.getChildCount();
-		levelButtons = new Button[numLevels];
+		levelButtons = new Button[numLevels];		
 		
+		final TextView levelDetails = (TextView) findViewById(R.id.textView2);	
 		
-		TextView debugCount = (TextView) findViewById(R.id.textView2);	
-		debugCount.setText(Integer.toString(numLevels));
+		levelButtonLoader = new View.OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				int ID = 0;
+				for(int i = 0; i < numLevels; i++){
+					if(v == levels.getChildAt(i)){
+						ID = i;
+						selectedLevel = i + 1;
+					}
+				}
+				levelDetails.setText("Level " + Integer.toString(ID+1) + ":\n<level details here>");				
+			}
+		};
 		
 		for(int i = 0; i < numLevels; i++){
 			Button b;
 			View v = levels.getChildAt(i);
 			if(v instanceof Button){
 				b = (Button) v;
-				levelButtons[i] = b;				
+				levelButtons[i] = b;
+				b.setOnClickListener(levelButtonLoader);
 			}
 		}
 		
-
-		for(int i = 0; i < numLevels; i++){
-			LayoutInflater inflater = (LayoutInflater) NewGameActivity.this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-			final PopupWindow p = new PopupWindow();
-			final View popUpView = inflater.inflate(R.layout.popup_level_details, (ViewGroup) findViewById(R.id.popUp));
-			TextView levelDisplay = (TextView) findViewById(R.id.popUpLevelNumber);
-			Button close = (Button) findViewById(R.id.closeButton);
-			levelButtons[i].setOnClickListener(new View.OnClickListener(){
-				@Override
-				public void onClick(View v) {
-					p.showAtLocation(popUpView, Gravity.CENTER, 0, 0);
+		final Button startButton = (Button) findViewById(R.id.startGameButton);
+		
+		startButton.setOnClickListener(new View.OnClickListener(){
+			
+			public void onClick(View v){
+				if(selectedLevel == 0){
+					levelDetails.setText("Select a Level above first.");
 				}
-			});
-//			close.setOnClickListener(new View.OnClickListener() {		
-//				@Override
-//				public void onClick(View v) {
-//					p.dismiss();
-//				}
-//			});
-		}
+				else{
+					Intent customisationLaunch = new Intent(getApplicationContext(), CustomisationActivity.class);
+					customisationLaunch.putExtra("level", selectedLevel);
+					startActivity(customisationLaunch);
+				}
+			}
+		});
 	}
 
 	@Override
