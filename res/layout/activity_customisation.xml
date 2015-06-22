@@ -23,7 +23,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="25dp"
+        android:layout_marginTop="15dp"
         android:text="@string/placeholder"
         android:textAppearance="?android:attr/textAppearanceLarge" />
 
@@ -51,5 +51,15 @@
         android:layout_marginBottom="20dp"
         android:text=""
         android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <CheckBox
+        android:id="@+id/checkBox1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/spinner1"
+        android:layout_below="@+id/spinner1"
+        android:layout_marginTop="15dp"
+        android:text="@string/choose_dice"
+        android:onClick="checkBoxListener" />
 
 </RelativeLayout>

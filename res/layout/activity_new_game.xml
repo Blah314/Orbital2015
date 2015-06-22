@@ -30,35 +30,6 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:orientation="horizontal" >
-
-            <Button
-                android:id="@+id/level1"
-                style="android:attr/buttonBarButtonStyle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/level1" />
-
-            <Button
-                android:id="@+id/level2"
-                style="android:attr/buttonBarButtonStyle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/level2" />
-
-            <Button
-                android:id="@+id/level3"
-                style="android:attr/buttonBarButtonStyle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/level3" />
-
-            <Button
-                android:id="@+id/level4"
-                style="android:attr/buttonBarButtonStyle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/level4" />
-
         </LinearLayout>
     </HorizontalScrollView>
 

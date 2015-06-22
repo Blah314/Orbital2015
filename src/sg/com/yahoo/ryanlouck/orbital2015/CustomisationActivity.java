@@ -1,12 +1,14 @@
 package sg.com.yahoo.ryanlouck.orbital2015;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.view.View;
@@ -15,6 +17,8 @@ public class CustomisationActivity extends Activity {
 	
 	private int level = 0;
 	private int diff = 0;
+	private boolean diceLike = false;
+	private String levelName;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -22,13 +26,14 @@ public class CustomisationActivity extends Activity {
 		Bundle details = getIntent().getExtras();
 		if(details != null){
 			level = details.getInt("level");
+			levelName = details.getString("levelName");
 		}
 		final TextView heading = (TextView) findViewById(R.id.heading);
 		final Spinner diffSelect = (Spinner) findViewById(R.id.spinner1);
 		final Button start = (Button) findViewById(R.id.start);
-		final TextView debug = (TextView) findViewById(R.id.debug);
+//		final TextView debug = (TextView) findViewById(R.id.debug);
 		
-		heading.setText("Level " + Integer.toString(level));
+		heading.setText(levelName);
 		
 		ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
 		        R.array.difficulty_levels, android.R.layout.simple_spinner_item);
@@ -49,10 +54,24 @@ public class CustomisationActivity extends Activity {
 		start.setOnClickListener(new View.OnClickListener() {
 			
 			@Override
-			public void onClick(View v) {
-				debug.setText("Starting Level " + Integer.toString(level) + " on " + Integer.toString(diff) + " difficulty...");
+			public void onClick(View v){
+				Intent gameLaunch = new Intent(getApplicationContext(), MapActivity.class);
+				gameLaunch.putExtra("diff", diff);
+				gameLaunch.putExtra("lvl", level);
+				gameLaunch.putExtra("dice", diceLike);
+				startActivity(gameLaunch);
 			}
 		});
+	}
+	
+	public void checkBoxListener(View v){
+		boolean checked = ((CheckBox) v).isChecked();
+		
+		switch(v.getId()){
+		case R.id.checkBox1:
+			diceLike = checked;
+			break;
+		}
 	}
 
 	@Override

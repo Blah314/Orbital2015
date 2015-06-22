@@ -17,10 +17,12 @@ public class MainActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 		
+		// gets the references to the 3 main buttons
 		newGameButton = (Button) findViewById(R.id.button2);
 		continueButton = (Button) findViewById(R.id.button1);
 		optionsButton = (Button) findViewById(R.id.button3);
 		
+		// newGameButton launches the level selection
 		newGameButton.setOnClickListener(new View.OnClickListener() {
 			
 			@Override
@@ -30,6 +32,9 @@ public class MainActivity extends Activity {
 			}
 		});
 		
+		// to do - continue game button
+		
+		// options button goes to options menu
 		optionsButton.setOnClickListener(new View.OnClickListener() {
 			
 			@Override

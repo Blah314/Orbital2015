@@ -1,7 +1,13 @@
 package sg.com.yahoo.ryanlouck.orbital2015;
 
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.util.ArrayList;
+
 import android.app.Activity;
 import android.content.Intent;
+import android.content.res.AssetManager;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -12,10 +18,11 @@ import android.widget.TextView;
 
 public class NewGameActivity extends Activity {
 	
+	// this activity basically handles level select
 	private int numLevels;
-	private Button[] levelButtons;
 	private View.OnClickListener levelButtonLoader;
 	private int selectedLevel = 0;
+	private ArrayList<String[]> levelDetails;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -23,12 +30,27 @@ public class NewGameActivity extends Activity {
 		setContentView(R.layout.activity_new_game);
 		getActionBar().setDisplayHomeAsUpEnabled(true);
 		
+		final TextView levelDetailsView = (TextView) findViewById(R.id.textView2);
+		
+		levelDetails = new ArrayList<String[]>();
+		
+		AssetManager am = this.getAssets();
+		try{
+			InputStream is = am.open("levelDetails.txt");
+			InputStreamReader isr = new InputStreamReader(is);
+			BufferedReader br = new BufferedReader(isr);
+			while(br.ready()){
+				String[] currentLevelDetails = br.readLine().split(",");
+				levelDetails.add(currentLevelDetails);
+			}
+			is.close();
+		}
+		catch(Exception e){
+			e.printStackTrace();
+		}
+		
+		numLevels = levelDetails.size();
 		final ViewGroup levels = (ViewGroup) (findViewById(R.id.buttonScroller).findViewById(R.id.levelButtons));
-		numLevels = levels.getChildCount();
-		levelButtons = new Button[numLevels];		
-		
-		final TextView levelDetails = (TextView) findViewById(R.id.textView2);	
-		
 		levelButtonLoader = new View.OnClickListener() {
 			
 			@Override
@@ -37,22 +59,29 @@ public class NewGameActivity extends Activity {
 				for(int i = 0; i < numLevels; i++){
 					if(v == levels.getChildAt(i)){
 						ID = i;
-						selectedLevel = i + 1;
+						selectedLevel = ID + 1;
 					}
 				}
-				levelDetails.setText("Level " + Integer.toString(ID+1) + ":\n<level details here>");				
+				levelDetailsView.setText(levelDetails.get(selectedLevel)[2] + ": " + levelDetails.get(selectedLevel)[6]);				
 			}
 		};
 		
-		for(int i = 0; i < numLevels; i++){
-			Button b;
-			View v = levels.getChildAt(i);
-			if(v instanceof Button){
-				b = (Button) v;
-				levelButtons[i] = b;
-				b.setOnClickListener(levelButtonLoader);
-			}
+		for(int i = 1; i < numLevels; i++){
+			Button b = new Button(this);
+			b.setText(levelDetails.get(i)[2]);
+			b.setOnClickListener(levelButtonLoader);
+			levels.addView(b);		
 		}
+		
+//		for(int i = 0; i < numLevels; i++){
+//			Button b;
+//			View v = levels.getChildAt(i);
+//			if(v instanceof Button){
+//				b = (Button) v;
+//				levelButtons[i] = b;
+//				b.setOnClickListener(levelButtonLoader);
+//			}
+//		}
 		
 		final Button startButton = (Button) findViewById(R.id.startGameButton);
 		
@@ -60,11 +89,12 @@ public class NewGameActivity extends Activity {
 			
 			public void onClick(View v){
 				if(selectedLevel == 0){
-					levelDetails.setText("Select a Level above first.");
+					levelDetailsView.setText("Select a Level above first.");
 				}
 				else{
 					Intent customisationLaunch = new Intent(getApplicationContext(), CustomisationActivity.class);
 					customisationLaunch.putExtra("level", selectedLevel);
+					customisationLaunch.putExtra("levelName", levelDetails.get(selectedLevel)[2]);
 					startActivity(customisationLaunch);
 				}
 			}

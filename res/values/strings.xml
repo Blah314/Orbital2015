@@ -17,11 +17,15 @@
     <string name="placeholder">PH</string>
     <string name="start_level">START</string>
     <string name="title_activity_customisation">Game Customisation</string>
+
     <string-array name="difficulty_levels">
         <item>Easy</item>
         <item>Medium</item>
         <item>Hard</item>
     </string-array>
+
     <string name="choose_diff">Difficulty</string>
+    <string name="choose_dice">Dice-Like?</string>
+    <string name="title_activity_map">MAP</string>
 
 </resources>
