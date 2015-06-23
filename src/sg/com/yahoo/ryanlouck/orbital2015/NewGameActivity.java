@@ -49,14 +49,14 @@ public class NewGameActivity extends Activity {
 			e.printStackTrace();
 		}
 		
-		numLevels = levelDetails.size();
+		numLevels = levelDetails.size() - 1;
 		final ViewGroup levels = (ViewGroup) (findViewById(R.id.buttonScroller).findViewById(R.id.levelButtons));
 		levelButtonLoader = new View.OnClickListener() {
 			
 			@Override
 			public void onClick(View v) {
 				int ID = 0;
-				for(int i = 0; i < numLevels; i++){
+				for(int i = 0; i <= numLevels; i++){
 					if(v == levels.getChildAt(i)){
 						ID = i;
 						selectedLevel = ID + 1;
@@ -66,22 +66,12 @@ public class NewGameActivity extends Activity {
 			}
 		};
 		
-		for(int i = 1; i < numLevels; i++){
+		for(int i = 1; i <= numLevels; i++){
 			Button b = new Button(this);
 			b.setText(levelDetails.get(i)[2]);
 			b.setOnClickListener(levelButtonLoader);
 			levels.addView(b);		
 		}
-		
-//		for(int i = 0; i < numLevels; i++){
-//			Button b;
-//			View v = levels.getChildAt(i);
-//			if(v instanceof Button){
-//				b = (Button) v;
-//				levelButtons[i] = b;
-//				b.setOnClickListener(levelButtonLoader);
-//			}
-//		}
 		
 		final Button startButton = (Button) findViewById(R.id.startGameButton);
 		

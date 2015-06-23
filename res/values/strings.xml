@@ -27,5 +27,6 @@
     <string name="choose_diff">Difficulty</string>
     <string name="choose_dice">Dice-Like?</string>
     <string name="title_activity_map">MAP</string>
+    <string name="end_turn">Execute Turn</string>
 
 </resources>

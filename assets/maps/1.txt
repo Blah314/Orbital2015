@@ -1,5 +1,5 @@
 T_NAME,T_X,T_Y,T_OWNER,T_ARMIES,T_NEIGHBOUR1,T_NEIGHBOUR2
-North-West,0,0,1,5,1,2
-North-East,50,0,0,1,0,3
-South-West,0,-50,0,1,0,3
-South-East,50,-50,2,3,1,2
+North-West,0,0,1,5,2,3
+North-East,300,0,0,1,1,4
+South-West,0,300,0,1,1,4
+South-East,300,300,2,3,2,3
