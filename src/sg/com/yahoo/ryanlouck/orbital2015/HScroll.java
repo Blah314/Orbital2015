@@ -5,6 +5,7 @@ import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.widget.HorizontalScrollView;
 
+// custom horizontal scroll view for the map
 public class HScroll extends HorizontalScrollView {
 
     public HScroll(Context context, AttributeSet attrs, int defStyle) {

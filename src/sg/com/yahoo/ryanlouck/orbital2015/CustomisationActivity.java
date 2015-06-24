@@ -23,18 +23,22 @@ public class CustomisationActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_customisation);
+		
+		// get the stuff the NewGameActivity passed over
 		Bundle details = getIntent().getExtras();
 		if(details != null){
 			level = details.getInt("level");
 			levelName = details.getString("levelName");
 		}
+		
+		// all the elements on screen
 		final TextView heading = (TextView) findViewById(R.id.heading);
 		final Spinner diffSelect = (Spinner) findViewById(R.id.spinner1);
 		final Button start = (Button) findViewById(R.id.start);
-//		final TextView debug = (TextView) findViewById(R.id.debug);
 		
 		heading.setText(levelName);
 		
+		// difficulty spinner code (0 - easy, 1 - medium, 2 - hard)
 		ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
 		        R.array.difficulty_levels, android.R.layout.simple_spinner_item);
 		adapter.setDropDownViewResource(android.R.layout.simple_spinner_item);
@@ -51,6 +55,7 @@ public class CustomisationActivity extends Activity {
 		    }
 		});
 		
+		// startButton launches the game with the selected settings.
 		start.setOnClickListener(new View.OnClickListener() {
 			
 			@Override
@@ -64,6 +69,7 @@ public class CustomisationActivity extends Activity {
 		});
 	}
 	
+	// dice-like checkbox listener
 	public void checkBoxListener(View v){
 		boolean checked = ((CheckBox) v).isChecked();
 		

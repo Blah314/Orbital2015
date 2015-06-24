@@ -30,10 +30,12 @@ public class NewGameActivity extends Activity {
 		setContentView(R.layout.activity_new_game);
 		getActionBar().setDisplayHomeAsUpEnabled(true);
 		
+		// levelDetailsView displays level details when a level button is clicked
 		final TextView levelDetailsView = (TextView) findViewById(R.id.textView2);
 		
 		levelDetails = new ArrayList<String[]>();
 		
+		// read levelDetails from file
 		AssetManager am = this.getAssets();
 		try{
 			InputStream is = am.open("levelDetails.txt");
@@ -50,7 +52,11 @@ public class NewGameActivity extends Activity {
 		}
 		
 		numLevels = levelDetails.size() - 1;
+		
+		// levels is the view containing all the level buttons
 		final ViewGroup levels = (ViewGroup) (findViewById(R.id.buttonScroller).findViewById(R.id.levelButtons));
+		
+		// levelButtonLoader makes the buttons load up the details for their appropriate level
 		levelButtonLoader = new View.OnClickListener() {
 			
 			@Override
@@ -66,6 +72,7 @@ public class NewGameActivity extends Activity {
 			}
 		};
 		
+		// setting the buttons text to the levelName as well as assigning levelButtonLoader to them
 		for(int i = 1; i <= numLevels; i++){
 			Button b = new Button(this);
 			b.setText(levelDetails.get(i)[2]);
@@ -73,6 +80,7 @@ public class NewGameActivity extends Activity {
 			levels.addView(b);		
 		}
 		
+		// startButton code - launches the customization screen if a level is selected
 		final Button startButton = (Button) findViewById(R.id.startGameButton);
 		
 		startButton.setOnClickListener(new View.OnClickListener(){

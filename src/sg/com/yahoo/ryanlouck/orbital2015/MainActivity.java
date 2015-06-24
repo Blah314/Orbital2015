@@ -22,7 +22,7 @@ public class MainActivity extends Activity {
 		continueButton = (Button) findViewById(R.id.button1);
 		optionsButton = (Button) findViewById(R.id.button3);
 		
-		// newGameButton launches the level selection
+		// newGameButton launches the level selection (to do - prompt when there is an already saved game)
 		newGameButton.setOnClickListener(new View.OnClickListener() {
 			
 			@Override
@@ -32,7 +32,7 @@ public class MainActivity extends Activity {
 			}
 		});
 		
-		// to do - continue game button
+		// to do - continue game button (need game to work first)
 		
 		// options button goes to options menu
 		optionsButton.setOnClickListener(new View.OnClickListener() {

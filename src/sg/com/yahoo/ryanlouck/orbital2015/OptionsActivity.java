@@ -13,6 +13,8 @@ public class OptionsActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_options);
 		getActionBar().setDisplayHomeAsUpEnabled(true);
+		
+		// to do - add options
 	}
 
 	@Override

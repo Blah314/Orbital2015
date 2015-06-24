@@ -24,8 +24,8 @@ public class MapActivity extends Activity {
 	private ScrollView vScroll;
 	private HorizontalScrollView hScroll;
 	private RelativeLayout map;
-	private TextView res, obj, turnNo;
-	private Button endTurn;
+	private TextView res, obj, turnNo, phaseNo;
+	private Button endPhase;
 	
 	private Game game;
 	private ArrayList<String[]> territoryDetails;
@@ -39,14 +39,16 @@ public class MapActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_map);
 		
+		// all the views
 		vScroll = (ScrollView) findViewById(R.id.vScroll1);
 		hScroll = (HorizontalScrollView) findViewById(R.id.hScroll1);
 		map = (RelativeLayout) findViewById(R.id.map);
 		res = (TextView) findViewById(R.id.textView1);
 		obj = (TextView) findViewById(R.id.textView2);
 		turnNo = (TextView) findViewById(R.id.textView3);
-		endTurn = (Button) findViewById(R.id.button1);
+		endPhase = (Button) findViewById(R.id.button1);
 		
+		// getting the stuff passed from CustomisationActivity
 		Bundle details = getIntent().getExtras();
 		if(details != null){
 			level = details.getInt("lvl");
@@ -57,8 +59,11 @@ public class MapActivity extends Activity {
 		startGame();
 	}
 	
+	// Initialization method - creates the map and a new game
 	public void startGame(){		
 		territoryDetails = new ArrayList<String[]>();
+		
+		// loading up the map and getting the details of all territories
 		AssetManager am = this.getAssets();
 		try{
 			InputStream is = am.open("maps/" + Integer.toString(level) + ".txt");
@@ -74,22 +79,30 @@ public class MapActivity extends Activity {
 			e.printStackTrace();
 		}
 		
+		
 		for(int i = 1; i < territoryDetails.size(); i++){
 			String[] tDetails = territoryDetails.get(i);
-			for(int j = 5; j < tDetails.length; j++){
+			
+			// load up each territory, check its neighbours, then draw lines between their coordinates - to do)
+			for(int j = 11; j < tDetails.length; j++){
 				int neighbour = Integer.parseInt(tDetails[j]);
 				if(neighbour < i) continue;
 				String[] neighbourDetails = territoryDetails.get(neighbour);
-				
+				// draw line stuff goes here
 			}
+			
+			// creates the territory buttons and puts them at their corresponding location
 			Button territoryButton = new Button(this);
-			System.out.println(tDetails[0]);
-			territoryButton.setText(tDetails[0]);
+			territoryButton.setText(tDetails[1]);
 			RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(-2, -2);
-			params.leftMargin = Integer.parseInt(tDetails[1]);
-			params.topMargin = Integer.parseInt(tDetails[2]);
+			params.leftMargin = Integer.parseInt(tDetails[2]);
+			params.topMargin = Integer.parseInt(tDetails[3]);
 			map.addView(territoryButton, params);		
 		}
+		
+		// to do - create new game and assign buttons to the TerritoryActivity
+		
+		// to do - execute phase button
 	}
 
 	@Override
@@ -111,6 +124,7 @@ public class MapActivity extends Activity {
 		return super.onOptionsItemSelected(item);
 	}
 	
+	// map scrolling code - it's MAGIC! Don't touch!
     @Override
     public boolean onTouchEvent(MotionEvent event) {
 

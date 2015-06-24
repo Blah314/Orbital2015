@@ -1,0 +1,19 @@
+Notes on level format:
+
+Each level occupies one line, with the line having at least 10 parameters. 
+(Add more if we make it more complicated)
+
+0 - LevelID (Used to lookup the level chosen)
+1 - LevelSet (Not used yet - will be used to separate levels into different sets later on)
+2 - LevelName (The name displayed to the player)
+3 - Objective (What needs to be done to complete the level:
+	0 - Eliminate everybody
+	1 - Capture X territories
+	2 - Survive X turns
+	3 - Eliminate everybody in X turns or less)
+	(More can be added)
+4 - ObjectiveNum (Replaces the X for game modes 1,2,3)
+5 - NumPlayers (We need NumPlayers - 1 AI players)
+6 - Description (Level description seen by the player)
+7 - MapID (The ID of the map to use)
+8 onwards - Starting resources of players.

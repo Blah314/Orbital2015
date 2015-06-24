@@ -5,6 +5,7 @@ import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.widget.ScrollView;
 
+// custom vertical scroll view for the map
 public class VScroll extends ScrollView {
 
     public VScroll(Context context, AttributeSet attrs, int defStyle) {

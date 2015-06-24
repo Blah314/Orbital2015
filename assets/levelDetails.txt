@@ -1,5 +1,5 @@
-LEVELID,LEVELSET,LEVELNAME,OBJECTIVE,OBJECTIVEAMT,NUMPLAYERS,DESCRIPTION,NUMTERRITORIES,MAPID
-0,0,testinglevel0,0,0,2,A testing map to see if this works,4,1
-1,0,testinglevel1,0,0,3,A larger map,9,2
-2,0,testinglevel2,1,5,4,Testing capture game type,16,3
-3,0,testinglevel3,0,0,4,Testing large map,20,4
+LEVELID,LEVELSET,LEVELNAME,OBJECTIVE,OBJECTIVEAMT,NUMPLAYERS,DESCRIPTION,NUMTERRITORIES,MAPID,STARTINGRESP1,STARTINGRESP2,...
+0,0,Tutorial Level 1,0,0,2,A quick tutorial to show you the basics.,1,100,50
+1,0,Tutorial Level 2,0,0,3,Introduction to regions.,2,100,75,75
+2,0,Tutorial Level 3,1,5,4,Introduction to capture mode.,3,250,125,125
+3,0,Tutorial Level 4,0,0,4,Introduction to upgrades.,4,500,250,250
