@@ -2,26 +2,44 @@ package sg.com.yahoo.ryanlouck.orbital2015;
 
 import java.util.ArrayList;
 import java.util.Hashtable;
-import java.util.Iterator;
+
+import android.util.Log;
 
 public class Territory {
 	
 	private String name;
-	private int id, owner;
-	private int[] armies;
-	private ArrayList<Integer> neighbours;
-	private Hashtable<Integer,int[]> attacks;
+	private int id;
+	private int owner;
+	private int numUnits;
+	private ArrayList<Integer> neighbourIDs;
+	private Hashtable<Integer,Integer> attacks;  //<NeighbourID to attack, numUnits used to attack>
 	
+	
+	/* Assumes String[] comes in the form ( name,id,owner,numUnit1,
+	 * neighbour1,neighbour2...neighbourLast)Additional details to be added if needed
+	 */
 	public Territory(String[] details){
-		// to do - assign all territory info from the details
+		
+		name = details[0];
+		id = Integer.parseInt(details[1]);
+		owner = Integer.parseInt(details[2]);
+		numUnits = Integer.parseInt(details[3]);  		
+		for ( int i = details.length-1; i>3; i-- ){
+			neighbourIDs.add(Integer.parseInt(details[i])); //Adds neighbourIDs to arrayList ( reverse order makes no difference)
+		}
+		
 	}
 	
-	// clears all set attacks on the territory at the end of every turn
-	public void turnStart(){
-		attacks.clear();
+	public void addUnits(int unit){
+		numUnits += unit;			
 	}
 	
-	// accessors for use to display on the buttons
+	// clears all set attacks on the territory at the start of every turn
+	//public void turnStart(){
+	//	attacks.clear();		
+	//}
+	
+	// Accessors for use to display on the buttons
 	public String getName(){
 		return name;
 	}
@@ -34,26 +52,35 @@ public class Territory {
 		return owner;
 	}
 	
-	public int[] getArmies(){
-		return armies;
+	public int getNumUnits(){
+		return numUnits;
 	}
 	
-	public ArrayList<Integer> getNeighbours(){
-		return neighbours;
+	public void setOwner(int ownerID){
+		owner = ownerID;
+	}	
+	
+	public void setNumUnits(int toSetUnits){
+		numUnits = toSetUnits;
 	}
 	
-	// set an attack on a neighbour with a certain number of armies
-	public void setAttack(int neighbour, int[] armies){
-		if(!neighbours.contains(neighbour)){
-			// shouldn't happen
+	public ArrayList<Integer> getNeighbourIDs(){
+		return neighbourIDs;
+	}
+	
+	/* set an attack on a neighbour with a certain number of units
+	 * public void setAttack(int neighbour, int numAttackUnits){
+		if(!neighbourIDs.contains(neighbour)){
+			Log.d("setAttackInTerritoryClass","Setting an attack on a territory which is not adjacent to this");
 		}
-		else{
-			attacks.put(neighbour, armies);
+		else {
+			attacks.put(neighbour, numAttackUnits);
 		}
-	}
-	
+	}	
+	 
 	// to be called after the game calculate the outcome of a phase
-	public void update(int owner, int[] armies){
-		
+	public void update(int owner, int numUnits){
+	
 	}
-}
+	*/	
+	}
