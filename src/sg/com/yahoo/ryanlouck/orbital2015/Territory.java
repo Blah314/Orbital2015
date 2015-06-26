@@ -17,17 +17,19 @@ public class Territory {
 	
 	/* Assumes String[] comes in the form ( name,id,owner,numUnit1,
 	 * neighbour1,neighbour2...neighbourLast)Additional details to be added if needed
+	 * 
+	 * Some minor changes to accomodate current file format
 	 */
-	public Territory(String[] details){
+	public Territory(String[] details){		
+		neighbourIDs = new ArrayList<Integer>();
 		
-		name = details[0];
-		id = Integer.parseInt(details[1]);
-		owner = Integer.parseInt(details[2]);
-		numUnits = Integer.parseInt(details[3]);  		
-		for ( int i = details.length-1; i>3; i-- ){
-			neighbourIDs.add(Integer.parseInt(details[i])); //Adds neighbourIDs to arrayList ( reverse order makes no difference)
-		}
-		
+		name = details[1];
+		id = Integer.parseInt(details[0]);
+		owner = Integer.parseInt(details[7]);
+		numUnits = Integer.parseInt(details[8]);  		
+		for ( int i = 11; i < details.length; i++){
+			neighbourIDs.add(Integer.parseInt(details[i]));
+		}	
 	}
 	
 	public void addUnits(int unit){

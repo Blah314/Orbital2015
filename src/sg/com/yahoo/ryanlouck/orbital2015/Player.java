@@ -43,6 +43,11 @@ public class Player {
 	public void setNumTurns(int newNumTurns){
 		numTurns = newNumTurns;
 	}
+	
+	public int getNumTurns(){
+		return numTurns;
+	}
+	
 	public boolean isTurnEnded(){
 		if ( numTurns == 0){
 			return true;

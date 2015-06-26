@@ -21,6 +21,7 @@ public class Game {
 			playersMap.put(i,new Player(i,startingResources[i]));
 		}
 		Iterator<String[]> territoryIterator = mapDetails.iterator();
+		territoryIterator.next(); // removes invalid first row
 		while(territoryIterator.hasNext()){
 			String[] currTerritory = territoryIterator.next();
 			Territory tempTerritory = new Territory(currTerritory);
@@ -28,7 +29,18 @@ public class Game {
 		}
 	}
 	
-
+	public HashMap<Integer, Territory> getTerritories(){
+		return territoriesMap;
+	}
+	
+	public HashMap<Integer, Player> getPlayers(){
+		return playersMap;
+	}
+	
+	public int getCurrPlayer(){
+		return currPlayerID;
+	}
+	
 	// This method is called when a new player needs to start his turn 
 	public void startPlayerTurn(int playerID){
 		currPlayerID = playerID;

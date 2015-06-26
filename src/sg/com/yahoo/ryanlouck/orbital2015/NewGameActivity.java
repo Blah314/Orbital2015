@@ -92,7 +92,7 @@ public class NewGameActivity extends Activity {
 				else{
 					Intent customisationLaunch = new Intent(getApplicationContext(), CustomisationActivity.class);
 					customisationLaunch.putExtra("level", selectedLevel);
-					customisationLaunch.putExtra("levelName", levelDetails.get(selectedLevel)[2]);
+					customisationLaunch.putExtra("levelDetails", levelDetails.get(selectedLevel));
 					startActivity(customisationLaunch);
 				}
 			}

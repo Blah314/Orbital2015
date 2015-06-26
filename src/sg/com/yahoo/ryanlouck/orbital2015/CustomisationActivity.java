@@ -18,7 +18,8 @@ public class CustomisationActivity extends Activity {
 	private int level = 0;
 	private int diff = 0;
 	private boolean diceLike = false;
-	private String levelName;
+	private String[] levelDetails;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -28,7 +29,7 @@ public class CustomisationActivity extends Activity {
 		Bundle details = getIntent().getExtras();
 		if(details != null){
 			level = details.getInt("level");
-			levelName = details.getString("levelName");
+			levelDetails = details.getStringArray("levelDetails");
 		}
 		
 		// all the elements on screen
@@ -36,7 +37,7 @@ public class CustomisationActivity extends Activity {
 		final Spinner diffSelect = (Spinner) findViewById(R.id.spinner1);
 		final Button start = (Button) findViewById(R.id.start);
 		
-		heading.setText(levelName);
+		heading.setText(levelDetails[2]);
 		
 		// difficulty spinner code (0 - easy, 1 - medium, 2 - hard)
 		ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
@@ -64,6 +65,7 @@ public class CustomisationActivity extends Activity {
 				gameLaunch.putExtra("diff", diff);
 				gameLaunch.putExtra("lvl", level);
 				gameLaunch.putExtra("dice", diceLike);
+				gameLaunch.putExtra("levelDetails", levelDetails);
 				startActivity(gameLaunch);
 			}
 		});

@@ -1,5 +1,5 @@
 T_ID,T_NAME,T_X,T_Y,T_TYPE,T_VALUE,T_REGION,T_OWNER,T_ARMIES_1,T_ARMIES_2,T_ARMIES_3,T_NEIGHBOUR1,T_NEIGHBOUR2,...
 1,North-West,0,0,0,0,0,1,5,0,0,2,3
-2,North-East,300,0,0,0,0,0,1,0,0,1,4
-3,South-West,0,300,0,0,0,0,1,0,0,1,4
-4,South-East,300,300,0,0,0,2,3,0,0,2,3
+2,North-East,150,0,0,0,0,0,1,0,0,1,4
+3,South-West,0,150,0,0,0,0,1,0,0,1,4
+4,South-East,150,150,0,0,0,2,3,0,0,2,3
