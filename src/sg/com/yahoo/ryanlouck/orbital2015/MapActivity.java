@@ -22,6 +22,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.HorizontalScrollView;
 import android.widget.RelativeLayout;
+import android.widget.RelativeLayout.LayoutParams;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
@@ -121,10 +122,14 @@ public class MapActivity extends Activity {
 			// creates the territory buttons and puts them at their corresponding location
 			Button territoryButton = new Button(this);
 			territoryButton.setText(tDetails[1]);
-			RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(-2, -2);
+			RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(LayoutParams.WRAP_CONTENT,LayoutParams.WRAP_CONTENT);
 			params.leftMargin = Integer.parseInt(tDetails[2]);
 			params.topMargin = Integer.parseInt(tDetails[3]);
-			map.addView(territoryButton, params);			
+			params.addRule(RelativeLayout.ALIGN_LEFT,RelativeLayout.ALIGN_PARENT_END);
+			map.addView(territoryButton, params);	
+
+        
+
 		}
 		
 		// create the line view and draws them

@@ -1,12 +1,19 @@
 package sg.com.yahoo.ryanlouck.orbital2015;
 
-import android.os.Bundle;
 import android.app.Activity;
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Point;
+import android.os.Bundle;
+import android.view.Display;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
-import android.content.Intent;
+import android.widget.ImageView;
 
 public class MainActivity extends Activity {
 	
@@ -21,6 +28,7 @@ public class MainActivity extends Activity {
 		newGameButton = (Button) findViewById(R.id.button2);
 		continueButton = (Button) findViewById(R.id.button1);
 		optionsButton = (Button) findViewById(R.id.button3);
+		
 		
 		// newGameButton launches the level selection (to do - prompt when there is an already saved game)
 		newGameButton.setOnClickListener(new View.OnClickListener() {

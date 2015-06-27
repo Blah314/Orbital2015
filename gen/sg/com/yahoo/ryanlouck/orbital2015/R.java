@@ -1904,7 +1904,8 @@ containing a value of this type.
         public static final int abc_textfield_search_activated_mtrl_alpha=0x7f020038;
         public static final int abc_textfield_search_default_mtrl_alpha=0x7f020039;
         public static final int abc_textfield_search_material=0x7f02003a;
-        public static final int ic_launcher=0x7f02003b;
+        public static final int background_pic=0x7f02003b;
+        public static final int ic_launcher=0x7f02003c;
     }
     public static final class id {
         public static final int action_bar=0x7f090040;
@@ -1996,8 +1997,8 @@ containing a value of this type.
         public static final int submit_area=0x7f09004b;
         public static final int tabMode=0x7f09000c;
         public static final int textSpacerNoButtons=0x7f090033;
-        public static final int textView1=0x7f09005a;
-        public static final int textView2=0x7f09005f;
+        public static final int textView1=0x7f09005f;
+        public static final int textView2=0x7f09005a;
         public static final int textView3=0x7f09005e;
         public static final int title=0x7f09002c;
         public static final int title_template=0x7f09002f;
