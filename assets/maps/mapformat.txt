@@ -1,18 +1,19 @@
 Notes on map format:
 
-Each territory occupies one line, with each line having at least 12 parameters.
+Each territory occupies one line, with each line having at least 14 parameters.
 (More will be added when we make it more complicated)
 
 0 - TerritoryID (Used to lookup the territory)
 1 - TerritoryName (The name the player sees)
-2 - X-coord (How far right this territory is from the left) (Must be >= 0)
-3 - Y-coord (How far down this territory is from the right) (Must be >= 0)
-4 - TerritoryType (Not used yet)
-5 - TerritoryValue (Not used yet)
-6 - TerritoryRegion (Not used yet)
-7 - TerritoryOwner (Who owns this territory at the start)
+2 - TerritoryAbbv (Abbreviated name for use of the buttons)
+3 - X-coord (How far right this territory is from the left) (Must be >= 0)
+4 - Y-coord (How far down this territory is from the right) (Must be >= 0)
+5 - TerritoryType (Not used yet)
+6 - TerritoryValue (Not used yet)
+7 - TerritoryRegion (Not used yet)
+8 - TerritoryOwner (Who owns this territory at the start)
 	0 - Neutral
 	1 - Human Players
 	Others - AI)
-8,9,10 - TerritoryArmies1,2,3 (How much of each army is on the territory at start)
-11 onwards - TerritoryNeighbours (All the IDs of the territories that are next to this one)
+9,10,11 - TerritoryArmies1,2,3 (How much of each army is on the territory at start)
+12 onwards - TerritoryNeighbours (All the IDs of the territories that are next to this one)

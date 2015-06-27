@@ -1908,6 +1908,7 @@ containing a value of this type.
         public static final int ic_launcher=0x7f02003c;
     }
     public static final class id {
+        public static final int actionButtons=0x7f090065;
         public static final int action_bar=0x7f090040;
         public static final int action_bar_activity_content=0x7f090003;
         public static final int action_bar_container=0x7f09003f;
@@ -1921,7 +1922,7 @@ containing a value of this type.
         public static final int action_mode_bar=0x7f09003d;
         public static final int action_mode_bar_stub=0x7f09003c;
         public static final int action_mode_close_button=0x7f090025;
-        public static final int action_settings=0x7f090063;
+        public static final int action_settings=0x7f090066;
         public static final int activity_chooser_view_content=0x7f090026;
         public static final int alertTitle=0x7f090030;
         public static final int always=0x7f090019;
@@ -1972,6 +1973,7 @@ containing a value of this type.
         public static final int radio=0x7f09003a;
         public static final int screen=0x7f090015;
         public static final int scrollView=0x7f090032;
+        public static final int scrollView1=0x7f090064;
         public static final int search_badge=0x7f090044;
         public static final int search_bar=0x7f090043;
         public static final int search_button=0x7f090045;
@@ -1996,6 +1998,7 @@ containing a value of this type.
         public static final int startGameButton=0x7f090062;
         public static final int submit_area=0x7f09004b;
         public static final int tabMode=0x7f09000c;
+        public static final int territoryName=0x7f090063;
         public static final int textSpacerNoButtons=0x7f090033;
         public static final int textView1=0x7f09005f;
         public static final int textView2=0x7f09005a;
@@ -2069,10 +2072,11 @@ containing a value of this type.
         public static final int activity_map=0x7f03001b;
         public static final int activity_new_game=0x7f03001c;
         public static final int activity_options=0x7f03001d;
-        public static final int select_dialog_item_material=0x7f03001e;
-        public static final int select_dialog_multichoice_material=0x7f03001f;
-        public static final int select_dialog_singlechoice_material=0x7f030020;
-        public static final int support_simple_spinner_dropdown_item=0x7f030021;
+        public static final int activity_territory=0x7f03001e;
+        public static final int select_dialog_item_material=0x7f03001f;
+        public static final int select_dialog_multichoice_material=0x7f030020;
+        public static final int select_dialog_singlechoice_material=0x7f030021;
+        public static final int support_simple_spinner_dropdown_item=0x7f030022;
     }
     public static final class menu {
         public static final int customisation=0x7f0d0000;
@@ -2080,6 +2084,7 @@ containing a value of this type.
         public static final int map=0x7f0d0002;
         public static final int new_game=0x7f0d0003;
         public static final int options=0x7f0d0004;
+        public static final int territory=0x7f0d0005;
     }
     public static final class string {
         /**  Content description for the action bar "home" affordance. [CHAR LIMIT=NONE] 
@@ -2142,21 +2147,35 @@ containing a value of this type.
          */
         public static final int abc_toolbar_collapse_description=0x7f0a0004;
         public static final int action_settings=0x7f0a0013;
+        public static final int add_num=0x7f0a0026;
+        public static final int add_units=0x7f0a0027;
         public static final int app_name=0x7f0a0011;
+        public static final int attack=0x7f0a002b;
+        public static final int attack_desc=0x7f0a002a;
+        public static final int attack_head=0x7f0a0028;
+        public static final int attack_num=0x7f0a0029;
         public static final int choose_dice=0x7f0a001e;
         public static final int choose_diff=0x7f0a001d;
         public static final int continueGameMenu=0x7f0a0015;
         public static final int end_turn=0x7f0a0020;
         public static final int hello_world=0x7f0a0012;
+        public static final int move=0x7f0a002e;
+        public static final int move_desc=0x7f0a002d;
+        public static final int move_num=0x7f0a002c;
         public static final int newGameMenu=0x7f0a0014;
         public static final int optionsMenu=0x7f0a0016;
         public static final int placeholder=0x7f0a001a;
+        public static final int reject=0x7f0a0022;
         public static final int select_level=0x7f0a0019;
         public static final int start_level=0x7f0a001b;
         public static final int title_activity_customisation=0x7f0a001c;
         public static final int title_activity_map=0x7f0a001f;
         public static final int title_activity_new_game=0x7f0a0018;
         public static final int title_activity_options=0x7f0a0017;
+        public static final int title_activity_territory=0x7f0a0021;
+        public static final int unit1_desc=0x7f0a0025;
+        public static final int unit1_name=0x7f0a0024;
+        public static final int unit_head=0x7f0a0023;
     }
     public static final class style {
         public static final int AlertDialog_AppCompat=0x7f0b0040;

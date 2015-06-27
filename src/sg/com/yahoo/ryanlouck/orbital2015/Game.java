@@ -1,11 +1,12 @@
 package sg.com.yahoo.ryanlouck.orbital2015;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Random;
 
-public class Game {
+public class Game implements Serializable {
 
 	private int diff, numPlayers, currPlayerID;
 	private HashMap<Integer, Player> playersMap = new HashMap<Integer, Player>();
@@ -69,6 +70,10 @@ public class Game {
 		// Updates new number of resources for player
 		player.addResources(playerNumTerrOwned * 10); // Each unit costs 1
 														// resource to build
+		
+		if(currPlayerID != 0){
+			AIMoves(player);
+		}
 	}
 
 	public void executeTerritoryAddUnits(int playerID, int territoryID,
@@ -158,7 +163,7 @@ public class Game {
 		int rscSplit1;
 		int rscSplit2;
 		ArrayList<Territory> tempStorage= new ArrayList<Territory>();
-		for (int i = 0; i < territoriesMap.size(); i++) { // Adds to temp storage
+		for (int i = 1; i <= territoriesMap.size(); i++) { // Adds to temp storage
 			Territory currTerr = territoriesMap.get(i);
 			if (currTerr.getOwner() == player.getPlayerID()) {
 				tempStorage.add(currTerr);
@@ -185,7 +190,7 @@ public class Game {
 					rscTempStorage.remove(indexRandom);
 					indexRandom = rand.nextInt(player.getNumTerritoriesOwned() - 1);
 					chosen = rscTempStorage.get(indexRandom);
-					executeTerritoryAddUnits(player.getPlayerID(),chosen.getId(), rscSplit1);
+					executeTerritoryAddUnits(player.getPlayerID(),chosen.getId(), rscSplit2);
 				}
 				else {
 					for (int i = 0; i < territoriesMap.size(); i++) {
@@ -201,7 +206,7 @@ public class Game {
 			for ( int i = 0; i < player.getNumTerritoriesOwned(); i++){  //Loops through all owned territories it has
 				Territory currTerr = tempStorage.get(i);
 				ArrayList<Integer> AtkTempStorage = new ArrayList<Integer>();
-				AtkTempStorage = (ArrayList<Integer>)currTerr.getNeighbourIDs().clone();  //Stores neighbor IDs for curr terr
+				AtkTempStorage = (ArrayList<Integer>) currTerr.getNeighbourIDs().clone();  //Stores neighbor IDs for curr terr
 				for ( int j = 0; j < AtkTempStorage.size(); j++){  //Loops through all its neighbors
 					if ( currTerr.getNumUnits() >= territoriesMap.get(AtkTempStorage.get(j)).getNumUnits()){
 						executeTerritoryAttack(player.getPlayerID(), territoriesMap.get(AtkTempStorage.get(j)).getOwner(),

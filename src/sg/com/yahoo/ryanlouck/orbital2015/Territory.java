@@ -1,14 +1,15 @@
 
 package sg.com.yahoo.ryanlouck.orbital2015;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Hashtable;
 
 import android.util.Log;
 
-public class Territory {
+public class Territory implements Serializable {
 	
-	private String name;
+	private String name, abbrvName;
 	private int id;
 	private int owner;
 	private int numUnits;
@@ -25,10 +26,11 @@ public class Territory {
 		neighbourIDs = new ArrayList<Integer>();
 		
 		name = details[1];
+		abbrvName = details[2];
 		id = Integer.parseInt(details[0]);
-		owner = Integer.parseInt(details[7]);
-		numUnits = Integer.parseInt(details[8]);  		
-		for ( int i = 11; i < details.length; i++){
+		owner = Integer.parseInt(details[8]);
+		numUnits = Integer.parseInt(details[9]);  		
+		for ( int i = 12; i < details.length; i++){
 			neighbourIDs.add(Integer.parseInt(details[i]));
 		}	
 	}
@@ -45,6 +47,10 @@ public class Territory {
 	// Accessors for use to display on the buttons
 	public String getName(){
 		return name;
+	}
+	
+	public String getAbbrvName(){
+		return abbrvName;
 	}
 	
 	public int getId(){

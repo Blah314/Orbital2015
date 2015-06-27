@@ -24,25 +24,43 @@
         </activity>
         <activity
             android:name=".OptionsActivity"
-            android:label="@string/title_activity_options" >
+            android:label="@string/title_activity_options"
+            android:parentActivityName=".MainActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".MainActivity" />
+                android:value="sg.com.yahoo.ryanlouck.orbital2015.MainActivity" />
         </activity>
         <activity
             android:name=".NewGameActivity"
-            android:label="@string/title_activity_new_game" >
+            android:label="@string/title_activity_new_game"
+            android:parentActivityName=".MainActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".MainActivity" />
+                android:value="sg.com.yahoo.ryanlouck.orbital2015.MainActivity" />
         </activity>
         <activity
             android:name=".CustomisationActivity"
-            android:label="@string/title_activity_customisation" >
+            android:label="@string/title_activity_customisation"
+            android:parentActivityName=".NewGameActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="sg.com.yahoo.ryanlouck.orbital2015.NewGameActivity" />
         </activity>
         <activity
             android:name=".MapActivity"
-            android:label="@string/title_activity_map" >
+            android:label="@string/title_activity_map"
+            android:parentActivityName=".MainActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="sg.com.yahoo.ryanlouck.orbital2015.MainActivity" />
+        </activity>
+        <activity
+            android:name=".TerritoryActivity"
+            android:label="@string/title_activity_territory"
+            android:parentActivityName=".MapActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="sg.com.yahoo.ryanlouck.orbital2015.MapActivity" />
         </activity>
     </application>
 

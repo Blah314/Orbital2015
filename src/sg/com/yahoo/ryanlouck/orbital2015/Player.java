@@ -1,8 +1,9 @@
 package sg.com.yahoo.ryanlouck.orbital2015;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Player {
+public class Player implements Serializable {
 	
 	private int playerID;
 	private int numResources;

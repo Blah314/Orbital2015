@@ -8,6 +8,7 @@ import java.util.HashMap;
 import java.util.Hashtable;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.content.res.AssetManager;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
@@ -18,6 +19,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.HorizontalScrollView;
@@ -33,7 +35,7 @@ public class MapActivity extends Activity {
 	private HorizontalScrollView hScroll;
 	private ViewGroup map;
 	private TextView res, obj, turnsLeft;
-	private Button endPhase;
+	private Button endTurn;
 	
 	private String[] levelDetails;
 	private ArrayList<String[]> territoryDetails;
@@ -56,12 +58,12 @@ public class MapActivity extends Activity {
 		vScroll = (ScrollView) findViewById(R.id.vScroll1);
 		hScroll = (HorizontalScrollView) findViewById(R.id.hScroll1);
 		map = (ViewGroup) findViewById(R.id.map);
-		res = (TextView) findViewById(R.id.textView2);
-		obj = (TextView) findViewById(R.id.textView1);
+		res = (TextView) findViewById(R.id.textView1);
+		obj = (TextView) findViewById(R.id.textView2);
 		turnsLeft = (TextView) findViewById(R.id.textView3);
-		endPhase = (Button) findViewById(R.id.button1);
+		endTurn = (Button) findViewById(R.id.button1);
 		
-		// getting the stuff passed from CustomisationActivity
+		// getting the stuff passed from CustomisationActivity or ContinueGameButton
 		Bundle details = getIntent().getExtras();
 		if(details != null){
 			level = details.getInt("lvl");
@@ -101,43 +103,38 @@ public class MapActivity extends Activity {
 		catch(Exception e){
 			e.printStackTrace();
 		}
-		
-		
+			
 		for(int i = 1; i < territoryDetails.size(); i++){
 			String[] tDetails = territoryDetails.get(i);
 			
 			// load up each territory, check its neighbours, then note the lines that need to be drawn
-			for(int j = 11; j < tDetails.length; j++){
+			for(int j = 12; j < tDetails.length; j++){
 				int neighbour = Integer.parseInt(tDetails[j]);
 				if(neighbour < i) continue;
 				String[] nDetails = territoryDetails.get(neighbour);
 				int sX, sY, eX, eY;
-				sX = Integer.parseInt(tDetails[2]);
-				sY = Integer.parseInt(tDetails[3]);
-				eX = Integer.parseInt(nDetails[2]);
-				eY = Integer.parseInt(nDetails[3]);
+				sX = Integer.parseInt(tDetails[3]);
+				sY = Integer.parseInt(tDetails[4]);
+				eX = Integer.parseInt(nDetails[3]);
+				eY = Integer.parseInt(nDetails[4]);
 				lineCoords.add(new int[]{sX, sY, eX, eY});
 			}
 			
 			// creates the territory buttons and puts them at their corresponding location
 			Button territoryButton = new Button(this);
-			territoryButton.setText(tDetails[1]);
-			RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(LayoutParams.WRAP_CONTENT,LayoutParams.WRAP_CONTENT);
-			params.leftMargin = Integer.parseInt(tDetails[2]);
-			params.topMargin = Integer.parseInt(tDetails[3]);
-			params.addRule(RelativeLayout.ALIGN_LEFT,RelativeLayout.ALIGN_PARENT_END);
-			map.addView(territoryButton, params);	
-
-        
-
+			territoryButton.setText(tDetails[2]);
+			RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(100,100);
+			params.leftMargin = Integer.parseInt(tDetails[3]);
+			params.topMargin = Integer.parseInt(tDetails[4]);
+			map.addView(territoryButton, params);
 		}
 		
 		// create the line view and draws them
-		LineView lines = new LineView(this);
-		lines.setMap(lineCoords);
-		lines.invalidate();
+//		LineView lines = new LineView(this);
+//		lines.setMap(lineCoords);
+//		lines.invalidate();
 			
-		// cannot get lines to display in the map layout - to do
+		// TODO cannot get lines to display in the map layout
 		
 //		map.addView(lines);
 //		
@@ -161,9 +158,25 @@ public class MapActivity extends Activity {
 		numTerritories = territories.size();
 		players = game.getPlayers();
 		
+		game.startPlayerTurn(0);
+		
 		update();
 		
-		game.startPlayerTurn(0);
+		for(int i = 0; i < numTerritories; i++){
+			Button b = (Button) map.getChildAt(i);
+			final Territory t = territories.get(i+1);
+			b.setOnClickListener(new View.OnClickListener() {
+				
+				@Override
+				public void onClick(View v) {
+					Intent TerritoryLaunch = new Intent(getApplicationContext(), TerritoryActivity.class);
+					TerritoryLaunch.putExtra("territory", t);
+					TerritoryLaunch.putExtra("res", game.getPlayers().get(0).getNumResources());
+					TerritoryLaunch.putExtra("game", game);
+					startActivity(TerritoryLaunch);
+				}
+			});
+		}
 	}
 	
 	// updates the values on each button and the text fields at the end of every move
@@ -173,14 +186,22 @@ public class MapActivity extends Activity {
 		for(int i = 0; i < numTerritories; i++){
 			Button b = (Button) map.getChildAt(i);
 			Territory t = territories.get(i+1);
-			b.setText(t.getName() + "\n" + t.getNumUnits());
+			b.setText(t.getAbbrvName() + "\n" + t.getNumUnits());
 			b.getBackground().setColorFilter(new PorterDuffColorFilter(ColorMap.get(t.getOwner()),PorterDuff.Mode.OVERLAY));
 			
 			res.setText("Resources:\n" + players.get(0).getNumResources());
 			turnsLeft.setText("Turns Left:\n" + players.get(0).getNumTurns());
 		}
 	}
-
+	
+	public void onPause(){
+		super.onPause();		
+	}
+	
+	public void onResume(){
+		super.onResume();
+	}
+	
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
