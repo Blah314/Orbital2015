@@ -8,6 +8,7 @@ import java.util.HashMap;
 import java.util.Hashtable;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.content.res.AssetManager;
 import android.graphics.Color;
@@ -24,9 +25,9 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.HorizontalScrollView;
 import android.widget.RelativeLayout;
-import android.widget.RelativeLayout.LayoutParams;
 import android.widget.ScrollView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class MapActivity extends Activity {
 	
@@ -158,7 +159,7 @@ public class MapActivity extends Activity {
 		numTerritories = territories.size();
 		players = game.getPlayers();
 		
-		game.startPlayerTurn(0);
+		game.startPlayerTurn(1);
 		
 		update();
 		
@@ -169,18 +170,48 @@ public class MapActivity extends Activity {
 				
 				@Override
 				public void onClick(View v) {
-					Intent TerritoryLaunch = new Intent(getApplicationContext(), TerritoryActivity.class);
-					TerritoryLaunch.putExtra("territory", t);
-					TerritoryLaunch.putExtra("res", game.getPlayers().get(0).getNumResources());
-					TerritoryLaunch.putExtra("game", game);
-					startActivity(TerritoryLaunch);
+					if(t.getOwner() != 1){
+						Context c = getApplicationContext();
+						CharSequence text = getResources().getString(R.string.reject);
+						int duration = Toast.LENGTH_SHORT;
+						
+						Toast t = Toast.makeText(c, text, duration);
+						t.show();
+					}
+					
+					else{
+						if(!game.getPlayers().get(1).isTurnEnded()){
+							Intent TerritoryLaunch = new Intent(getApplicationContext(), TerritoryActivity.class);
+							TerritoryLaunch.putExtra("territory", t);
+							TerritoryLaunch.putExtra("res", game.getPlayers().get(1).getNumResources());
+							TerritoryLaunch.putExtra("game", game);
+							startActivity(TerritoryLaunch);
+						}
+						else{
+							Context c = getApplicationContext();
+							CharSequence text = getResources().getString(R.string.out_of_turns);
+							int duration = Toast.LENGTH_SHORT;
+						
+							Toast t = Toast.makeText(c, text, duration);
+							t.show();
+						}
+					}
 				}
 			});
 		}
+		
+		endTurn.setOnClickListener(new View.OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				game.turnEnds();
+				update();
+			}
+		});
 	}
 	
 	// updates the values on each button and the text fields at the end of every move
-	public void update(){		
+	public void update(){
 		territories = game.getTerritories();
 		
 		for(int i = 0; i < numTerritories; i++){
@@ -189,17 +220,38 @@ public class MapActivity extends Activity {
 			b.setText(t.getAbbrvName() + "\n" + t.getNumUnits());
 			b.getBackground().setColorFilter(new PorterDuffColorFilter(ColorMap.get(t.getOwner()),PorterDuff.Mode.OVERLAY));
 			
-			res.setText("Resources:\n" + players.get(0).getNumResources());
-			turnsLeft.setText("Turns Left:\n" + players.get(0).getNumTurns());
+			res.setText("Resources:\n" + players.get(1).getNumResources());
+			turnsLeft.setText("Turns Left:\n" + players.get(1).getNumTurns());
 		}
 	}
 	
 	public void onPause(){
-		super.onPause();		
+		super.onPause();
+	}
+	
+	public void onNewIntent(Intent intent){
+		Bundle details = intent.getExtras();
+		boolean add = details.getBoolean("add", false);
+		boolean move = details.getBoolean("move", false);
+		boolean attack = details.getBoolean("attack", false);
+		int target = details.getInt("target", 0);
+		int requested = details.getInt("request", 0);
+		int origin = details.getInt("origin", 0);
+		
+		if(add){
+			game.executeTerritoryAddUnits(1, origin, requested);
+		}
+		else if(move){
+			game.executeMoveUnits(1, origin, target, requested);
+		}
+		else if(attack){
+			game.executeTerritoryAttack(1, territories.get(target).getOwner(), origin, target, requested);
+		}
 	}
 	
 	public void onResume(){
 		super.onResume();
+		update();
 	}
 	
 	@Override

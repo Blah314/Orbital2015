@@ -9,8 +9,10 @@ import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffColorFilter;
 import android.os.Bundle;
+import android.app.FragmentManager;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Button;
 import android.widget.TableLayout;
 import android.widget.TableRow;
@@ -95,6 +97,17 @@ public class TerritoryActivity extends Activity {
 		btn.setText(getResources().getString(R.string.unit1_name));
 		desc.setText(getResources().getString(R.string.unit1_desc));
 		
+		final FragmentManager fm = getFragmentManager();
+		
+		btn.setOnClickListener(new View.OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				ActionFragment addDialog = new ActionFragment(limit, t.getNumUnits(), 0, t.getId(), true, false);
+				addDialog.show(fm, "add");
+			}
+		});
+		
 		addUnit.addView(btn);
 		addUnit.addView(desc);
 		
@@ -110,19 +123,33 @@ public class TerritoryActivity extends Activity {
 		Iterator<Integer> n = neighbours.iterator();
 		while(n.hasNext()){
 			int nextNeighbour = n.next();
-			System.out.println(nextNeighbour);
 			TableRow neighbourAttack = new TableRow(this);
 			Button b = new Button(this);
 			TextView d = new TextView(this);
-			Territory tNext = g.getTerritories().get(nextNeighbour);
+			final Territory tNext = g.getTerritories().get(nextNeighbour);
 			b.setText(tNext.getAbbrvName());
-			System.out.println(tNext.getOwner());
 			b.getBackground().setColorFilter(ColorTable.get(tNext.getOwner()));
 			if(tNext.getOwner() == t.getOwner()){
 				d.setText(getResources().getString(R.string.move_desc));
+				b.setOnClickListener(new View.OnClickListener() {
+					
+					@Override
+					public void onClick(View v) {
+						ActionFragment moveDialog = new ActionFragment(limit, t.getNumUnits(), tNext.getId(), t.getId(), false, true);
+						moveDialog.show(fm, "move");
+					}
+				});
 			}
 			else{
 				d.setText(getResources().getString(R.string.attack_desc));
+				b.setOnClickListener(new View.OnClickListener() {
+					
+					@Override
+					public void onClick(View v) {
+						ActionFragment attackDialog = new ActionFragment(limit, t.getNumUnits(), tNext.getId(), t.getId(), false, false);
+						attackDialog.show(fm, "attack");
+					}
+				});
 			}
 			d.setEllipsize(null);
 			d.setMaxLines(5);

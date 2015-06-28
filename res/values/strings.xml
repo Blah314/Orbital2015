@@ -26,6 +26,7 @@
     <string name="end_turn">End Turn</string>
     <string name="title_activity_territory">Territory</string>
     <string name="reject">You do not own this territory. Conquer this territory to issue orders here.</string>
+    <string name="out_of_turns">You are out of turns, press the End Turn button.</string>
     <string name="unit_head">Add Units</string>
     <string name="unit1_name">Army Unit</string>
     <string name="unit1_desc">A basic Army Unit - the backbone of your power. Cost: 10</string>
@@ -38,5 +39,6 @@
     <string name="move_num">Move how many units?</string>
     <string name="move_desc">Move units to this territory.</string>
     <string name="move">Move</string>
+    <string name="cancel">Cancel</string>
 
 </resources>
