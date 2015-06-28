@@ -9,7 +9,7 @@ public class Player implements Serializable {
 	private int numResources;
 	private int numTurns;
 	private int numTerritoriesOwned;
-	private ArrayList<Integer> territoriesOwnedID = new ArrayList<Integer>();
+//	private ArrayList<Integer> territoriesOwnedID = new ArrayList<Integer>();
 	
 	public Player(int ID, int resources){
 		playerID = ID;
@@ -24,17 +24,17 @@ public class Player implements Serializable {
 		return numResources;
 	}
 	
-	public void addTerritoryID(int ID){
-		territoriesOwnedID.add(ID);
-	}
+//	public void addTerritoryID(int ID){
+//		territoriesOwnedID.add(ID);
+//	}
 	
-	public void removeTerritoryID(int ID){
-		territoriesOwnedID.remove(ID);
-	}
+//	public void removeTerritoryID(int ID){
+//		territoriesOwnedID.remove(ID);
+//	}
 	
-	public int getTerritoryID(int index){
-		return territoriesOwnedID.get(index);		
-	}
+//	public int getTerritoryID(int index){
+//		return territoriesOwnedID.get(index);		
+//	}
 	public int getNumTerritoriesOwned(){
 		return numTerritoriesOwned;
 	}

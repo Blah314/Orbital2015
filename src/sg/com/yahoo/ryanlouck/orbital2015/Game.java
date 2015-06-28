@@ -81,7 +81,7 @@ public class Game implements Serializable {
 
 		Player currPlayer = playersMap.get(playerID);
 		territoriesMap.get(territoryID).addUnits(numUnits);
-		currPlayer.minusResources(numUnits*10);
+		currPlayer.minusResources(numUnits);
 		currPlayer.minusNumTurns();
 		
 		if (currPlayer.isTurnEnded() & playerID != 1) {
@@ -104,40 +104,40 @@ public class Game implements Serializable {
 		int numUnitsA = terrA.getNumUnits();
 		int numUnitsB = terrB.getNumUnits();
 		
-		terrA.setNumUnits(numUnitsA - numUnits);
+
 		
-//		int numUnitsA = (int) Math.floor(terrA.getNumUnits()
-//				* (1 + (Math.random() / 10.0)));
-//		int numUnitsB = (int) Math.floor(terrB.getNumUnits()
-//				* (1 + (Math.random() / 10.0)));
-		// If the attacker has more units
-				
-		if (numUnits > numUnitsB) {
-			int finalNumUnits = numUnits - numUnitsB; // Saves the number of
+		 int numUnitsARevised = (int) Math.floor(terrA.getNumUnits()
+				* (1 + (Math.random() / 10.0)));
+		int numUnitsBRevised = (int) Math.floor(terrB.getNumUnits()
+				* (1 + (Math.random() / 10.0)));
+		 //If the attacker has more units
+		terrA.setNumUnits(numUnitsA - numUnits);		
+		if (numUnitsARevised > numUnitsBRevised) {
+			int finalNumUnits = numUnitsARevised - numUnitsBRevised; // Saves the number of
 														// surviving units
-//			if (finalNumUnits > terrA.getNumUnits()) { // In the case where end
-//														// units are
-//				finalNumUnits = terrA.getNumUnits(); // more than at start, set
-//														// to numUnits at start
-//			}
+			if (finalNumUnits > numUnitsA) { // In the case where end
+														// units are
+				finalNumUnits = numUnitsA; // more than at start, set
+														// to numUnits at start
+			}
 			
 			terrB.setNumUnits(finalNumUnits); // Set number of units left after
 												// the fight on terrB
 			terrB.setOwner(terrA.getOwner()); // Change owner to winner of fight
 			
 			playerA.setNumTerritoriesOwned(playerA.getNumTerritoriesOwned() + 1); // Adjusts number of territories
-			playerA.addTerritoryID(territory2ID); //owned per player
+//			playerA.addTerritoryID(territory2ID); //owned per player
 			if(playerID2 != 0){
 				playerB.setNumTerritoriesOwned(playerB.getNumTerritoriesOwned() - 1);
-				playerB.removeTerritoryID(territory2ID);
+//				playerB.removeTerritoryID(territory2ID);
 			}	
 		}
 		// If defender has more units
 		else if (numUnitsB > numUnits) {
-			int finalNumUnits = numUnitsB - numUnits;
-//			if (finalNumUnits > terrB.getNumUnits()) {
-//				finalNumUnits = terrB.getNumUnits();
-//			}
+			int finalNumUnits = numUnitsBRevised - numUnits;
+			if (finalNumUnits > numUnitsB) {
+				finalNumUnits = numUnitsB;
+			}
 			terrB.setNumUnits(finalNumUnits);
 		}
 		playersMap.get(playerID1).minusNumTurns();
@@ -146,9 +146,9 @@ public class Game implements Serializable {
 																			// all
 			// TODO player has won
 		}
-//		if (playerA.isTurnEnded()) {
-//			turnEnds();
-//		}
+		if (playerA.isTurnEnded()) {
+			turnEnds();
+			}
 	}
 
 	public void executeMoveUnits(int playerID, int territory1ID,
@@ -182,6 +182,7 @@ public class Game implements Serializable {
 			}
 		}
 		do {
+			boolean executedAttack = false;
 			//ADDS RESOURCES IF AVAILABLE TO RANDOM 2 TERRITORIES IT HAS OR IF ONLY HAS 1, ADD TO 1
 			if (player.getNumResources() > 0) {
 
@@ -223,9 +224,17 @@ public class Game implements Serializable {
 					if ( currTerr.getNumUnits() >= territoriesMap.get(AtkTempStorage.get(j)).getNumUnits()){
 						executeTerritoryAttack(player.getPlayerID(), territoriesMap.get(AtkTempStorage.get(j)).getOwner(),
 								currTerr.getId(), AtkTempStorage.get(j), currTerr.getNumUnits() );
+						executedAttack = true;
 					}					
 				}
 			}
+			if ( !executedAttack ){
+				break;
+			}
+			else{
+				executedAttack = false;
+			}
+			
 
 		} while (!player.isTurnEnded());
 

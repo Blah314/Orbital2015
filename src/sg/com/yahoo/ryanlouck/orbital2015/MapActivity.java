@@ -124,7 +124,7 @@ public class MapActivity extends Activity {
 			// creates the territory buttons and puts them at their corresponding location
 			Button territoryButton = new Button(this);
 			territoryButton.setText(tDetails[2]);
-			RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(100,100);
+			RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(500,500);
 			params.leftMargin = Integer.parseInt(tDetails[3]);
 			params.topMargin = Integer.parseInt(tDetails[4]);
 			map.addView(territoryButton, params);
