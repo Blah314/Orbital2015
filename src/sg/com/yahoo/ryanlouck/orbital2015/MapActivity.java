@@ -8,8 +8,10 @@ import java.util.HashMap;
 import java.util.Hashtable;
 
 import android.app.Activity;
+import android.app.FragmentManager;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.AssetManager;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
@@ -32,6 +34,7 @@ import android.widget.Toast;
 public class MapActivity extends Activity {
 	
 	private float mx, my, currX, currY;
+	private int buttonScale;
 	private ScrollView vScroll;
 	private HorizontalScrollView hScroll;
 	private ViewGroup map;
@@ -42,7 +45,7 @@ public class MapActivity extends Activity {
 	private ArrayList<String[]> territoryDetails;
 	private ArrayList<int[]> lineCoords;
 	
-	private int level, diff, numTerritories;
+	private int level, diff, numTerritories, turnNum;
 	private boolean diceLike;
 	private Game game;
 	private HashMap<Integer, Territory> territories;
@@ -54,6 +57,7 @@ public class MapActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_map);
+		getActionBar().setDisplayHomeAsUpEnabled(true);
 		
 		// all the views
 		vScroll = (ScrollView) findViewById(R.id.vScroll1);
@@ -73,6 +77,12 @@ public class MapActivity extends Activity {
 			levelDetails = details.getStringArray("levelDetails");
 		}
 		
+		SharedPreferences settings = getSharedPreferences("options", 0);
+		SharedPreferences.Editor editor = settings.edit();
+	    editor.putBoolean("gameStarted", true);
+	    editor.commit();
+		buttonScale = settings.getInt("tSize", 1);
+		
 		// color definitions - more to come
 		ColorMap = new Hashtable<Integer,Integer>();
 		ColorMap.put(0,Color.GRAY);
@@ -88,6 +98,7 @@ public class MapActivity extends Activity {
 	public void startGame(){
 		territoryDetails = new ArrayList<String[]>();
 		lineCoords = new ArrayList<int[]>();
+		turnNum = 1;
 		
 		// loading up the map and getting the details of all territories
 		AssetManager am = this.getAssets();
@@ -118,15 +129,15 @@ public class MapActivity extends Activity {
 				sY = Integer.parseInt(tDetails[4]);
 				eX = Integer.parseInt(nDetails[3]);
 				eY = Integer.parseInt(nDetails[4]);
-				lineCoords.add(new int[]{sX, sY, eX, eY});
+				lineCoords.add(new int[]{sX*buttonScale, sY*buttonScale, eX*buttonScale, eY*buttonScale});
 			}
 			
 			// creates the territory buttons and puts them at their corresponding location
 			Button territoryButton = new Button(this);
 			territoryButton.setText(tDetails[2]);
-			RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(500,500);
-			params.leftMargin = Integer.parseInt(tDetails[3]);
-			params.topMargin = Integer.parseInt(tDetails[4]);
+			RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(100*buttonScale, 100*buttonScale);
+			params.leftMargin = Integer.parseInt(tDetails[3])*buttonScale;
+			params.topMargin = Integer.parseInt(tDetails[4])*buttonScale;
 			map.addView(territoryButton, params);
 		}
 		
@@ -180,21 +191,20 @@ public class MapActivity extends Activity {
 					}
 					
 					else{
-						if(!game.getPlayers().get(1).isTurnEnded()){
-							Intent TerritoryLaunch = new Intent(getApplicationContext(), TerritoryActivity.class);
-							TerritoryLaunch.putExtra("territory", t);
-							TerritoryLaunch.putExtra("res", game.getPlayers().get(1).getNumResources());
-							TerritoryLaunch.putExtra("game", game);
-							startActivity(TerritoryLaunch);
-						}
-						else{
-							Context c = getApplicationContext();
-							CharSequence text = getResources().getString(R.string.out_of_turns);
-							int duration = Toast.LENGTH_SHORT;
+						Intent TerritoryLaunch = new Intent(getApplicationContext(), TerritoryActivity.class);
+						TerritoryLaunch.putExtra("territory", t);
+						TerritoryLaunch.putExtra("res", game.getPlayers().get(1).getNumResources());
+						TerritoryLaunch.putExtra("game", game);
+						startActivity(TerritoryLaunch);
 						
-							Toast t = Toast.makeText(c, text, duration);
-							t.show();
-						}
+//						else{
+//							Context c = getApplicationContext();
+//							CharSequence text = getResources().getString(R.string.out_of_turns);
+//							int duration = Toast.LENGTH_SHORT;
+//						
+//							Toast t = Toast.makeText(c, text, duration);
+//							t.show();
+//						}
 					}
 				}
 			});
@@ -204,6 +214,7 @@ public class MapActivity extends Activity {
 			
 			@Override
 			public void onClick(View v) {
+				turnNum++;
 				game.turnEnds();
 				update();
 			}
@@ -213,16 +224,40 @@ public class MapActivity extends Activity {
 	// updates the values on each button and the text fields at the end of every move
 	public void update(){
 		territories = game.getTerritories();
+		boolean won, lost;
+		
+		won = true;
+		lost = true;
 		
 		for(int i = 0; i < numTerritories; i++){
 			Button b = (Button) map.getChildAt(i);
 			Territory t = territories.get(i+1);
+			int owner = t.getOwner();
+			if(owner != 1){
+				won = false;
+			}
+			else{
+				lost = false;
+			}
 			b.setText(t.getAbbrvName() + "\n" + t.getNumUnits());
 			b.getBackground().setColorFilter(new PorterDuffColorFilter(ColorMap.get(t.getOwner()),PorterDuff.Mode.OVERLAY));
 			
 			res.setText("Resources:\n" + players.get(1).getNumResources());
-			turnsLeft.setText("Turns Left:\n" + players.get(1).getNumTurns());
+			turnsLeft.setText("Turn Number:\n" + Integer.toString(turnNum));
 		}
+		
+		if(won){
+			final FragmentManager fm = getFragmentManager();
+			EndGameFragment win = new EndGameFragment(true);
+			win.show(fm, "endGame");
+		}
+		
+		if(lost){
+			final FragmentManager fm = getFragmentManager();
+			EndGameFragment lose = new EndGameFragment(false);
+			lose.show(fm, "endGame");
+		}
+		
 	}
 	
 	public void onPause(){
@@ -267,7 +302,11 @@ public class MapActivity extends Activity {
 		// automatically handle clicks on the Home/Up button, so long
 		// as you specify a parent activity in AndroidManifest.xml.
 		int id = item.getItemId();
-		if (id == R.id.action_settings) {
+		switch(id){
+		case android.R.id.home:
+			onBackPressed();
+			return true;
+		case R.id.action_settings:
 			return true;
 		}
 		return super.onOptionsItemSelected(item);

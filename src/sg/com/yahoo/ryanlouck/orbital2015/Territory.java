@@ -3,7 +3,6 @@ package sg.com.yahoo.ryanlouck.orbital2015;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Hashtable;
 
 import android.util.Log;
 
@@ -14,13 +13,12 @@ public class Territory implements Serializable {
 	private int owner;
 	private int numUnits;
 	private ArrayList<Integer> neighbourIDs;
-	private Hashtable<Integer,Integer> attacks;  //<NeighbourID to attack, numUnits used to attack>
 	
 	
 	/* Assumes String[] comes in the form ( name,id,owner,numUnit1,
 	 * neighbour1,neighbour2...neighbourLast)Additional details to be added if needed
 	 * 
-	 * Some minor changes to accomodate current file format
+	 * Some minor changes to accommodate current file format
 	 */
 	public Territory(String[] details){		
 		neighbourIDs = new ArrayList<Integer>();

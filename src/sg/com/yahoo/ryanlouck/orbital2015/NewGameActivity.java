@@ -89,6 +89,9 @@ public class NewGameActivity extends Activity {
 				if(selectedLevel == 0){
 					levelDetailsView.setText("Select a Level above first.");
 				}
+				else if(selectedLevel != 1){
+					levelDetailsView.setText("Sorry. This level is not available yet.");
+				}
 				else{
 					Intent customisationLaunch = new Intent(getApplicationContext(), CustomisationActivity.class);
 					customisationLaunch.putExtra("level", selectedLevel);
@@ -97,6 +100,11 @@ public class NewGameActivity extends Activity {
 				}
 			}
 		});
+	}
+	
+	public void onPause(){
+		super.onPause();
+		this.finish();
 	}
 
 	@Override

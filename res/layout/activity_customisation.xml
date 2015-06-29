@@ -8,25 +8,6 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="sg.com.yahoo.ryanlouck.orbital2015.CustomisationActivity" >
 
-    <Button
-        android:id="@+id/start"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="40dp"
-        android:text="@string/start_level" />
-
-    <TextView
-        android:id="@+id/heading"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="15dp"
-        android:text="@string/placeholder"
-        android:textAppearance="?android:attr/textAppearanceLarge" />
-
     <TextView
         android:id="@+id/diff"
         android:layout_width="wrap_content"
@@ -42,16 +23,6 @@
         android:layout_alignLeft="@+id/diff"
         android:layout_below="@+id/diff" />
 
-    <TextView
-        android:id="@+id/debug"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="20dp"
-        android:text=""
-        android:textAppearance="?android:attr/textAppearanceMedium" />
-
     <CheckBox
         android:id="@+id/checkBox1"
         android:layout_width="wrap_content"
@@ -61,5 +32,22 @@
         android:layout_marginTop="15dp"
         android:text="@string/choose_dice"
         android:onClick="checkBoxListener" />
+
+    <Button
+        android:id="@+id/start"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_toRightOf="@+id/checkBox1"
+        android:text="@string/start_level" />
+
+    <TextView
+        android:id="@+id/heading"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:text="@string/placeholder"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
 
 </RelativeLayout>

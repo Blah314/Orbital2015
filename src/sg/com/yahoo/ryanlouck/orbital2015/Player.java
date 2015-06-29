@@ -1,7 +1,6 @@
 package sg.com.yahoo.ryanlouck.orbital2015;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 
 public class Player implements Serializable {
 	
@@ -11,9 +10,10 @@ public class Player implements Serializable {
 	private int numTerritoriesOwned;
 //	private ArrayList<Integer> territoriesOwnedID = new ArrayList<Integer>();
 	
-	public Player(int ID, int resources){
+	public Player(int ID, int resources, int startingTerritories){
 		playerID = ID;
 		numResources = resources;
+		numTerritoriesOwned = startingTerritories;
 	}
 
 	public int getPlayerID() {
@@ -35,6 +35,7 @@ public class Player implements Serializable {
 //	public int getTerritoryID(int index){
 //		return territoriesOwnedID.get(index);		
 //	}
+	
 	public int getNumTerritoriesOwned(){
 		return numTerritoriesOwned;
 	}

@@ -32,6 +32,7 @@ public class TerritoryActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_territory);
+		getActionBar().setDisplayHomeAsUpEnabled(true);
 		
 		Bundle details = getIntent().getExtras();
 		if(details != null){
@@ -55,20 +56,9 @@ public class TerritoryActivity extends Activity {
 		displayActions();
 	}
 	
-	public void onResume(){
-		super.onResume();
-		Bundle details = getIntent().getExtras();
-		if(details != null){
-			t = (Territory) details.getSerializable("territory");
-			res = details.getInt("res");
-			g = (Game) details.getSerializable("game");
-			limit = res / 10;
-		}
-		
-		tName.setText(t.getName());
-		tName.setGravity(17);
-		
-		displayActions();
+	public void onPause(){
+		super.onPause();
+		this.finish();
 	}
 	
 	public void displayActions(){
@@ -176,7 +166,11 @@ public class TerritoryActivity extends Activity {
 		// automatically handle clicks on the Home/Up button, so long
 		// as you specify a parent activity in AndroidManifest.xml.
 		int id = item.getItemId();
-		if (id == R.id.action_settings) {
+		switch(id){
+		case android.R.id.home:
+			onBackPressed();
+			return true;
+		case R.id.action_settings:
 			return true;
 		}
 		return super.onOptionsItemSelected(item);

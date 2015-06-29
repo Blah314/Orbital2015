@@ -71,6 +71,11 @@ public class CustomisationActivity extends Activity {
 		});
 	}
 	
+	public void onPause(){
+		super.onPause();
+		this.finish();
+	}
+	
 	// dice-like checkbox listener
 	public void checkBoxListener(View v){
 		boolean checked = ((CheckBox) v).isChecked();

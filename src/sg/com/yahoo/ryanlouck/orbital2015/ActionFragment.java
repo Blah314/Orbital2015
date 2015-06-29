@@ -72,8 +72,11 @@ public class ActionFragment extends DialogFragment {
 		});
         
         LinearLayout l = new LinearLayout(this.getActivity());
-        l.addView(armySlider);
-        l.addView(num);
+        l.setOrientation(1);
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(-1,-2);
+        l.addView(armySlider, params);
+        l.addView(num, params);
+        num.setGravity(17);
         
         builder.setView(l);
         
@@ -88,7 +91,6 @@ public class ActionFragment extends DialogFragment {
         			moveLaunch.putExtra("attack", false);
         			moveLaunch.putExtra("move", false);
         			moveLaunch.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
-        			System.out.println(requested);
     				startActivity(moveLaunch);
         		}
         	});
