@@ -46,22 +46,21 @@ public class MainActivity extends Activity {
 			
 			@Override
 			public void onClick(View v) {
-				SharedPreferences settings = getSharedPreferences("options", 0);
-				boolean started = settings.getBoolean("gameStarted", false);
-				
-				if(started){
-					Intent gameLaunch = new Intent(getApplicationContext(), MapActivity.class);
-					gameLaunch.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-					startActivity(gameLaunch);
-				}
-				else{
-					Context c = getApplicationContext();
-					CharSequence text = getResources().getString(R.string.no_game);
-					int duration = Toast.LENGTH_SHORT;
+//				SharedPreferences settings = getSharedPreferences("options", 0);
+//				boolean started = settings.getBoolean("gameStarted", false);
+//				
+//				if(started){
+//					Intent gameLaunch = new Intent(getApplicationContext(), MapActivity.class);
+//					gameLaunch.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+//					startActivity(gameLaunch);
+//				}
+//				else{
+				Context c = getApplicationContext();
+				CharSequence text = getResources().getString(R.string.no_save_game);
+				int duration = Toast.LENGTH_SHORT;
 					
-					Toast t = Toast.makeText(c, text, duration);
-					t.show();
-				}
+				Toast t = Toast.makeText(c, text, duration);
+				t.show();
 			}
 		});
 		

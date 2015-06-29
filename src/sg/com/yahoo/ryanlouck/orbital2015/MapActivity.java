@@ -52,12 +52,15 @@ public class MapActivity extends Activity {
 	private HashMap<Integer, Player> players;
 	
 	public Hashtable<Integer,Integer> ColorMap;
+	private MapActivity self;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_map);
 		getActionBar().setDisplayHomeAsUpEnabled(true);
+		
+		self = this;
 		
 		// all the views
 		vScroll = (ScrollView) findViewById(R.id.vScroll1);
@@ -99,6 +102,13 @@ public class MapActivity extends Activity {
 		territoryDetails = new ArrayList<String[]>();
 		lineCoords = new ArrayList<int[]>();
 		turnNum = 1;
+		
+		TutorialFragment t0 = new TutorialFragment(0,this);
+		FragmentManager fm = getFragmentManager();
+		
+		if(level == 1){
+			t0.show(fm, "tutorial0");
+		}
 		
 		// loading up the map and getting the details of all territories
 		AssetManager am = this.getAssets();
@@ -195,6 +205,7 @@ public class MapActivity extends Activity {
 						TerritoryLaunch.putExtra("territory", t);
 						TerritoryLaunch.putExtra("res", game.getPlayers().get(1).getNumResources());
 						TerritoryLaunch.putExtra("game", game);
+						if(turnNum == 1) TerritoryLaunch.putExtra("level", level);
 						startActivity(TerritoryLaunch);
 						
 //						else{
@@ -217,6 +228,12 @@ public class MapActivity extends Activity {
 				turnNum++;
 				game.turnEnds();
 				update();
+				if(level == 1 & turnNum == 2){
+					TutorialFragment t3 = new TutorialFragment(3,self);
+					FragmentManager fm = getFragmentManager();
+					
+					t3.show(fm, "tutorial3");
+				}
 			}
 		});
 	}
@@ -257,7 +274,6 @@ public class MapActivity extends Activity {
 			EndGameFragment lose = new EndGameFragment(false);
 			lose.show(fm, "endGame");
 		}
-		
 	}
 	
 	public void onPause(){
@@ -281,6 +297,13 @@ public class MapActivity extends Activity {
 		}
 		else if(attack){
 			game.executeTerritoryAttack(1, territories.get(target).getOwner(), origin, target, requested);
+		}
+		
+		if(level == 1 & turnNum == 1){
+			TutorialFragment t2 = new TutorialFragment(2,this);
+			FragmentManager fm = getFragmentManager();
+			
+			t2.show(fm, "tutorial2");
 		}
 	}
 	

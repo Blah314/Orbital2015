@@ -23,6 +23,7 @@ public final class R {
     public static final class array {
         public static final int difficulty_levels=0x7f0c0001;
         public static final int territory_sizes=0x7f0c0000;
+        public static final int tutorial_messages=0x7f0c0002;
     }
     public static final class attr {
         /**  Custom divider drawable to use for elements in the action bar. 
@@ -2158,6 +2159,7 @@ containing a value of this type.
         public static final int cancel=0x7f0a0035;
         public static final int choose_dice=0x7f0a0023;
         public static final int choose_diff=0x7f0a0022;
+        public static final int close_tut=0x7f0a003d;
         public static final int continueGameMenu=0x7f0a0015;
         public static final int demo_territory=0x7f0a001a;
         public static final int end_turn=0x7f0a0025;
@@ -2170,7 +2172,8 @@ containing a value of this type.
         public static final int move_desc=0x7f0a0033;
         public static final int move_num=0x7f0a0032;
         public static final int newGameMenu=0x7f0a0014;
-        public static final int no_game=0x7f0a0016;
+        public static final int next_tut=0x7f0a003e;
+        public static final int no_save_game=0x7f0a0016;
         public static final int optionsMenu=0x7f0a0017;
         public static final int out_of_turns=0x7f0a0028;
         public static final int placeholder=0x7f0a001f;
@@ -2185,6 +2188,7 @@ containing a value of this type.
         public static final int title_activity_new_game=0x7f0a001d;
         public static final int title_activity_options=0x7f0a0018;
         public static final int title_activity_territory=0x7f0a0026;
+        public static final int tutorial_window=0x7f0a003c;
         public static final int unit1_desc=0x7f0a002b;
         public static final int unit1_name=0x7f0a002a;
         public static final int unit_head=0x7f0a0029;

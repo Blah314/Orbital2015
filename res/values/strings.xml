@@ -6,7 +6,7 @@
     <string name="action_settings">Settings</string>
     <string name="newGameMenu">New Game</string>
     <string name="continueGameMenu">Continue Game</string>
-    <string name="no_game">No game has been saved yet.</string>
+    <string name="no_save_game">The game save and continue feature is not available yet.</string>
     <string name="optionsMenu">Options</string>
     <string name="title_activity_options">Options</string>
     <string name="territory_size">Territory Size</string>
@@ -58,5 +58,24 @@
     <string name="lose_text">Painful fiery death. :(</string>
     <string name="exit_win">Yay!</string>
     <string name="exit_lose">Dang!</string>
+    <string name="tutorial_window">Helpful Advice</string>
+    <string name="close_tut">Close</string>
+    <string name="next_tut">Next</string>
+    
+    <string-array name="tutorial_messages">
+        <item>Hello and welcome to Orbit Wars! This quick tutorial will help you learn the basics of the game.\n\n
+            Right now the game only supports basic Risk-Like gameplay so if you have played Risk before this should be familiar.\n\n
+            Behind this tutorial message is the main Map view, where you are represented by the Blue faction in the top left. Your opponent is the Red faction in the bottom right, played by the AI. Neutral territories are in gray.\n\n
+            As this is the first level, you have a vast advantage over the enemy. So let\'s get to using it!\n\n
+            To start, click your territory to see what you can do there. </item>
+        <item>Now you\'re in the territory actions screen, where you can perform actions regarding your territories.\n\n
+            You can add units to your territory with your resources, move units between your territories and order attacks on your neighbours.\n\n
+            Go ahead and add a few units or attack one of your neutral neighbours. They won\'t mind.</item>
+        <item>Now we are back in the map screen. Notice that your action has been carried out and the map has been updated.\n\n
+            Also notice that the number of armies each territory has is indicated by the number under the territory\'s code. Also note that the amount of resources you have at the moment can be found at the bottom right.\n\n
+            Go ahead and issue a few more orders from your territories. When you are done, press the End Turn button below the Map.</item>
+        <item>Now your opponent has moved. Notice the map changes to reflect what he has done. (Hopefully he didn\'t inflict too much damage.)\n\n
+            Alright! You now know the basics! Go forth and achieve victory!</item>
+    </string-array>
 
 </resources>

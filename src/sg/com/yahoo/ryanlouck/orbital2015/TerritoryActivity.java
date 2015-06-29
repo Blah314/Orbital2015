@@ -23,7 +23,7 @@ public class TerritoryActivity extends Activity {
 	private TextView tName;
 	private TableLayout actionButtons;
 	
-	private int res, limit;
+	private int res, limit, level;
 	private Territory t;
 	private Game g;
 	private Hashtable<Integer, PorterDuffColorFilter> ColorTable = new Hashtable<Integer, PorterDuffColorFilter>();
@@ -40,6 +40,13 @@ public class TerritoryActivity extends Activity {
 			res = details.getInt("res");
 			g = (Game) details.getSerializable("game");
 			limit = res / 10;
+			level = details.getInt("level",0);
+		}
+		
+		if(level == 1){
+			TutorialFragment t1 = new TutorialFragment(1,this);
+			FragmentManager fm = getFragmentManager();
+			t1.show(fm, "tutorial1");
 		}
 		
 		tName = (TextView) findViewById(R.id.territoryName);

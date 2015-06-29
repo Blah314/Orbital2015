@@ -33,14 +33,6 @@
         android:text="@string/choose_dice"
         android:onClick="checkBoxListener" />
 
-    <Button
-        android:id="@+id/start"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_toRightOf="@+id/checkBox1"
-        android:text="@string/start_level" />
-
     <TextView
         android:id="@+id/heading"
         android:layout_width="wrap_content"
@@ -49,5 +41,13 @@
         android:layout_centerHorizontal="true"
         android:text="@string/placeholder"
         android:textAppearance="?android:attr/textAppearanceLarge" />
+
+    <Button
+        android:id="@+id/start"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:text="@string/start_level" />
 
 </RelativeLayout>
