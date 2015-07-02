@@ -52,7 +52,6 @@ public class MapActivity extends Activity {
 	private HashMap<Integer, Player> players;
 	
 	public Hashtable<Integer,Integer> ColorMap;
-	private MapActivity self;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -60,16 +59,14 @@ public class MapActivity extends Activity {
 		setContentView(R.layout.activity_map);
 		getActionBar().setDisplayHomeAsUpEnabled(true);
 		
-		self = this;
-		
 		// all the views
 		vScroll = (ScrollView) findViewById(R.id.vScroll1);
 		hScroll = (HorizontalScrollView) findViewById(R.id.hScroll1);
 		map = (ViewGroup) findViewById(R.id.map);
-		res = (TextView) findViewById(R.id.textView1);
-		obj = (TextView) findViewById(R.id.textView2);
-		turnsLeft = (TextView) findViewById(R.id.textView3);
-		endTurn = (Button) findViewById(R.id.button1);
+		res = (TextView) findViewById(R.id.resourceView);
+		obj = (TextView) findViewById(R.id.objectiveView);
+		turnsLeft = (TextView) findViewById(R.id.turnView);
+		endTurn = (Button) findViewById(R.id.endTurnButton);
 		
 		// getting the stuff passed from CustomisationActivity or ContinueGameButton
 		Bundle details = getIntent().getExtras();
@@ -102,13 +99,6 @@ public class MapActivity extends Activity {
 		territoryDetails = new ArrayList<String[]>();
 		lineCoords = new ArrayList<int[]>();
 		turnNum = 1;
-		
-		TutorialFragment t0 = new TutorialFragment(0,this);
-		FragmentManager fm = getFragmentManager();
-		
-		if(level == 1){
-			t0.show(fm, "tutorial0");
-		}
 		
 		// loading up the map and getting the details of all territories
 		AssetManager am = this.getAssets();
@@ -145,7 +135,7 @@ public class MapActivity extends Activity {
 			// creates the territory buttons and puts them at their corresponding location
 			Button territoryButton = new Button(this);
 			territoryButton.setText(tDetails[2]);
-			RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(100*buttonScale, 100*buttonScale);
+			RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(70*buttonScale, 70*buttonScale);
 			params.leftMargin = Integer.parseInt(tDetails[3])*buttonScale;
 			params.topMargin = Integer.parseInt(tDetails[4])*buttonScale;
 			map.addView(territoryButton, params);
@@ -200,12 +190,20 @@ public class MapActivity extends Activity {
 						t.show();
 					}
 					
+					else if(t.isConq()){
+						Context c = getApplicationContext();
+						CharSequence text = getResources().getString(R.string.conquered_territory);
+						int duration = Toast.LENGTH_SHORT;
+						
+						Toast t = Toast.makeText(c, text, duration);
+						t.show();
+					}
+					
 					else{
 						Intent TerritoryLaunch = new Intent(getApplicationContext(), TerritoryActivity.class);
 						TerritoryLaunch.putExtra("territory", t);
 						TerritoryLaunch.putExtra("res", game.getPlayers().get(1).getNumResources());
 						TerritoryLaunch.putExtra("game", game);
-						if(turnNum == 1) TerritoryLaunch.putExtra("level", level);
 						startActivity(TerritoryLaunch);
 						
 //						else{
@@ -228,12 +226,6 @@ public class MapActivity extends Activity {
 				turnNum++;
 				game.turnEnds();
 				update();
-				if(level == 1 & turnNum == 2){
-					TutorialFragment t3 = new TutorialFragment(3,self);
-					FragmentManager fm = getFragmentManager();
-					
-					t3.show(fm, "tutorial3");
-				}
 			}
 		});
 	}
@@ -282,6 +274,7 @@ public class MapActivity extends Activity {
 	
 	public void onNewIntent(Intent intent){
 		Bundle details = intent.getExtras();
+		if(details == null) return;
 		boolean add = details.getBoolean("add", false);
 		boolean move = details.getBoolean("move", false);
 		boolean attack = details.getBoolean("attack", false);
@@ -297,13 +290,6 @@ public class MapActivity extends Activity {
 		}
 		else if(attack){
 			game.executeTerritoryAttack(1, territories.get(target).getOwner(), origin, target, requested);
-		}
-		
-		if(level == 1 & turnNum == 1){
-			TutorialFragment t2 = new TutorialFragment(2,this);
-			FragmentManager fm = getFragmentManager();
-			
-			t2.show(fm, "tutorial2");
 		}
 	}
 	

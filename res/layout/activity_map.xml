@@ -13,8 +13,8 @@
         android:id="@+id/mapmaster"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/textView2"
-        android:layout_above="@+id/button1"
+        android:layout_below="@+id/objectiveView"
+        android:layout_above="@+id/endTurnButton"
         android:layout_centerHorizontal="true" >
 
         <sg.com.yahoo.ryanlouck.orbital2015.VScroll
@@ -40,7 +40,7 @@
     </FrameLayout>
 
     <Button
-        android:id="@+id/button1"
+        android:id="@+id/endTurnButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
@@ -48,25 +48,25 @@
         android:text="@string/end_turn" />
 
     <TextView
-        android:id="@+id/textView3"
+        android:id="@+id/turnView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignRight="@+id/mapmaster"
-        android:layout_alignTop="@+id/button1"
+        android:layout_alignTop="@+id/endTurnButton"
         android:text="@string/placeholder"
         android:textAppearance="?android:attr/textAppearanceSmall" />
 
     <TextView
-        android:id="@+id/textView1"
+        android:id="@+id/resourceView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/mapmaster"
-        android:layout_alignTop="@+id/button1"
+        android:layout_alignTop="@+id/endTurnButton"
         android:text="@string/placeholder"
         android:textAppearance="?android:attr/textAppearanceSmall" />
 
     <TextView
-        android:id="@+id/textView2"
+        android:id="@+id/objectiveView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"

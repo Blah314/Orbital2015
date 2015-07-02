@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="sg.com.yahoo.ryanlouck.orbital2015"
     android:versionCode="1"
-    android:versionName="1.0" >
+    android:versionName="2.0" >
 
     <uses-sdk
         android:minSdkVersion="11"
@@ -61,6 +61,14 @@
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="sg.com.yahoo.ryanlouck.orbital2015.MapActivity" />
+        </activity>
+        <activity
+            android:name=".InstructionsActivity"
+            android:label="@string/title_activity_instructions" >
+            android:parentActivityName=".MainActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="sg.com.yahoo.ryanlouck.orbital2015.MainActivity" />
         </activity>
     </application>
 

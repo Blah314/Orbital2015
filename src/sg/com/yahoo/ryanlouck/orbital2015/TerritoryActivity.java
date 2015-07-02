@@ -10,6 +10,7 @@ import android.graphics.PorterDuff;
 import android.graphics.PorterDuffColorFilter;
 import android.os.Bundle;
 import android.app.FragmentManager;
+import android.content.Intent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -22,8 +23,9 @@ public class TerritoryActivity extends Activity {
 	
 	private TextView tName;
 	private TableLayout actionButtons;
+	private Button backButton;
 	
-	private int res, limit, level;
+	private int res, limit;
 	private Territory t;
 	private Game g;
 	private Hashtable<Integer, PorterDuffColorFilter> ColorTable = new Hashtable<Integer, PorterDuffColorFilter>();
@@ -40,17 +42,11 @@ public class TerritoryActivity extends Activity {
 			res = details.getInt("res");
 			g = (Game) details.getSerializable("game");
 			limit = res / 10;
-			level = details.getInt("level",0);
-		}
-		
-		if(level == 1){
-			TutorialFragment t1 = new TutorialFragment(1,this);
-			FragmentManager fm = getFragmentManager();
-			t1.show(fm, "tutorial1");
 		}
 		
 		tName = (TextView) findViewById(R.id.territoryName);
 		actionButtons = (TableLayout) findViewById(R.id.actionButtons);
+		backButton = (Button) findViewById(R.id.backToMapButton);
 		
 		tName.setText(t.getName());
 		
@@ -158,6 +154,16 @@ public class TerritoryActivity extends Activity {
 		}
 		
 		actionButtons.setColumnShrinkable(1, true);
+		
+		backButton.setOnClickListener(new View.OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				Intent backLaunch = new Intent(getApplicationContext(), MapActivity.class);
+    			backLaunch.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+				startActivity(backLaunch);
+			}
+		});
 	}
 
 	@Override

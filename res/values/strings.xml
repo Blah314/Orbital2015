@@ -8,17 +8,18 @@
     <string name="continueGameMenu">Continue Game</string>
     <string name="no_save_game">The game save and continue feature is not available yet.</string>
     <string name="optionsMenu">Options</string>
+    <string name="instructions_menu">Instructions</string>
     <string name="title_activity_options">Options</string>
     <string name="territory_size">Territory Size</string>
-    <string name="demo_territory">NW\n56</string>
+    <string name="demo_territory">ORB\n56</string>
     <string name="territory_size_desc">Depending on your screen size, you may need to adjust the size of territories so that you can see both its initials and the number of units it has. Use the territory Button below to help you judge.</string>
-    
+
     <string-array name="territory_sizes">
         <item>Small</item>
         <item>Medium</item>
         <item>Large</item>
     </string-array>
-    
+
     <string name="save_options">Save Options</string>
     <string name="title_activity_new_game">New Game</string>
     <string name="select_level">Select a Level</string>
@@ -38,6 +39,7 @@
     <string name="end_turn">End Turn</string>
     <string name="title_activity_territory">Territory</string>
     <string name="reject">You do not own this territory. Conquer this territory to issue orders here.</string>
+    <string name="conquered_territory">You have just conquered this territory. You can\'t issue orders from here until your next turn.</string>
     <string name="out_of_turns">You are out of turns, press the End Turn button.</string>
     <string name="unit_head">Add Units</string>
     <string name="unit1_name">Army Unit</string>
@@ -58,24 +60,32 @@
     <string name="lose_text">Painful fiery death. :(</string>
     <string name="exit_win">Yay!</string>
     <string name="exit_lose">Dang!</string>
-    <string name="tutorial_window">Helpful Advice</string>
-    <string name="close_tut">Close</string>
-    <string name="next_tut">Next</string>
-    
-    <string-array name="tutorial_messages">
-        <item>Hello and welcome to Orbit Wars! This quick tutorial will help you learn the basics of the game.\n\n
-            Right now the game only supports basic Risk-Like gameplay so if you have played Risk before this should be familiar.\n\n
-            Behind this tutorial message is the main Map view, where you are represented by the Blue faction in the top left. Your opponent is the Red faction in the bottom right, played by the AI. Neutral territories are in gray.\n\n
-            As this is the first level, you have a vast advantage over the enemy. So let\'s get to using it!\n\n
-            To start, click your territory to see what you can do there. </item>
-        <item>Now you\'re in the territory actions screen, where you can perform actions regarding your territories.\n\n
-            You can add units to your territory with your resources, move units between your territories and order attacks on your neighbours.\n\n
-            Go ahead and add a few units or attack one of your neutral neighbours. They won\'t mind.</item>
-        <item>Now we are back in the map screen. Notice that your action has been carried out and the map has been updated.\n\n
-            Also notice that the number of armies each territory has is indicated by the number under the territory\'s code. Also note that the amount of resources you have at the moment can be found at the bottom right.\n\n
-            Go ahead and issue a few more orders from your territories. When you are done, press the End Turn button below the Map.</item>
-        <item>Now your opponent has moved. Notice the map changes to reflect what he has done. (Hopefully he didn\'t inflict too much damage.)\n\n
-            Alright! You now know the basics! Go forth and achieve victory!</item>
+    <string name="exit_map">Back to Map</string>
+	
+    <string-array name="instruction_titles">
+        <item>Welcome!</item>
+        <item>The Basics</item>
+        <item>Customisation</item>
     </string-array>
+    
+    <string-array name="instruction_messages">
+        <item>Hello and welcome to Orbit Wars! This instructions page will contain all the info you will need to learn how to play the game.\n\n
+            Orbit Wars is a Risk-like turn-based 4X game, where you control a faction and have to complete certain objectives to acheive victory. If you have played Risk before, gameplay should come naturally to you.\n\n
+            Read on for more detailed information. Or simply learn as you play!</item>
+        <item>The most basic objective in Orbit Wars is to eliminate all your opponents, represented by other factions in different colours on the map.\n\n
+            To do that, you have to buy armies with your resources and conquer all their territories. The territories you hold at the start of each turn will grant you resources automatically, so defend them if you want to keep your income going.\n\n
+            Clicking on any of your territories on the map will bring up another menu, where you can perform various actions with regard to that territory. This can range from adding armies to attacking neighbouring territories.\n\n
+            Once you are done with your turn, press the end turn button. The AI player(s) will then take their turns and then play passes back to you. (If you are still alive at the end of their wrath.)</item>
+        <item>An Orbit Wars game is highly customisable, allowing you to choose which mechanics you want active and which you don\'t. This is done via the Game Customisation screen shown after selecting a level.\n\n
+            A detailed description of each modifier can be found below:\n\n
+            Difficulty: Determines the general difficulty of the AI players.\n\n
+            Dice-Like: As with Risk, you can choose to have the outcomes of battles be determined by dice-rolls, adding a factor of luck into a battle. Battles are one-for-one by default.</item>
+    </string-array>
+
+    <string name="title_activity_instructions">Instructions</string>
+    <string name="prev_inst">Prev.</string>
+    <string name="next_inst">Next</string>
+    <string name="first_page">This is the first page.</string>
+    <string name="last_page">This is the last page.</string>
 
 </resources>

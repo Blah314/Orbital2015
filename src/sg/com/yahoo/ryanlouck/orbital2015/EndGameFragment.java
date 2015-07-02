@@ -18,6 +18,7 @@ public class EndGameFragment extends DialogFragment {
 	public Dialog onCreateDialog(Bundle savedInstanceState) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         
+        // win dialog
         if(win){
         	builder.setTitle(getResources().getString(R.string.win));
         	builder.setMessage(getResources().getString(R.string.win_text));
@@ -30,6 +31,7 @@ public class EndGameFragment extends DialogFragment {
             });
         }
         
+        // lose dialog
         else{
         	builder.setTitle(getResources().getString(R.string.lose));
         	builder.setMessage(getResources().getString(R.string.lose_text));
@@ -46,6 +48,7 @@ public class EndGameFragment extends DialogFragment {
         return builder.create();
 	}
 	
+	// return to mainActivity even if you close it otherwise
 	public void onDismiss(DialogInterface dialog){
 		Intent backLaunch = new Intent(getActivity().getApplicationContext(), MainActivity.class);
     	backLaunch.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);

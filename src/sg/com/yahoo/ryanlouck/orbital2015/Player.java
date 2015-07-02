@@ -4,10 +4,8 @@ import java.io.Serializable;
 
 public class Player implements Serializable {
 	
-	private int playerID;
-	private int numResources;
-	private int numTurns;
-	private int numTerritoriesOwned;
+	static final long serialVersionUID = 1; // use this as a version number
+	private int playerID, numResources, numTurns, numTerritoriesOwned;
 //	private ArrayList<Integer> territoriesOwnedID = new ArrayList<Integer>();
 	
 	public Player(int ID, int resources, int startingTerritories){
@@ -15,7 +13,8 @@ public class Player implements Serializable {
 		numResources = resources;
 		numTerritoriesOwned = startingTerritories;
 	}
-
+	
+	// get functions for use by other classes
 	public int getPlayerID() {
 		return playerID;
 	}
@@ -24,22 +23,24 @@ public class Player implements Serializable {
 		return numResources;
 	}
 	
-//	public void addTerritoryID(int ID){
-//		territoriesOwnedID.add(ID);
-//	}
-	
-//	public void removeTerritoryID(int ID){
-//		territoriesOwnedID.remove(ID);
-//	}
-	
-//	public int getTerritoryID(int index){
-//		return territoriesOwnedID.get(index);		
-//	}
-	
 	public int getNumTerritoriesOwned(){
 		return numTerritoriesOwned;
 	}
 	
+	public int getNumTurns(){
+		return numTurns;
+	}
+	
+	public boolean isTurnEnded(){
+		if ( numTurns == 0){
+			return true;
+		}
+		else{
+			return false;
+		}		
+	}
+	
+	// set functions for game to manipulate
 	public void addResources(int resourcesToAdd){
 		numResources += resourcesToAdd;
 	}
@@ -60,16 +61,15 @@ public class Player implements Serializable {
 		numTurns = newNumTurns;
 	}
 	
-	public int getNumTurns(){
-		return numTurns;
-	}
+//	public void addTerritoryID(int ID){
+//		territoriesOwnedID.add(ID);
+//	}
 	
-	public boolean isTurnEnded(){
-		if ( numTurns == 0){
-			return true;
-		}
-		else{
-			return false;
-		}		
-	}
+//	public void removeTerritoryID(int ID){
+//		territoriesOwnedID.remove(ID);
+//	}
+	
+//	public int getTerritoryID(int index){
+//		return territoriesOwnedID.get(index);		
+//	}
 }

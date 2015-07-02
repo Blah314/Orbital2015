@@ -4,24 +4,18 @@ package sg.com.yahoo.ryanlouck.orbital2015;
 import java.io.Serializable;
 import java.util.ArrayList;
 
-import android.util.Log;
-
 public class Territory implements Serializable {
 	
+	static final long serialVersionUID = 1; // use this as a version number
 	private String name, abbrvName;
-	private int id;
-	private int owner;
-	private int numUnits;
+	private int id, owner, numUnits;
 	private ArrayList<Integer> neighbourIDs;
+	private boolean recentlyConquered;
 	
-	
-	/* Assumes String[] comes in the form ( name,id,owner,numUnit1,
-	 * neighbour1,neighbour2...neighbourLast)Additional details to be added if needed
-	 * 
-	 * Some minor changes to accommodate current file format
-	 */
+	// Territory detail format is in mapformat.txt	
 	public Territory(String[] details){		
 		neighbourIDs = new ArrayList<Integer>();
+		recentlyConquered = false;
 		
 		name = details[1];
 		abbrvName = details[2];
@@ -33,16 +27,7 @@ public class Territory implements Serializable {
 		}	
 	}
 	
-	public void addUnits(int unit){
-		numUnits += unit;			
-	}
-	
-	// clears all set attacks on the territory at the start of every turn
-	//public void turnStart(){
-	//	attacks.clear();		
-	//}
-	
-	// Accessors for use to display on the buttons
+	// get functions for use by other classes
 	public String getName(){
 		return name;
 	}
@@ -63,6 +48,23 @@ public class Territory implements Serializable {
 		return numUnits;
 	}
 	
+	public boolean isConq(){
+		return recentlyConquered;
+	}
+	
+	public ArrayList<Integer> getNeighbourIDs(){
+		return neighbourIDs;
+	}
+	
+	// set functions for game to manipulate	
+	public void setConquered(boolean setting){
+		recentlyConquered = setting;
+	}
+	
+	public void addUnits(int unit){
+		numUnits += unit;			
+	}
+	
 	public void setOwner(int ownerID){
 		owner = ownerID;
 	}	
@@ -70,24 +72,4 @@ public class Territory implements Serializable {
 	public void setNumUnits(int toSetUnits){
 		numUnits = toSetUnits;
 	}
-	
-	public ArrayList<Integer> getNeighbourIDs(){
-		return neighbourIDs;
-	}
-	
-	/* set an attack on a neighbour with a certain number of units
-	 * public void setAttack(int neighbour, int numAttackUnits){
-		if(!neighbourIDs.contains(neighbour)){
-			Log.d("setAttackInTerritoryClass","Setting an attack on a territory which is not adjacent to this");
-		}
-		else {
-			attacks.put(neighbour, numAttackUnits);
-		}
-	}	
-	 
-	// to be called after the game calculate the outcome of a phase
-	public void update(int owner, int numUnits){
-	
-	}
-	*/	
-	}
+}

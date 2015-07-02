@@ -9,32 +9,32 @@
     tools:context="sg.com.yahoo.ryanlouck.orbital2015.CustomisationActivity" >
 
     <TextView
-        android:id="@+id/diff"
+        android:id="@+id/diffText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/heading"
+        android:layout_below="@+id/customisationTitle"
         android:text="@string/choose_diff"
         android:textAppearance="?android:attr/textAppearanceMedium" />
 
     <Spinner
-        android:id="@+id/spinner1"
+        android:id="@+id/diffSpinner"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/diff"
-        android:layout_below="@+id/diff" />
+        android:layout_alignLeft="@+id/diffText"
+        android:layout_below="@+id/diffText" />
 
     <CheckBox
-        android:id="@+id/checkBox1"
+        android:id="@+id/diceCheckbox"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/spinner1"
-        android:layout_below="@+id/spinner1"
+        android:layout_alignLeft="@+id/diffSpinner"
+        android:layout_below="@+id/diffSpinner"
         android:layout_marginTop="15dp"
         android:text="@string/choose_dice"
         android:onClick="checkBoxListener" />
 
     <TextView
-        android:id="@+id/heading"
+        android:id="@+id/customisationTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
@@ -43,7 +43,7 @@
         android:textAppearance="?android:attr/textAppearanceLarge" />
 
     <Button
-        android:id="@+id/start"
+        android:id="@+id/startButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"

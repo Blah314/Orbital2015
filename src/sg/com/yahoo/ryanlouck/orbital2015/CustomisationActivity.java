@@ -33,9 +33,9 @@ public class CustomisationActivity extends Activity {
 		}
 		
 		// all the elements on screen
-		final TextView heading = (TextView) findViewById(R.id.heading);
-		final Spinner diffSelect = (Spinner) findViewById(R.id.spinner1);
-		final Button start = (Button) findViewById(R.id.start);
+		final TextView heading = (TextView) findViewById(R.id.customisationTitle);
+		final Spinner diffSelect = (Spinner) findViewById(R.id.diffSpinner);
+		final Button start = (Button) findViewById(R.id.startButton);
 		
 		heading.setText(levelDetails[2]);
 		
@@ -81,7 +81,7 @@ public class CustomisationActivity extends Activity {
 		boolean checked = ((CheckBox) v).isChecked();
 		
 		switch(v.getId()){
-		case R.id.checkBox1:
+		case R.id.diceCheckbox:
 			diceLike = checked;
 			break;
 		}

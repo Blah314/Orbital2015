@@ -31,7 +31,8 @@ public class NewGameActivity extends Activity {
 		getActionBar().setDisplayHomeAsUpEnabled(true);
 		
 		// levelDetailsView displays level details when a level button is clicked
-		final TextView levelDetailsView = (TextView) findViewById(R.id.textView2);
+		final TextView levelDetailsView = (TextView) findViewById(R.id.levelText);
+		final Button startButton = (Button) findViewById(R.id.startGameButton);
 		
 		levelDetails = new ArrayList<String[]>();
 		
@@ -80,18 +81,16 @@ public class NewGameActivity extends Activity {
 			levels.addView(b);		
 		}
 		
-		// startButton code - launches the customization screen if a level is selected
-		final Button startButton = (Button) findViewById(R.id.startGameButton);
-		
+		// startButton code - launches the customization screen if a level is selected		
 		startButton.setOnClickListener(new View.OnClickListener(){
 			
 			public void onClick(View v){
 				if(selectedLevel == 0){
 					levelDetailsView.setText("Select a Level above first.");
 				}
-				else if(selectedLevel != 1){
-					levelDetailsView.setText("Sorry. This level is not available yet.");
-				}
+//				else if(selectedLevel != 1){
+//					levelDetailsView.setText("Sorry. This level is not available yet.");
+//				}
 				else{
 					Intent customisationLaunch = new Intent(getApplicationContext(), CustomisationActivity.class);
 					customisationLaunch.putExtra("level", selectedLevel);

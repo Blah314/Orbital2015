@@ -7,33 +7,39 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="sg.com.yahoo.ryanlouck.orbital2015.MainActivity">
-    
-    <Button
-        android:id="@+id/button1"
+
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
-        android:text="@string/continueGameMenu" />
+        android:orientation="vertical" >
 
-    <Button
-        android:id="@+id/button2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/button1"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="40dp"
-        android:gravity="center_vertical|center_horizontal"
-        android:text="@string/newGameMenu" />
+        <Button
+            android:id="@+id/newGameButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical|center_horizontal"
+            android:text="@string/newGameMenu" />
 
-    <Button
-        android:id="@+id/button3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_below="@+id/button1"
-        android:layout_marginTop="40dp"
-        android:text="@string/optionsMenu" />
+        <Button
+            android:id="@+id/continueGameButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/continueGameMenu" />
 
+        <Button
+            android:id="@+id/optionsButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/optionsMenu" />
+
+        <Button
+            android:id="@+id/instructionsButon"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/instructions_menu" />
+
+    </LinearLayout>
    
 </RelativeLayout>

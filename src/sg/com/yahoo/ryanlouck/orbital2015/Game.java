@@ -8,42 +8,54 @@ import java.util.Iterator;
 import java.util.Random;
 
 public class Game implements Serializable {
-
-	private int diff, numPlayers, currPlayerID;
+	
+	static final long serialVersionUID = 1; // use this as a version number
+	private int numPlayers, currPlayerID;
 	private HashMap<Integer, Player> playersMap = new HashMap<Integer, Player>();
 	private boolean isDice;
+	private double diff;
 	private HashMap<Integer, Territory> territoriesMap = new HashMap<Integer, Territory>();
 	private Random rand = new Random();
 
 	public Game(int diff, boolean diceLike, int numPlayersToAdd,
 			int[] startingResources, ArrayList<String[]> mapDetails) {
-
-		this.diff = diff;
+		
+		// sets AI resource generation based on selected difficulty
+		switch(diff){
+		case 0:
+			this.diff = 0.7;
+			break;
+		case 1:
+			this.diff = 1;
+			break;
+		case 2:
+			this.diff = 1.4;
+			break;
+		}
+		
 		isDice = diceLike;
 		this.numPlayers = numPlayersToAdd;
 		Iterator<String[]> territoryIterator = mapDetails.iterator();
 		territoryIterator.next(); // removes invalid first row
 		int[] startingTerritories = new int[numPlayers + 1];
 		Arrays.fill(startingTerritories, 0);
+		
+		// create territories as well as setting the players initial starting territories.		
 		while (territoryIterator.hasNext()) {
 			String[] currTerritory = territoryIterator.next();
 			Territory tempTerritory = new Territory(currTerritory);
 			startingTerritories[tempTerritory.getOwner()] += 1;
 			territoriesMap.put(tempTerritory.getId(), tempTerritory);
-			// Player test = playersMap.get( tempTerritory.getOwner() ); //Add
-			// territoryID to the player...
-			// Log.d("TESTING","TERR OWNER IS: " + tempTerritory.getOwner() +
-			// "PLAYER ID IS "+test.getPlayerID() +"NUM PLAYER IS " +
-			// this.numPlayers);
-			// .addTerritoryID(tempTerritory.getId()); //to make him own it
 		}
 		
+		// creating players with the number of starting territories determined
 		for (int i = 1; i <= numPlayers; i++) {
 			playersMap.put(i, new Player(i, startingResources[i-1], startingTerritories[i]));
 		}
 		
 	}
-
+	
+	// get functions for use by other classes
 	public HashMap<Integer, Territory> getTerritories() {
 		return territoriesMap;
 	}
@@ -61,6 +73,12 @@ public class Game implements Serializable {
 		currPlayerID = playerID;
 		Player player = playersMap.get(playerID);
 		int playerNumTerrOwned = player.getNumTerritoriesOwned();
+		
+		// resets conquered attribute for each territory
+		for(int i = 1; i <= territoriesMap.size(); i++){
+			Territory t = territoriesMap.get(i);
+			t.setConquered(false);
+		}
 
 		// Updates new number of turns for player
 //		int lowerBound = (playerNumTerrOwned / 2); // Number of turns player
@@ -72,16 +90,19 @@ public class Game implements Serializable {
 //																				// upbound(exclusive)
 //																				// and
 //																				// lowbound(inclusive)
-
-		// Updates new number of resources for player
-		player.addResources(playerNumTerrOwned * 10); 
 		
-		if(currPlayerID != 1){ // player 1 is the human player
+		if(currPlayerID != 1){ // AI resource adding and movement
+			int res = (int) (playerNumTerrOwned * 10 * diff);
+			player.addResources(res); 
 			AIMoves(player);
 			turnEnds();
 		}
+		else{ // player resource adding
+			player.addResources(playerNumTerrOwned * 10);
+		}
 	}
-
+	
+	// unit adding execution code
 	public void executeTerritoryAddUnits(int playerID, int territoryID,
 			int numUnits) {
 
@@ -95,6 +116,7 @@ public class Game implements Serializable {
 //		}
 	}
 
+	//attack execution code
 	public void executeTerritoryAttack(int playerID1, int playerID2,
 			int territory1ID, int territory2ID, int numUnits) {
 		Player playerA = playersMap.get(playerID1); // Owner of the attacking
@@ -118,18 +140,18 @@ public class Game implements Serializable {
 		
 		terrA.setNumUnits(numUnitsA - numUnits);
 		
+		// Attacker has more units - change ownership of territoryB and set it as conquered.
+		// Conquered territories can't execute any actions in that turn
 		if (numUnits > numUnitsB) {
 			int finalNumUnits = numUnits - numUnitsB; // number of suriving units
-														
-			if (finalNumUnits > numUnitsA) { // Failsafe in case unit number magically increases
-				finalNumUnits = numUnitsA; 
-			}
-			
+															
 			terrB.setNumUnits(finalNumUnits); // Set number of units left
 			terrB.setOwner(terrA.getOwner()); // Change owner to winner of fight
+			terrB.setConquered(true);
 			
 			playerA.setNumTerritoriesOwned(playerA.getNumTerritoriesOwned() + 1); // Adjusts number of territories
 //			playerA.addTerritoryID(territory2ID); //owned per player
+			
 			if(playerID2 != 0){ // player 0 is the neutral party - no player representing it
 				playerB.setNumTerritoriesOwned(playerB.getNumTerritoriesOwned() - 1);
 //				playerB.removeTerritoryID(territory2ID);
@@ -137,25 +159,19 @@ public class Game implements Serializable {
 		}
 		
 		// If defender has more units
-		else if (numUnitsB > numUnits) {
+		else{
 			int finalNumUnits = numUnitsB - numUnits;
-			if (finalNumUnits > numUnitsB) {
-				finalNumUnits = numUnitsB;
-			}
 			terrB.setNumUnits(finalNumUnits);
 		}
 		
 //		playersMap.get(playerID1).minusNumTurns();
 		
-		if (playerA.getNumTerritoriesOwned() == territoriesMap.size()) { // Player conquered all
-			// TODO player has won
-		}
-		
 //		if (playerA.isTurnEnded() & playerID1 != 1) {
 //			turnEnds();
 //		}
 	}
-
+	
+	// execute movement
 	public void executeMoveUnits(int playerID, int territory1ID,
 			int territory2ID, int numUnitsToMove) {
 		Territory A = territoriesMap.get(territory1ID);
@@ -167,7 +183,8 @@ public class Game implements Serializable {
 //			turnEnds();
 //		}
 	}
-
+	
+	// called by end turn button or AI finishing - causes the next player's turn to start
 	public void turnEnds() {
 		currPlayerID++;
 		if(currPlayerID > numPlayers){
@@ -175,7 +192,8 @@ public class Game implements Serializable {
 		}
 		startPlayerTurn(currPlayerID);
 	}
-
+	
+	// AI function
 	public void AIMoves(Player player) {
 		
 		ArrayList<Territory> owned = new ArrayList<Territory>();
@@ -314,10 +332,3 @@ public class Game implements Serializable {
 
 	}
 }
-
-/*
- * public int getGameWinner(){ Set<Integer> players = playersMap.keySet();
- * for(Integer playerID: players){ if (
- * playersMap.get(playerID).getNumTerritoriesOwned() == territoriesMap.size()){
- * return playerID; } } return 999; to add future methods of winning games }
- */

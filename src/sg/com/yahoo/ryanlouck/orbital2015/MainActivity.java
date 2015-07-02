@@ -13,7 +13,7 @@ import android.widget.Toast;
 
 public class MainActivity extends Activity {
 	
-	private Button newGameButton, continueButton, optionsButton;
+	private Button newGameButton, continueButton, optionsButton, instructionsButton;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -26,10 +26,10 @@ public class MainActivity extends Activity {
 	    editor.commit();
 		
 		// gets the references to the 3 main buttons
-		newGameButton = (Button) findViewById(R.id.button2);
-		continueButton = (Button) findViewById(R.id.button1);
-		optionsButton = (Button) findViewById(R.id.button3);
-		
+		newGameButton = (Button) findViewById(R.id.newGameButton);
+		continueButton = (Button) findViewById(R.id.continueGameButton);
+		optionsButton = (Button) findViewById(R.id.optionsButton);
+		instructionsButton = (Button) findViewById(R.id.instructionsButon);
 		
 		// newGameButton launches the level selection (to do - prompt when there is an already saved game)
 		newGameButton.setOnClickListener(new View.OnClickListener() {
@@ -71,6 +71,15 @@ public class MainActivity extends Activity {
 			public void onClick(View v) {
 				Intent optionsLaunch = new Intent(getApplicationContext(), OptionsActivity.class);
 				startActivity(optionsLaunch);
+			}
+		});
+		
+		instructionsButton.setOnClickListener(new View.OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				Intent instLaunch = new Intent(getApplicationContext(), InstructionsActivity.class);
+				startActivity(instLaunch);
 			}
 		});
 	}

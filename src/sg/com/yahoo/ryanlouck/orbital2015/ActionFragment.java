@@ -12,10 +12,7 @@ import android.widget.TextView;
 
 public class ActionFragment extends DialogFragment {
 	
-	private int requested;
-	private int limit;
-	private int numArmies;
-	private int target, origin;
+	private int requested, limit, numArmies, target, origin;
 	private boolean isAdd, isFriendly;
 	
 	public ActionFragment(int limit, int numArmies, int target, int origin, boolean isAdd, boolean isFriendly){
@@ -28,6 +25,7 @@ public class ActionFragment extends DialogFragment {
 		this.requested = 0;
 	}
 	
+	// create a dialog to ask the player about the action he selected
 	public Dialog onCreateDialog(Bundle savedInstanceState) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         SeekBar armySlider = new SeekBar(this.getActivity());
@@ -36,6 +34,7 @@ public class ActionFragment extends DialogFragment {
         armySlider.setProgress(requested);
         num.setText(Integer.toString(requested));
         
+        // setting the title depending on the situation
         if(isAdd){
         	armySlider.setMax(limit);
         	builder.setTitle(getResources().getString(R.string.add_num));
@@ -47,6 +46,7 @@ public class ActionFragment extends DialogFragment {
         	else builder.setTitle(getResources().getString(R.string.attack_num));
         }
         
+        // seekbar is used to set requested
         armySlider.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
 			
 			@Override
@@ -80,6 +80,7 @@ public class ActionFragment extends DialogFragment {
         
         builder.setView(l);
         
+        // positive button configuration
         if(isAdd){
         	builder.setPositiveButton(R.string.add_units, new DialogInterface.OnClickListener() {
         		public void onClick(DialogInterface dialog, int id) {
@@ -126,6 +127,7 @@ public class ActionFragment extends DialogFragment {
             });
         }
         
+        // cancel button
         builder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
 			
 			@Override
@@ -134,7 +136,6 @@ public class ActionFragment extends DialogFragment {
 			}
 		});
         
-        // Create the AlertDialog object and return it
         return builder.create();
     }
 }

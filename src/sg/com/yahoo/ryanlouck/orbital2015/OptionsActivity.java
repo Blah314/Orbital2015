@@ -30,9 +30,9 @@ public class OptionsActivity extends Activity {
 		
 		SharedPreferences settings = getSharedPreferences("options", 0);
 	    territorySize = settings.getInt("tSize", 1);
-	    tSize = (Spinner) findViewById(R.id.spinner1);
-	    t = (Button) findViewById(R.id.button2);
-	    save = (Button) findViewById(R.id.button1);
+	    tSize = (Spinner) findViewById(R.id.territorySpinner);
+	    t = (Button) findViewById(R.id.territoryDemo);
+	    save = (Button) findViewById(R.id.saveButton);
 	    optionsMaster = (LinearLayout) findViewById(R.id.optionsMaster);
 	    
 	    ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
@@ -46,20 +46,20 @@ public class OptionsActivity extends Activity {
 				switch(pos){
 				case 0:
 					territorySize = 1;
-					t.setHeight(100);
-					t.setWidth(100);
+					t.setHeight(70);
+					t.setWidth(70);
 					optionsMaster.invalidate();
 					break;
 				case 1:
 					territorySize = 3;
-					t.setHeight(300);
-					t.setWidth(300);
+					t.setHeight(210);
+					t.setWidth(210);
 					optionsMaster.invalidate();
 					break;
 				case 2:
 					territorySize = 5;
-					t.setHeight(500);
-					t.setWidth(500);
+					t.setHeight(350);
+					t.setWidth(350);
 					optionsMaster.invalidate();
 					break;
 				}
