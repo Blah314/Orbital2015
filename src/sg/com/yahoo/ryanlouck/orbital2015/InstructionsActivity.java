@@ -21,6 +21,7 @@ public class InstructionsActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_instructions);
+		getActionBar().setDisplayHomeAsUpEnabled(true);
 		
 		title = (TextView) findViewById(R.id.instructionTitle);
 		body = (TextView) findViewById(R.id.instructionBody);

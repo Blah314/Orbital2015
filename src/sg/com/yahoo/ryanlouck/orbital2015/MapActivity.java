@@ -140,7 +140,7 @@ public class MapActivity extends Activity {
 		assignTerritoryButtons();
 		setEndButton();
 		
-		game.startPlayerTurn(1);
+		game.startPlayerTurn(1, true);
 		
 		update();
 	}
@@ -196,6 +196,8 @@ public class MapActivity extends Activity {
 		assignTerritoryButtons();
 		setEndButton();
 		
+		game.startPlayerTurn(1, false);
+		
 		update();
 	}
 	
@@ -227,7 +229,6 @@ public class MapActivity extends Activity {
 	public void assignTerritoryButtons(){
 		for(int i = 0; i < numTerritories; i++){
 			Button b = (Button) map.getChildAt(i);
-			System.out.println(map.getChildCount());
 			final Territory t = territories.get(i+1);
 			b.setOnClickListener(new View.OnClickListener() {
 				
@@ -346,18 +347,6 @@ public class MapActivity extends Activity {
 				fos.write(gameSave.getBytes());
 				fos.flush();
 				fos.close();
-			}
-			catch(Exception e){
-				e.printStackTrace();
-			}
-			
-			try{
-				FileInputStream fis = openFileInput("savegame");
-				InputStreamReader isr = new InputStreamReader(fis);
-				BufferedReader br = new BufferedReader(isr);
-				while(br.ready()){
-					System.out.println(br.readLine());
-				}
 			}
 			catch(Exception e){
 				e.printStackTrace();

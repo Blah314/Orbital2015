@@ -74,15 +74,17 @@ public class Game implements Serializable {
 	}
 
 	// This method is called when a new player needs to start his turn
-	public void startPlayerTurn(int playerID) {
+	public void startPlayerTurn(int playerID, boolean addRes) {
 		currPlayerID = playerID;
 		Player player = playersMap.get(playerID);
 		int playerNumTerrOwned = player.getNumTerritoriesOwned();
 		
 		// resets conquered attribute for each territory
-		for(int i = 1; i <= territoriesMap.size(); i++){
-			Territory t = territoriesMap.get(i);
-			t.setConquered(false);
+		if(addRes){
+			for(int i = 1; i <= territoriesMap.size(); i++){
+				Territory t = territoriesMap.get(i);
+				t.setConquered(false);
+			}
 		}
 
 		// Updates new number of turns for player
@@ -102,7 +104,7 @@ public class Game implements Serializable {
 			AIMoves(player);
 			turnEnds();
 		}
-		else{ // player resource adding
+		else if(addRes){ // player resource adding
 			player.addResources(playerNumTerrOwned * 10);
 		}
 	}
@@ -195,7 +197,7 @@ public class Game implements Serializable {
 		if(currPlayerID > numPlayers){
 			currPlayerID = 1;
 		}
-		startPlayerTurn(currPlayerID);
+		startPlayerTurn(currPlayerID, true);
 	}
 	
 	// AI function

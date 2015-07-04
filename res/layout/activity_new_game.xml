@@ -8,22 +8,6 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="sg.com.yahoo.ryanlouck.orbital2015.NewGameActivity" >
 
-    <HorizontalScrollView
-        android:id="@+id/buttonScroller"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/textView1"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="40dp" >
-
-        <LinearLayout
-            android:id="@+id/levelButtons"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:orientation="horizontal" >
-        </LinearLayout>
-    </HorizontalScrollView>
-
     <TextView
         android:id="@+id/levelText"
         android:layout_width="wrap_content"
@@ -50,5 +34,20 @@
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:text="@string/start_level" />
+
+    <HorizontalScrollView
+        android:id="@+id/buttonScroller"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/levelSelectTitle"
+        android:layout_centerHorizontal="true" >
+
+        <LinearLayout
+            android:id="@+id/levelButtons"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:orientation="horizontal" >
+        </LinearLayout>
+    </HorizontalScrollView>
 
 </RelativeLayout>

@@ -7,6 +7,11 @@
     <string name="newGameMenu">New Game</string>
     <string name="continueGameMenu">Continue Game</string>
     <string name="no_save_game">No game has been saved yet.</string>
+    <string name="overwrite">Overwrite saved game?</string>
+    <string name="overwrite_desc">You currently have a saved game. Starting a new game will overwrite it.\n\n
+        Still proceed?</string>
+    <string name="y">Yes</string>
+    <string name="n">No</string>
     <string name="optionsMenu">Options</string>
     <string name="instructions_menu">Instructions</string>
     <string name="title_activity_options">Options</string>
