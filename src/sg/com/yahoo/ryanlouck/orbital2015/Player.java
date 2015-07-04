@@ -61,6 +61,10 @@ public class Player implements Serializable {
 		numTurns = newNumTurns;
 	}
 	
+	public String toString(){
+		return (Integer.toString(playerID) + "," + Integer.toString(numResources) + "," + Integer.toString(numTerritoriesOwned));
+	}
+	
 //	public void addTerritoryID(int ID){
 //		territoriesOwnedID.add(ID);
 //	}

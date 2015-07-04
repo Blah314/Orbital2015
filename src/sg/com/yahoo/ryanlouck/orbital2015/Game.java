@@ -17,8 +17,8 @@ public class Game implements Serializable {
 	private HashMap<Integer, Territory> territoriesMap = new HashMap<Integer, Territory>();
 	private Random rand = new Random();
 
-	public Game(int diff, boolean diceLike, int numPlayersToAdd,
-			int[] startingResources, ArrayList<String[]> mapDetails) {
+	public Game(int diff, boolean diceLike, int numPlayersToAdd, int[] startingResources, 
+			boolean fromSave, int[] savedTerrs, ArrayList<String[]> mapDetails) {
 		
 		// sets AI resource generation based on selected difficulty
 		switch(diff){
@@ -29,14 +29,14 @@ public class Game implements Serializable {
 			this.diff = 1;
 			break;
 		case 2:
-			this.diff = 1.4;
+			this.diff = 1.3;
 			break;
 		}
 		
 		isDice = diceLike;
 		this.numPlayers = numPlayersToAdd;
 		Iterator<String[]> territoryIterator = mapDetails.iterator();
-		territoryIterator.next(); // removes invalid first row
+		if(!fromSave) territoryIterator.next(); // removes invalid first row
 		int[] startingTerritories = new int[numPlayers + 1];
 		Arrays.fill(startingTerritories, 0);
 		
@@ -50,7 +50,12 @@ public class Game implements Serializable {
 		
 		// creating players with the number of starting territories determined
 		for (int i = 1; i <= numPlayers; i++) {
-			playersMap.put(i, new Player(i, startingResources[i-1], startingTerritories[i]));
+			if(fromSave){
+				playersMap.put(i, new Player(i, startingResources[i-1], savedTerrs[i-1]));
+			}
+			else{
+				playersMap.put(i, new Player(i, startingResources[i-1], startingTerritories[i]));
+			}
 		}
 		
 	}
@@ -329,6 +334,50 @@ public class Game implements Serializable {
 //			
 //
 //		} while (!player.isTurnEnded());
-
+		
+	}
+	
+	public String toString(){
+		StringBuilder sb = new StringBuilder();
+		
+		if(diff == 0.7){
+			sb.append("0");
+		}
+		else if(diff == 1){
+			sb.append("1");
+		}
+		else if(diff == 1.3){
+			sb.append("2");
+		}	
+		sb.append(",");
+		
+		sb.append(Boolean.toString(isDice));
+		sb.append(",");
+		
+		sb.append(Integer.toString(numPlayers));
+		sb.append(",");
+		
+		for(int i = 1; i <= playersMap.size(); i++){
+			sb.append(playersMap.get(i).getNumResources());
+			sb.append(",");
+		}
+		
+		sb.append(true);
+		
+		sb.append("\n");
+		
+		for(int i = 1; i <= playersMap.size(); i++){
+			sb.append(Integer.toString(playersMap.get(i).getNumTerritoriesOwned()));
+			if(i != playersMap.size()) sb.append(",");
+		}
+		
+		sb.append("\n");
+		
+		for(int i = 1; i <= territoriesMap.size(); i++){
+			sb.append(territoriesMap.get(i).toString());
+			sb.append("\n");
+		}
+		
+		return sb.toString();
 	}
 }

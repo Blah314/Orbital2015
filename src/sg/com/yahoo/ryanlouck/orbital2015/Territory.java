@@ -11,9 +11,11 @@ public class Territory implements Serializable {
 	private int id, owner, numUnits;
 	private ArrayList<Integer> neighbourIDs;
 	private boolean recentlyConquered;
+	private String[] baseDetails;
 	
 	// Territory detail format is in mapformat.txt	
-	public Territory(String[] details){		
+	public Territory(String[] details){
+		this.baseDetails = details.clone();
 		neighbourIDs = new ArrayList<Integer>();
 		recentlyConquered = false;
 		
@@ -22,7 +24,7 @@ public class Territory implements Serializable {
 		id = Integer.parseInt(details[0]);
 		owner = Integer.parseInt(details[8]);
 		numUnits = Integer.parseInt(details[9]);  		
-		for ( int i = 12; i < details.length; i++){
+		for (int i = 12; i < details.length; i++){
 			neighbourIDs.add(Integer.parseInt(details[i]));
 		}	
 	}
@@ -71,5 +73,47 @@ public class Territory implements Serializable {
 	
 	public void setNumUnits(int toSetUnits){
 		numUnits = toSetUnits;
+	}
+	
+	public String toString(){
+		StringBuilder sb = new StringBuilder();
+		for(int i = 0; i < 12; i++){
+			switch(i){
+			case 0:
+				sb.append(Integer.toString(id));
+				break;
+			case 1:
+				sb.append(name);
+				break;
+			case 2:
+				sb.append(abbrvName);
+				break;
+			case 3:
+			case 4:
+			case 5:
+			case 6:
+			case 7:	
+				sb.append(baseDetails[i]);
+				break;
+			case 8:
+				sb.append(Integer.toString(owner));
+				break;
+			case 9:
+				sb.append(Integer.toString(numUnits));
+				break;
+			case 10:
+			case 11:
+				sb.append("0");
+				break;
+			}
+			sb.append(",");
+		}
+		
+		for(int j = 0; j < neighbourIDs.size(); j++){
+			sb.append(Integer.toString(neighbourIDs.get(j)));
+			if(j != neighbourIDs.size() - 1) sb.append(",");
+		}
+		
+		return sb.toString();
 	}
 }

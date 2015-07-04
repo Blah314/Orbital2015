@@ -1,6 +1,8 @@
 package sg.com.yahoo.ryanlouck.orbital2015;
 
 import java.io.BufferedReader;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
@@ -16,8 +18,6 @@ import android.content.res.AssetManager;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffColorFilter;
-//import android.graphics.drawable.BitmapDrawable;
-//import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -35,6 +35,7 @@ public class MapActivity extends Activity {
 	
 	private float mx, my, currX, currY;
 	private int buttonScale;
+	private boolean resumed;
 	private ScrollView vScroll;
 	private HorizontalScrollView hScroll;
 	private ViewGroup map;
@@ -43,10 +44,9 @@ public class MapActivity extends Activity {
 	
 	private String[] levelDetails;
 	private ArrayList<String[]> territoryDetails;
-	private ArrayList<int[]> lineCoords;
 	
 	private int level, diff, numTerritories, turnNum;
-	private boolean diceLike;
+	private boolean diceLike, over;
 	private Game game;
 	private HashMap<Integer, Territory> territories;
 	private HashMap<Integer, Player> players;
@@ -68,21 +68,6 @@ public class MapActivity extends Activity {
 		turnsLeft = (TextView) findViewById(R.id.turnView);
 		endTurn = (Button) findViewById(R.id.endTurnButton);
 		
-		// getting the stuff passed from CustomisationActivity or ContinueGameButton
-		Bundle details = getIntent().getExtras();
-		if(details != null){
-			level = details.getInt("lvl");
-			diff = details.getInt("diff");
-			diceLike = details.getBoolean("dice");
-			levelDetails = details.getStringArray("levelDetails");
-		}
-		
-		SharedPreferences settings = getSharedPreferences("options", 0);
-		SharedPreferences.Editor editor = settings.edit();
-	    editor.putBoolean("gameStarted", true);
-	    editor.commit();
-		buttonScale = settings.getInt("tSize", 1);
-		
 		// color definitions - more to come
 		ColorMap = new Hashtable<Integer,Integer>();
 		ColorMap.put(0,Color.GRAY);
@@ -91,13 +76,35 @@ public class MapActivity extends Activity {
 		ColorMap.put(3,Color.GREEN);
 		ColorMap.put(4,Color.YELLOW);
 		
-		startGame();
+		over = false;
+		
+		// retrieving preferred button scale
+		SharedPreferences settings = getSharedPreferences("options", 0);
+		buttonScale = settings.getInt("tSize", 1);
+		
+		// checking if the game was resumed
+		Bundle details = getIntent().getExtras();
+		resumed = details.getBoolean("resumed", false);
+		
+		if(!resumed){
+			startNewGame();
+		}
+		else{
+			continueGame();
+		}
 	}
 	
 	// Initialization method - creates the map and a new game
-	public void startGame(){
+	public void startNewGame(){
+		
+		// getting the stuff passed from CustomisationActivity or ContinueGameButton
+		Bundle details = getIntent().getExtras();
+		level = details.getInt("lvl", 1);
+		diff = details.getInt("diff", 0);
+		diceLike = details.getBoolean("dice", false);
+		levelDetails = details.getStringArray("levelDetails");
+
 		territoryDetails = new ArrayList<String[]>();
-		lineCoords = new ArrayList<int[]>();
 		turnNum = 1;
 		
 		// loading up the map and getting the details of all territories
@@ -115,22 +122,96 @@ public class MapActivity extends Activity {
 		catch(Exception e){
 			e.printStackTrace();
 		}
-			
-		for(int i = 1; i < territoryDetails.size(); i++){
-			String[] tDetails = territoryDetails.get(i);
-			
-			// load up each territory, check its neighbours, then note the lines that need to be drawn
-			for(int j = 12; j < tDetails.length; j++){
-				int neighbour = Integer.parseInt(tDetails[j]);
-				if(neighbour < i) continue;
-				String[] nDetails = territoryDetails.get(neighbour);
-				int sX, sY, eX, eY;
-				sX = Integer.parseInt(tDetails[3]);
-				sY = Integer.parseInt(tDetails[4]);
-				eX = Integer.parseInt(nDetails[3]);
-				eY = Integer.parseInt(nDetails[4]);
-				lineCoords.add(new int[]{sX*buttonScale, sY*buttonScale, eX*buttonScale, eY*buttonScale});
+		
+		setFields();
+		loadTerritoryButtons();
+		
+		// create new game	
+		int[] startingRes = new int[levelDetails.length - 8];
+		for(int i = 8; i < levelDetails.length; i++){
+			startingRes[i-8] = Integer.parseInt(levelDetails[i]);
+		}
+		
+		game = new Game(diff, diceLike, Integer.parseInt(levelDetails[5]), startingRes, false, startingRes, territoryDetails);
+		territories = game.getTerritories();
+		numTerritories = territories.size();
+		players = game.getPlayers();
+		
+		assignTerritoryButtons();
+		setEndButton();
+		
+		game.startPlayerTurn(1);
+		
+		update();
+	}
+	
+	// reads the data given by MainActivity and creates an in-progress game
+	public void continueGame(){
+		Bundle details = getIntent().getExtras();
+		turnNum = details.getInt("turnNum", 1);
+		level = details.getInt("lvl", 1);
+		diff = details.getInt("diff", 1);
+		diceLike = details.getBoolean("dice", false);
+		int numPlayers = details.getInt("numPlayers", 2);
+		int[] res = details.getIntArray("res");
+		int[] terr = details.getIntArray("terr");
+		territoryDetails = (ArrayList<String[]>) details.getSerializable("rest");
+		
+//		for(int i = 0; i < territoryDetails.size(); i++){
+//			String[] t = territoryDetails.get(i);
+//			for(String s : t){
+//				System.out.print(s);
+//			}
+//			System.out.println();
+//		}
+		
+		// loading up the level details to get some basic info
+		AssetManager am = this.getAssets();
+		try{
+			InputStream is = am.open("levelDetails.txt");
+			InputStreamReader isr = new InputStreamReader(is);
+			BufferedReader br = new BufferedReader(isr);
+			int lineCount = 0;
+			while(br.ready()){
+				String[] tempLevel = br.readLine().split(",");
+				if(lineCount == level){
+					levelDetails = tempLevel;
+				}
+				lineCount++;
 			}
+			is.close();
+		}
+		catch(Exception e){
+			e.printStackTrace();
+		}
+		
+		setFields();
+		loadTerritoryButtons();
+		
+		game = new Game(diff, diceLike, numPlayers, res, true, terr, territoryDetails);
+		territories = game.getTerritories();
+		numTerritories = territories.size();
+		players = game.getPlayers();
+		
+		assignTerritoryButtons();
+		setEndButton();
+		
+		update();
+	}
+	
+	// sets the title and objective fields
+	public void setFields(){
+		getActionBar().setTitle(levelDetails[2]);
+		
+		obj.setText("Objective: Defeat all opponents.");
+		obj.setGravity(17);
+	}
+	
+	// creates the territory buttons
+	public void loadTerritoryButtons(){
+		int i = resumed ? 0 : 1;
+		for(; i < territoryDetails.size(); i++){
+			String[] tDetails = territoryDetails.get(i);
 			
 			// creates the territory buttons and puts them at their corresponding location
 			Button territoryButton = new Button(this);
@@ -140,42 +221,13 @@ public class MapActivity extends Activity {
 			params.topMargin = Integer.parseInt(tDetails[4])*buttonScale;
 			map.addView(territoryButton, params);
 		}
-		
-		// create the line view and draws them
-//		LineView lines = new LineView(this);
-//		lines.setMap(lineCoords);
-//		lines.invalidate();
-			
-		// TODO cannot get lines to display in the map layout
-		
-//		map.addView(lines);
-//		
-//		lines.buildDrawingCache();		
-//		Drawable l = new BitmapDrawable(lines.getDrawingCache());		
-//		map.setBackgroundDrawable(l);
-		
-		getActionBar().setTitle(levelDetails[2]);
-		
-		obj.setText("Objective: Defeat all opponents.");
-		obj.setGravity(17);
-		
-		// create new game	
-		int[] startingRes = new int[levelDetails.length - 8];
-		for(int i = 8; i < levelDetails.length; i++){
-			startingRes[i-8] = Integer.parseInt(levelDetails[i]);
-		}
-		
-		game = new Game(diff, diceLike, Integer.parseInt(levelDetails[5]), startingRes, territoryDetails);
-		territories = game.getTerritories();
-		numTerritories = territories.size();
-		players = game.getPlayers();
-		
-		game.startPlayerTurn(1);
-		
-		update();
-		
+	}
+	
+	// assigns the territory buttons
+	public void assignTerritoryButtons(){
 		for(int i = 0; i < numTerritories; i++){
 			Button b = (Button) map.getChildAt(i);
+			System.out.println(map.getChildCount());
 			final Territory t = territories.get(i+1);
 			b.setOnClickListener(new View.OnClickListener() {
 				
@@ -205,20 +257,14 @@ public class MapActivity extends Activity {
 						TerritoryLaunch.putExtra("res", game.getPlayers().get(1).getNumResources());
 						TerritoryLaunch.putExtra("game", game);
 						startActivity(TerritoryLaunch);
-						
-//						else{
-//							Context c = getApplicationContext();
-//							CharSequence text = getResources().getString(R.string.out_of_turns);
-//							int duration = Toast.LENGTH_SHORT;
-//						
-//							Toast t = Toast.makeText(c, text, duration);
-//							t.show();
-//						}
 					}
 				}
 			});
 		}
-		
+	}
+	
+	// assigns the end turn button
+	public void setEndButton(){
 		endTurn.setOnClickListener(new View.OnClickListener() {
 			
 			@Override
@@ -259,17 +305,15 @@ public class MapActivity extends Activity {
 			final FragmentManager fm = getFragmentManager();
 			EndGameFragment win = new EndGameFragment(true);
 			win.show(fm, "endGame");
+			over = true;
 		}
 		
 		if(lost){
 			final FragmentManager fm = getFragmentManager();
 			EndGameFragment lose = new EndGameFragment(false);
 			lose.show(fm, "endGame");
+			over = true;
 		}
-	}
-	
-	public void onPause(){
-		super.onPause();
 	}
 	
 	public void onNewIntent(Intent intent){
@@ -290,6 +334,34 @@ public class MapActivity extends Activity {
 		}
 		else if(attack){
 			game.executeTerritoryAttack(1, territories.get(target).getOwner(), origin, target, requested);
+		}
+		
+		// game saving code
+		if(!over){
+			String gameSave = game.toString();
+			FileOutputStream fos;
+			try{
+				fos = openFileOutput("savegame",Context.MODE_PRIVATE);
+				fos.write((Integer.toString(turnNum) + "," + Integer.toString(level) + "\n").getBytes());
+				fos.write(gameSave.getBytes());
+				fos.flush();
+				fos.close();
+			}
+			catch(Exception e){
+				e.printStackTrace();
+			}
+			
+			try{
+				FileInputStream fis = openFileInput("savegame");
+				InputStreamReader isr = new InputStreamReader(fis);
+				BufferedReader br = new BufferedReader(isr);
+				while(br.ready()){
+					System.out.println(br.readLine());
+				}
+			}
+			catch(Exception e){
+				e.printStackTrace();
+			}
 		}
 	}
 	

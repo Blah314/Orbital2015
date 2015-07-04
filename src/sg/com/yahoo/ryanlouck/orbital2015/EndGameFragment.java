@@ -39,8 +39,7 @@ public class EndGameFragment extends DialogFragment {
                 public void onClick(DialogInterface dialog, int id) {
                 	Intent backLaunch = new Intent(getActivity().getApplicationContext(), MainActivity.class);
                 	backLaunch.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
-    				startActivity(backLaunch);
-    				
+    				startActivity(backLaunch);    				
                 }
             });
         }
