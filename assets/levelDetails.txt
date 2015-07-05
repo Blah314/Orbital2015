@@ -1,5 +1,5 @@
 LEVELID,LEVELSET,LEVELNAME,OBJECTIVE,OBJECTIVEAMT,NUMPLAYERS,DESCRIPTION,NUMTERRITORIES,MAPID,STARTINGRESP1,STARTINGRESP2,...
 0,0,Level 1,0,0,2,An introductory stage. Your opponent should be a walkover.,1,100,50
-1,0,Level 2,0,0,3,You can't take both your opponents on at once. Let them fight among themselves first.,2,0,0,0
-2,0,Tutorial Level 3,1,5,4,Introduction to capture mode. (Not available yet),3,250,125,125
+1,0,Level 2,0,0,3,You can't take both your opponents on at once. Let them fight among themselves first.,2,0,20,20
+2,0,Level 3,1,5,4,All of you are quite evenly matched. Tactics matter here.,3,50,50,50,50
 3,0,Tutorial Level 4,0,0,4,Introduction to upgrades. (Not available yet),4,500,250,250

@@ -124,10 +124,24 @@ public class MainActivity extends Activity {
 					}	
 				
 					resumeLaunch.putExtra("terr", territoriesOwned);
+					
+					String[] terrConq = saveDetails.get(3);
+					
+					boolean[] territoriesConq = new boolean[terrConq.length];
+					for(int i = 0; i < terrConq.length; i++){
+						if(terrConq[i].equals("true")){
+							territoriesConq[i] = true;
+						}
+						else{
+							territoriesConq[i] = false;
+						}
+					}
+					
+					resumeLaunch.putExtra("conq", territoriesConq);
 				
 					ArrayList<String[]> tDetails = new ArrayList<String[]>();
 				
-					for(int i = 3; i < saveDetails.size(); i++){
+					for(int i = 4; i < saveDetails.size(); i++){
 						tDetails.add(saveDetails.get(i));
 					}
 				

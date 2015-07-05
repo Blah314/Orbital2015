@@ -155,6 +155,7 @@ public class MapActivity extends Activity {
 		int numPlayers = details.getInt("numPlayers", 2);
 		int[] res = details.getIntArray("res");
 		int[] terr = details.getIntArray("terr");
+		boolean[] terrConq = details.getBooleanArray("conq");
 		territoryDetails = (ArrayList<String[]>) details.getSerializable("rest");
 		
 //		for(int i = 0; i < territoryDetails.size(); i++){
@@ -189,6 +190,7 @@ public class MapActivity extends Activity {
 		loadTerritoryButtons();
 		
 		game = new Game(diff, diceLike, numPlayers, res, true, terr, territoryDetails);
+		game.setTerritoriesConq(terrConq);
 		territories = game.getTerritories();
 		numTerritories = territories.size();
 		players = game.getPlayers();

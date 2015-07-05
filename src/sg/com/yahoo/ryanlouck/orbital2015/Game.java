@@ -3,6 +3,7 @@ package sg.com.yahoo.ryanlouck.orbital2015;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Random;
@@ -221,10 +222,12 @@ public class Game implements Serializable {
 			Territory t = tIterator.next();
 			
 			ArrayList<Integer> n = t.getNeighbourIDs();
+			Collections.shuffle(n);
 			Iterator<Integer> nI = n.iterator();
 			
 			while(nI.hasNext()){
-				Territory neighbour = territoriesMap.get(nI.next());
+				int currTerr = nI.next();
+				Territory neighbour = territoriesMap.get(currTerr);
 				
 				// enemy territory next door - add armies here if possible
 				if(neighbour.getOwner() != player.getPlayerID()){
@@ -251,10 +254,12 @@ public class Game implements Serializable {
 					
 					boolean frontLine = false;
 					ArrayList<Integer> n2 = neighbour.getNeighbourIDs();
+					Collections.shuffle(n2);
 					Iterator<Integer> n2I = n2.iterator();
 					
 					while(n2I.hasNext()){
-						Territory n3 = territoriesMap.get(n2I.next());
+						int next = n2I.next();
+						Territory n3 = territoriesMap.get(next);
 						
 						// check if this neighbour of neighbour is hostile
 						if(n3.getOwner() != player.getPlayerID()){
@@ -339,6 +344,13 @@ public class Game implements Serializable {
 		
 	}
 	
+	public void setTerritoriesConq(boolean[] values){
+		for(int i = 1; i <= territoriesMap.size(); i++){
+			Territory t = territoriesMap.get(i);
+			t.setConquered(values[i-1]);
+		}
+	}
+	
 	public String toString(){
 		StringBuilder sb = new StringBuilder();
 		
@@ -371,6 +383,13 @@ public class Game implements Serializable {
 		for(int i = 1; i <= playersMap.size(); i++){
 			sb.append(Integer.toString(playersMap.get(i).getNumTerritoriesOwned()));
 			if(i != playersMap.size()) sb.append(",");
+		}
+		
+		sb.append("\n");
+		
+		for(int i = 1; i <= territoriesMap.size(); i++){
+			sb.append(Boolean.toString(territoriesMap.get(i).isConq()));
+			if(i != territoriesMap.size()) sb.append(",");
 		}
 		
 		sb.append("\n");
