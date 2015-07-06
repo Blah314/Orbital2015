@@ -40,6 +40,12 @@
 
     <string name="choose_diff">Difficulty</string>
     <string name="choose_dice">Dice-Like?</string>
+    <string name="choose_capital">Capital Cities?</string>
+    <string name="choose_upgrades">Upgrades Enabled?</string>
+    <string name="choose_armies">Multiple Army Types?</string>
+	<string name="choose_ai">AI Personalities?</string>
+	<string name="choose_conq">No Conquer Limit?</string>
+    <string name="choose_hardcore">Hardcore?</string>
     <string name="title_activity_map">MAP</string>
     <string name="end_turn">End Turn</string>
     <string name="title_activity_territory">Territory</string>
@@ -84,7 +90,13 @@
         <item>An Orbit Wars game is highly customisable, allowing you to choose which mechanics you want active and which you don\'t. This is done via the Game Customisation screen shown after selecting a level.\n\n
             A detailed description of each modifier can be found below:\n\n
             Difficulty: Determines the general difficulty of the AI players.\n\n
-            Dice-Like: As with Risk, you can choose to have the outcomes of battles be determined by dice-rolls, adding a factor of luck into a battle. Battles are one-for-one by default.</item>
+            Dice-Like: As with Risk, you can choose to have the outcomes of battles be determined by dice-rolls, adding a factor of luck into a battle. Battles are one-for-one by default.\n\n
+            Capital Cities: One of your starting territories will be your capital. Lose it, and you lose the game. Same goes for your opponents.\n\n
+            Upgrades: Enabling this will allow you to spend resources to upgrade your territories or armies.\n\n
+            Multiple Army Types: Instead of just a single army unit type, why not have three? The 3 types have different stats and have differing effectiveness against each other. Just like a rock-paper-scissors game.\n\n
+            AI Personalities: Tired of playing against the same predicitable AI opponents? Spice it up by enabling this. Each AI will then react in it\'s own distinct way.\n\n
+            Conquer Limit: Typically, after you conquer a territory, you cannot execute another attack from it until your next turn. Enabling this removes this limitiation. Warning: The AI will be free to use this too!\n\n
+            Hardcore Mode: Your game is not saved in this mode. So no going back once you have left. Can you handle it?</item>
     </string-array>
 
     <string name="title_activity_instructions">Instructions</string>

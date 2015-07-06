@@ -291,10 +291,10 @@ public class MapActivity extends Activity {
 			Button b = (Button) map.getChildAt(i);
 			Territory t = territories.get(i+1);
 			int owner = t.getOwner();
-			if(owner != 1){
+			if(owner != 1 & owner != 0){
 				won = false;
 			}
-			else{
+			else if(owner == 1){
 				lost = false;
 			}
 			b.setText(t.getAbbrvName() + "\n" + t.getNumUnits());
@@ -339,6 +339,8 @@ public class MapActivity extends Activity {
 			game.executeTerritoryAttack(1, territories.get(target).getOwner(), origin, target, requested);
 		}
 		
+		update();
+		
 		// game saving code
 		if(!over){
 			String gameSave = game.toString();
@@ -354,11 +356,6 @@ public class MapActivity extends Activity {
 				e.printStackTrace();
 			}
 		}
-	}
-	
-	public void onResume(){
-		super.onResume();
-		update();
 	}
 	
 	@Override

@@ -17,7 +17,7 @@ public class CustomisationActivity extends Activity {
 	
 	private int level = 0;
 	private int diff = 0;
-	private boolean diceLike = false;
+	private boolean diceLike, capital, upgrades, armies, ai, conq, hardcore;
 	private String[] levelDetails;
 	
 	@Override
@@ -31,6 +31,14 @@ public class CustomisationActivity extends Activity {
 			level = details.getInt("level");
 			levelDetails = details.getStringArray("levelDetails");
 		}
+		
+		diceLike = false;
+		capital = false;
+		upgrades = false;
+		armies = false;
+		ai = false;
+		conq = false;
+		hardcore = false;
 		
 		// all the elements on screen
 		final TextView heading = (TextView) findViewById(R.id.customisationTitle);
@@ -83,6 +91,24 @@ public class CustomisationActivity extends Activity {
 		switch(v.getId()){
 		case R.id.diceCheckbox:
 			diceLike = checked;
+			break;
+		case R.id.captialCheckBox:
+			capital = checked;
+			break;
+		case R.id.upgradesCheckBox:
+			upgrades = checked;
+			break;
+		case R.id.armiesCheckBox:
+			armies = checked;
+			break;
+		case R.id.aiCheckBox:
+			ai = checked;
+			break;
+		case R.id.conqueredCheckBox:
+			conq = checked;
+			break;
+		case R.id.hardcoreCheckBox:
+			hardcore = checked;
 			break;
 		}
 	}

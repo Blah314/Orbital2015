@@ -148,35 +148,75 @@ public class Game implements Serializable {
 		
 		terrA.setNumUnits(numUnitsA - numUnits);
 		
-		// Attacker has more units - change ownership of territoryB and set it as conquered.
-		// Conquered territories can't execute any actions in that turn
-		if (numUnits > numUnitsB) {
-			int finalNumUnits = numUnits - numUnitsB; // number of suriving units
-															
-			terrB.setNumUnits(finalNumUnits); // Set number of units left
-			terrB.setOwner(terrA.getOwner()); // Change owner to winner of fight
-			terrB.setConquered(true);
+		// dice-like logic
+		if(isDice){
 			
-			playerA.setNumTerritoriesOwned(playerA.getNumTerritoriesOwned() + 1); // Adjusts number of territories
-//			playerA.addTerritoryID(territory2ID); //owned per player
+			// keep fighting till one person's units reaches 0
+			while(numUnits != 0 & numUnitsB != 0){
+				int rollAttack = rand.nextInt(6);
+				int rollDef = rand.nextInt(6);
+				
+				// attacker only wins if his roll is higher
+				if(rollAttack > rollDef){
+					numUnitsB--;
+				}
+				else{
+					numUnits--;
+				}
+			}
 			
-			if(playerID2 != 0){ // player 0 is the neutral party - no player representing it
-				playerB.setNumTerritoriesOwned(playerB.getNumTerritoriesOwned() - 1);
-//				playerB.removeTerritoryID(territory2ID);
-			}	
+			// defender wins
+			if(numUnits == 0){
+				terrB.setNumUnits(numUnitsB);
+			}
+			
+			// attacker wins
+			else{
+				terrB.setNumUnits(numUnits);
+				terrB.setOwner(terrA.getOwner());
+				terrB.setConquered(true);
+				
+				playerA.setNumTerritoriesOwned(playerA.getNumTerritoriesOwned() + 1); // Adjusts number of territories
+//				playerA.addTerritoryID(territory2ID); //owned per player
+			
+				if(playerID2 != 0){ // player 0 is the neutral party - no player representing it
+					playerB.setNumTerritoriesOwned(playerB.getNumTerritoriesOwned() - 1);
+//					playerB.removeTerritoryID(territory2ID);
+				}	
+			}
 		}
 		
-		// If defender has more units
+		// non dice-like logic
 		else{
-			int finalNumUnits = numUnitsB - numUnits;
-			terrB.setNumUnits(finalNumUnits);
+			// attacker wins
+			if (numUnits > numUnitsB) {
+				int finalNumUnits = numUnits - numUnitsB; // number of suriving units
+															
+				terrB.setNumUnits(finalNumUnits); // Set number of units left
+				terrB.setOwner(terrA.getOwner()); // Change owner to winner of fight
+				terrB.setConquered(true);
+			
+				playerA.setNumTerritoriesOwned(playerA.getNumTerritoriesOwned() + 1); // Adjusts number of territories
+//				playerA.addTerritoryID(territory2ID); //owned per player
+			
+				if(playerID2 != 0){ // player 0 is the neutral party - no player representing it
+					playerB.setNumTerritoriesOwned(playerB.getNumTerritoriesOwned() - 1);
+//					playerB.removeTerritoryID(territory2ID);
+				}	
+			}
+		
+			// defender wins
+			else{
+				int finalNumUnits = numUnitsB - numUnits;
+				terrB.setNumUnits(finalNumUnits);
+			}
+		
+//			playersMap.get(playerID1).minusNumTurns();
+		
+//			if (playerA.isTurnEnded() & playerID1 != 1) {
+//				turnEnds();
+//			}
 		}
-		
-//		playersMap.get(playerID1).minusNumTurns();
-		
-//		if (playerA.isTurnEnded() & playerID1 != 1) {
-//			turnEnds();
-//		}
 	}
 	
 	// execute movement
@@ -215,6 +255,7 @@ public class Game implements Serializable {
 			}
 		}
 		
+		Collections.shuffle(owned);
 		Iterator<Territory> tIterator = owned.iterator();
 		
 		// go through each territory and do stuff

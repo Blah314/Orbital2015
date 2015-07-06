@@ -50,4 +50,52 @@
         android:layout_centerHorizontal="true"
         android:text="@string/start_level" />
 
+    <CheckBox
+        android:id="@+id/captialCheckBox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/diceCheckbox"
+        android:text="@string/choose_capital" />
+
+    <CheckBox
+        android:id="@+id/upgradesCheckBox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/captialCheckBox"
+        android:text="@string/choose_upgrades" />
+
+    <CheckBox
+        android:id="@+id/armiesCheckBox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/upgradesCheckBox"
+        android:text="@string/choose_armies" />
+
+    <CheckBox
+        android:id="@+id/aiCheckBox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/armiesCheckBox"
+        android:text="@string/choose_ai" />
+
+    <CheckBox
+        android:id="@+id/conqueredCheckBox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/aiCheckBox"
+        android:text="@string/choose_conq" />
+
+    <CheckBox
+        android:id="@+id/hardcoreCheckBox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/conqueredCheckBox"
+        android:text="@string/choose_hardcore" />
+
 </RelativeLayout>
