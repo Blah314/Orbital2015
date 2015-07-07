@@ -46,12 +46,12 @@ public class MapActivity extends Activity {
 	private ArrayList<String[]> territoryDetails;
 	
 	private int level, diff, numTerritories, turnNum;
-	private boolean diceLike, over;
+	private boolean diceLike, hardcore, over, conqLimit;
 	private Game game;
 	private HashMap<Integer, Territory> territories;
 	private HashMap<Integer, Player> players;
 	
-	public Hashtable<Integer,Integer> ColorMap;
+	private Hashtable<Integer,PorterDuffColorFilter> ColorMap;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -69,12 +69,12 @@ public class MapActivity extends Activity {
 		endTurn = (Button) findViewById(R.id.endTurnButton);
 		
 		// color definitions - more to come
-		ColorMap = new Hashtable<Integer,Integer>();
-		ColorMap.put(0,Color.GRAY);
-		ColorMap.put(1,Color.BLUE);
-		ColorMap.put(2,Color.RED);
-		ColorMap.put(3,Color.GREEN);
-		ColorMap.put(4,Color.YELLOW);
+		ColorMap = new Hashtable<Integer,PorterDuffColorFilter>();
+		ColorMap.put(0,new PorterDuffColorFilter(Color.GRAY, PorterDuff.Mode.OVERLAY));
+		ColorMap.put(1,new PorterDuffColorFilter(Color.BLUE, PorterDuff.Mode.OVERLAY));
+		ColorMap.put(2,new PorterDuffColorFilter(Color.RED, PorterDuff.Mode.OVERLAY));
+		ColorMap.put(3,new PorterDuffColorFilter(Color.GREEN, PorterDuff.Mode.OVERLAY));
+		ColorMap.put(4,new PorterDuffColorFilter(Color.YELLOW, PorterDuff.Mode.OVERLAY));
 		
 		over = false;
 		
@@ -102,6 +102,8 @@ public class MapActivity extends Activity {
 		level = details.getInt("lvl", 1);
 		diff = details.getInt("diff", 0);
 		diceLike = details.getBoolean("dice", false);
+		conqLimit = details.getBoolean("conqLimit", false);
+		hardcore = details.getBoolean("hardcore", false);
 		levelDetails = details.getStringArray("levelDetails");
 
 		territoryDetails = new ArrayList<String[]>();
@@ -132,7 +134,7 @@ public class MapActivity extends Activity {
 			startingRes[i-8] = Integer.parseInt(levelDetails[i]);
 		}
 		
-		game = new Game(diff, diceLike, Integer.parseInt(levelDetails[5]), startingRes, false, startingRes, territoryDetails);
+		game = new Game(diff, diceLike, conqLimit, Integer.parseInt(levelDetails[5]), startingRes, false, startingRes, territoryDetails);
 		territories = game.getTerritories();
 		numTerritories = territories.size();
 		players = game.getPlayers();
@@ -152,19 +154,13 @@ public class MapActivity extends Activity {
 		level = details.getInt("lvl", 1);
 		diff = details.getInt("diff", 1);
 		diceLike = details.getBoolean("dice", false);
+		conqLimit = details.getBoolean("conqLimit", false);
+		hardcore = details.getBoolean("hardcore", false);
 		int numPlayers = details.getInt("numPlayers", 2);
 		int[] res = details.getIntArray("res");
 		int[] terr = details.getIntArray("terr");
 		boolean[] terrConq = details.getBooleanArray("conq");
 		territoryDetails = (ArrayList<String[]>) details.getSerializable("rest");
-		
-//		for(int i = 0; i < territoryDetails.size(); i++){
-//			String[] t = territoryDetails.get(i);
-//			for(String s : t){
-//				System.out.print(s);
-//			}
-//			System.out.println();
-//		}
 		
 		// loading up the level details to get some basic info
 		AssetManager am = this.getAssets();
@@ -189,8 +185,8 @@ public class MapActivity extends Activity {
 		setFields();
 		loadTerritoryButtons();
 		
-		game = new Game(diff, diceLike, numPlayers, res, true, terr, territoryDetails);
-		game.setTerritoriesConq(terrConq);
+		game = new Game(diff, diceLike, conqLimit, numPlayers, res, true, terr, territoryDetails);
+		if(!conqLimit) game.setTerritoriesConq(terrConq);
 		territories = game.getTerritories();
 		numTerritories = territories.size();
 		players = game.getPlayers();
@@ -298,7 +294,7 @@ public class MapActivity extends Activity {
 				lost = false;
 			}
 			b.setText(t.getAbbrvName() + "\n" + t.getNumUnits());
-			b.getBackground().setColorFilter(new PorterDuffColorFilter(ColorMap.get(t.getOwner()),PorterDuff.Mode.OVERLAY));
+			b.getBackground().setColorFilter(ColorMap.get(t.getOwner()));
 			
 			res.setText("Resources:\n" + players.get(1).getNumResources());
 			turnsLeft.setText("Turn Number:\n" + Integer.toString(turnNum));
@@ -342,12 +338,13 @@ public class MapActivity extends Activity {
 		update();
 		
 		// game saving code
-		if(!over){
+		if(!over & !hardcore){
 			String gameSave = game.toString();
 			FileOutputStream fos;
 			try{
 				fos = openFileOutput("savegame",Context.MODE_PRIVATE);
-				fos.write((Integer.toString(turnNum) + "," + Integer.toString(level) + "\n").getBytes());
+				fos.write((Integer.toString(turnNum) + "," + Integer.toString(level) + "," + 
+						Boolean.toString(hardcore) + "," + Boolean.toString(conqLimit) + "\n").getBytes());
 				fos.write(gameSave.getBytes());
 				fos.flush();
 				fos.close();

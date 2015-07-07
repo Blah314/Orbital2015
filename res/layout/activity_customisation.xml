@@ -8,30 +8,13 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="sg.com.yahoo.ryanlouck.orbital2015.CustomisationActivity" >
 
-    <TextView
-        android:id="@+id/diffText"
+    <Button
+        android:id="@+id/startButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/customisationTitle"
-        android:text="@string/choose_diff"
-        android:textAppearance="?android:attr/textAppearanceMedium" />
-
-    <Spinner
-        android:id="@+id/diffSpinner"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/diffText"
-        android:layout_below="@+id/diffText" />
-
-    <CheckBox
-        android:id="@+id/diceCheckbox"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/diffSpinner"
-        android:layout_below="@+id/diffSpinner"
-        android:layout_marginTop="15dp"
-        android:text="@string/choose_dice"
-        android:onClick="checkBoxListener" />
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:text="@string/start_level" />
 
     <TextView
         android:id="@+id/customisationTitle"
@@ -42,60 +25,96 @@
         android:text="@string/placeholder"
         android:textAppearance="?android:attr/textAppearanceLarge" />
 
-    <Button
-        android:id="@+id/startButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:text="@string/start_level" />
+    <ScrollView
+        android:id="@+id/scrollView1"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_below="@+id/customisationTitle"
+        android:layout_above="@+id/startButton"
+        android:layout_centerHorizontal="true" >
 
-    <CheckBox
-        android:id="@+id/captialCheckBox"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_below="@+id/diceCheckbox"
-        android:text="@string/choose_capital" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
 
-    <CheckBox
-        android:id="@+id/upgradesCheckBox"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_below="@+id/captialCheckBox"
-        android:text="@string/choose_upgrades" />
+            <TextView
+                android:id="@+id/diffText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/choose_diff"
+                android:textAppearance="?android:attr/textAppearanceMedium" />
 
-    <CheckBox
-        android:id="@+id/armiesCheckBox"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_below="@+id/upgradesCheckBox"
-        android:text="@string/choose_armies" />
+            <Spinner
+                android:id="@+id/diffSpinner"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
 
-    <CheckBox
-        android:id="@+id/aiCheckBox"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_below="@+id/armiesCheckBox"
-        android:text="@string/choose_ai" />
+            <CheckBox
+                android:id="@+id/diceCheckbox"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:onClick="checkBoxListener"
+                android:text="@string/choose_dice" />
 
-    <CheckBox
-        android:id="@+id/conqueredCheckBox"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_below="@+id/aiCheckBox"
-        android:text="@string/choose_conq" />
+            <CheckBox
+                android:id="@+id/armiesCheckBox"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="checkBoxListener"
+                android:text="@string/choose_armies" />
 
-    <CheckBox
-        android:id="@+id/hardcoreCheckBox"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_below="@+id/conqueredCheckBox"
-        android:text="@string/choose_hardcore" />
+            <CheckBox
+                android:id="@+id/aiCheckBox"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="checkBoxListener"
+                android:text="@string/choose_ai" />
+
+            <CheckBox
+                android:id="@+id/conqueredCheckBox"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="checkBoxListener"
+                android:text="@string/choose_conq" />
+
+            <CheckBox
+                android:id="@+id/upgradesCheckBox"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="checkBoxListener"
+                android:text="@string/choose_upgrades" />
+
+            <CheckBox
+                android:id="@+id/capitalCheckBox"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="checkBoxListener"
+                android:text="@string/choose_capital" />
+
+            <CheckBox
+                android:id="@+id/fowCheckBox"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="checkBoxListener"
+                android:text="@string/choose_fow" />
+
+            <CheckBox
+                android:id="@+id/turnCheckBox"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="checkBoxListener"
+                android:text="@string/choose_turns" />
+
+            <CheckBox
+                android:id="@+id/hardcoreCheckBox"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="checkBoxListener"
+                android:text="@string/choose_hardcore" />
+
+        </LinearLayout>
+    </ScrollView>
 
 </RelativeLayout>

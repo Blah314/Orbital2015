@@ -3,3 +3,4 @@ LEVELID,LEVELSET,LEVELNAME,OBJECTIVE,OBJECTIVEAMT,NUMPLAYERS,DESCRIPTION,NUMTERR
 1,0,Level 2,0,0,3,You can't take both your opponents on at once. Let them fight among themselves first.,2,0,20,20
 2,0,Level 3,0,0,4,All of you are quite evenly matched. Tactics matter here.,3,50,50,50,50
 3,0,Level 4,0,0,3,You're sandwiched between your enemies. Survive and defeat them both.,4,100,50,50
+4,0,Level 5,0,0,2,A large map with your opponent on the other side. Good luck.,5,0,0

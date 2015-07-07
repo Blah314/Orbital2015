@@ -104,6 +104,23 @@ public class MainActivity extends Activity {
 					String[] globalDetails = saveDetails.get(0);
 					resumeLaunch.putExtra("turnNum", Integer.parseInt(globalDetails[0]));
 					resumeLaunch.putExtra("lvl", Integer.parseInt(globalDetails[1]));
+					boolean hardcore;
+					if(globalDetails[2].equals("true")){
+						hardcore = true;
+					}
+					else{
+						hardcore = false;
+					}
+					resumeLaunch.putExtra("hardcore", hardcore);
+					
+					boolean conqLimit;
+					if(globalDetails[3].equals("true")){
+						conqLimit = true;
+					}
+					else{
+						conqLimit = false;
+					}
+					resumeLaunch.putExtra("conqLimit", conqLimit);
 				
 					String[] gameDetails = saveDetails.get(1);
 					resumeLaunch.putExtra("diff", Integer.parseInt(gameDetails[0]));

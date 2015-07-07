@@ -45,6 +45,8 @@
     <string name="choose_armies">Multiple Army Types?</string>
 	<string name="choose_ai">AI Personalities?</string>
 	<string name="choose_conq">No Conquer Limit?</string>
+	<string name="choose_fow">Fog of War?</string>
+	<string name="choose_turns">Turn Limit?</string>
     <string name="choose_hardcore">Hardcore?</string>
     <string name="title_activity_map">MAP</string>
     <string name="end_turn">End Turn</string>

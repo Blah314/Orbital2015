@@ -13,7 +13,7 @@ Each territory occupies one line, with each line having at least 14 parameters.
 7 - TerritoryRegion (Not used yet)
 8 - TerritoryOwner (Who owns this territory at the start)
 	0 - Neutral
-	1 - Human Players
+	1 - Human Player
 	Others - AI)
 9,10,11 - TerritoryArmies1,2,3 (How much of each army is on the territory at start)
 12 onwards - TerritoryNeighbours (All the IDs of the territories that are next to this one)

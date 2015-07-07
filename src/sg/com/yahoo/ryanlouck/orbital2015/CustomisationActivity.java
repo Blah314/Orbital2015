@@ -17,7 +17,7 @@ public class CustomisationActivity extends Activity {
 	
 	private int level = 0;
 	private int diff = 0;
-	private boolean diceLike, capital, upgrades, armies, ai, conq, hardcore;
+	private boolean diceLike, capital, upgrades, armies, ai, conq, fow, turns, hardcore;
 	private String[] levelDetails;
 	
 	@Override
@@ -38,6 +38,8 @@ public class CustomisationActivity extends Activity {
 		armies = false;
 		ai = false;
 		conq = false;
+		fow = false;
+		turns = false;
 		hardcore = false;
 		
 		// all the elements on screen
@@ -73,6 +75,8 @@ public class CustomisationActivity extends Activity {
 				gameLaunch.putExtra("diff", diff);
 				gameLaunch.putExtra("lvl", level);
 				gameLaunch.putExtra("dice", diceLike);
+				gameLaunch.putExtra("conqLimit", conq);
+				gameLaunch.putExtra("hardcore", hardcore);
 				gameLaunch.putExtra("levelDetails", levelDetails);
 				startActivity(gameLaunch);
 			}
@@ -84,7 +88,7 @@ public class CustomisationActivity extends Activity {
 		this.finish();
 	}
 	
-	// dice-like checkbox listener
+	// checkbox listener
 	public void checkBoxListener(View v){
 		boolean checked = ((CheckBox) v).isChecked();
 		
@@ -92,7 +96,7 @@ public class CustomisationActivity extends Activity {
 		case R.id.diceCheckbox:
 			diceLike = checked;
 			break;
-		case R.id.captialCheckBox:
+		case R.id.capitalCheckBox:
 			capital = checked;
 			break;
 		case R.id.upgradesCheckBox:
@@ -106,6 +110,12 @@ public class CustomisationActivity extends Activity {
 			break;
 		case R.id.conqueredCheckBox:
 			conq = checked;
+			break;
+		case R.id.fowCheckBox:
+			fow = checked;
+			break;
+		case R.id.turnCheckBox:
+			turns = checked;
 			break;
 		case R.id.hardcoreCheckBox:
 			hardcore = checked;

@@ -24,6 +24,7 @@ public class EndGameFragment extends DialogFragment {
         	builder.setMessage(getResources().getString(R.string.win_text));
         	builder.setPositiveButton(R.string.exit_win, new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int id) {
+                	getActivity().getApplicationContext().deleteFile("savegame");
                 	Intent backLaunch = new Intent(getActivity().getApplicationContext(), MainActivity.class);
                 	backLaunch.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
     				startActivity(backLaunch);
@@ -37,6 +38,7 @@ public class EndGameFragment extends DialogFragment {
         	builder.setMessage(getResources().getString(R.string.lose_text));
         	builder.setPositiveButton(R.string.exit_lose, new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int id) {
+                	getActivity().getApplicationContext().deleteFile("savegame");
                 	Intent backLaunch = new Intent(getActivity().getApplicationContext(), MainActivity.class);
                 	backLaunch.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
     				startActivity(backLaunch);    				
