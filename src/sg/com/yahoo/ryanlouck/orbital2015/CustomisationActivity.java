@@ -17,7 +17,7 @@ public class CustomisationActivity extends Activity {
 	
 	private int level = 0;
 	private int diff = 0;
-	private boolean diceLike, capital, upgrades, armies, ai, conq, fow, turns, hardcore;
+	private boolean diceLike, capital, upgrades, armies, ai, fow, turns, hardcore;
 	private String[] levelDetails;
 	
 	@Override
@@ -37,7 +37,6 @@ public class CustomisationActivity extends Activity {
 		upgrades = false;
 		armies = false;
 		ai = false;
-		conq = false;
 		fow = false;
 		turns = false;
 		hardcore = false;
@@ -75,7 +74,8 @@ public class CustomisationActivity extends Activity {
 				gameLaunch.putExtra("diff", diff);
 				gameLaunch.putExtra("lvl", level);
 				gameLaunch.putExtra("dice", diceLike);
-				gameLaunch.putExtra("conqLimit", conq);
+				gameLaunch.putExtra("capital", capital);
+				gameLaunch.putExtra("fow", fow);
 				gameLaunch.putExtra("hardcore", hardcore);
 				gameLaunch.putExtra("levelDetails", levelDetails);
 				startActivity(gameLaunch);
@@ -107,9 +107,6 @@ public class CustomisationActivity extends Activity {
 			break;
 		case R.id.aiCheckBox:
 			ai = checked;
-			break;
-		case R.id.conqueredCheckBox:
-			conq = checked;
 			break;
 		case R.id.fowCheckBox:
 			fow = checked;

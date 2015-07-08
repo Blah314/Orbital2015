@@ -6,12 +6,14 @@ public class Player implements Serializable {
 	
 	static final long serialVersionUID = 1; // use this as a version number
 	private int playerID, numResources, numTurns, numTerritoriesOwned;
+	private boolean isActive;
 //	private ArrayList<Integer> territoriesOwnedID = new ArrayList<Integer>();
 	
 	public Player(int ID, int resources, int startingTerritories){
 		playerID = ID;
 		numResources = resources;
 		numTerritoriesOwned = startingTerritories;
+		isActive = true;
 	}
 	
 	// get functions for use by other classes
@@ -25,6 +27,10 @@ public class Player implements Serializable {
 	
 	public int getNumTerritoriesOwned(){
 		return numTerritoriesOwned;
+	}
+	
+	public boolean isActive(){
+		return isActive;
 	}
 	
 	public int getNumTurns(){
@@ -59,6 +65,10 @@ public class Player implements Serializable {
 	
 	public void setNumTurns(int newNumTurns){
 		numTurns = newNumTurns;
+	}
+	
+	public void deactivate(){
+		isActive = false;
 	}
 	
 	public String toString(){

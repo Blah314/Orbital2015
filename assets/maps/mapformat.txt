@@ -8,7 +8,9 @@ Each territory occupies one line, with each line having at least 14 parameters.
 2 - TerritoryAbbv (Abbreviated name for use of the buttons)
 3 - X-coord (How far right this territory is from the left) (Must be >= 0)
 4 - Y-coord (How far down this territory is from the right) (Must be >= 0)
-5 - TerritoryType (Not used yet)
+5 - TerritoryType
+	0 - Normal Territory
+	1 - Capital
 6 - TerritoryValue (Not used yet)
 7 - TerritoryRegion (Not used yet)
 8 - TerritoryOwner (Who owns this territory at the start)

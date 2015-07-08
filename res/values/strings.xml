@@ -16,7 +16,7 @@
     <string name="instructions_menu">Instructions</string>
     <string name="title_activity_options">Options</string>
     <string name="territory_size">Territory Size</string>
-    <string name="demo_territory">ORB\n56</string>
+    <string name="demo_territory">ORB\n56/23/10</string>
     <string name="territory_size_desc">Depending on your screen size, you may need to adjust the size of territories so that you can see both its initials and the number of units it has. Use the territory Button below to help you judge.</string>
 
     <string-array name="territory_sizes">
@@ -44,7 +44,6 @@
     <string name="choose_upgrades">Upgrades Enabled?</string>
     <string name="choose_armies">Multiple Army Types?</string>
 	<string name="choose_ai">AI Personalities?</string>
-	<string name="choose_conq">No Conquer Limit?</string>
 	<string name="choose_fow">Fog of War?</string>
 	<string name="choose_turns">Turn Limit?</string>
     <string name="choose_hardcore">Hardcore?</string>
@@ -85,7 +84,7 @@
         <item>Hello and welcome to Orbit Wars! This instructions page will contain all the info you will need to learn how to play the game.\n\n
             Orbit Wars is a Risk-like turn-based 4X game, where you control a faction and have to complete certain objectives to acheive victory. If you have played Risk before, gameplay should come naturally to you.\n\n
             Read on for more detailed information. Or simply learn as you play!</item>
-        <item>The most basic objective in Orbit Wars is to eliminate all your opponents, represented by other factions in different colours on the map.\n\n
+        <item>The most basic objective in Orbit Wars is to eliminate all your opponents, represented by other factions in different colours on the map. Your faction is blue on the map.\n\n
             To do that, you have to buy armies with your resources and conquer all their territories. The territories you hold at the start of each turn will grant you resources automatically, so defend them if you want to keep your income going.\n\n
             Clicking on any of your territories on the map will bring up another menu, where you can perform various actions with regard to that territory. This can range from adding armies to attacking neighbouring territories.\n\n
             Once you are done with your turn, press the end turn button. The AI player(s) will then take their turns and then play passes back to you. (If you are still alive at the end of their wrath.)</item>
@@ -93,11 +92,12 @@
             A detailed description of each modifier can be found below:\n\n
             Difficulty: Determines the general difficulty of the AI players.\n\n
             Dice-Like: As with Risk, you can choose to have the outcomes of battles be determined by dice-rolls, adding a factor of luck into a battle. Battles are one-for-one by default.\n\n
-            Capital Cities: One of your starting territories will be your capital. Lose it, and you lose the game. Same goes for your opponents.\n\n
+            Capital Cities: One of your starting territories will be your capital. Lose it, and you lose the game. Same goes for your opponents. Capitals can be identified by asterisks on both sides of their name on the map.\n\n
             Upgrades: Enabling this will allow you to spend resources to upgrade your territories or armies.\n\n
             Multiple Army Types: Instead of just a single army unit type, why not have three? The 3 types have different stats and have differing effectiveness against each other. Just like a rock-paper-scissors game.\n\n
             AI Personalities: Tired of playing against the same predicitable AI opponents? Spice it up by enabling this. Each AI will then react in it\'s own distinct way.\n\n
-            Conquer Limit: Typically, after you conquer a territory, you cannot execute another attack from it until your next turn. Enabling this removes this limitiation. Warning: The AI will be free to use this too!\n\n
+            Fog Of War: To make things super realistic, where you can\'t see what\'s happening beyond your borders, turn this on.\n\n
+            Turn Limit: Limits the number of actions you and your opponents can do within one turn. Make those moves count!\n\n
             Hardcore Mode: Your game is not saved in this mode. So no going back once you have left. Can you handle it?</item>
     </string-array>
 

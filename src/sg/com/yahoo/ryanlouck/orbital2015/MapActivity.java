@@ -1,13 +1,14 @@
 package sg.com.yahoo.ryanlouck.orbital2015;
 
 import java.io.BufferedReader;
-import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Hashtable;
+import java.util.Iterator;
 
 import android.app.Activity;
 import android.app.FragmentManager;
@@ -46,7 +47,7 @@ public class MapActivity extends Activity {
 	private ArrayList<String[]> territoryDetails;
 	
 	private int level, diff, numTerritories, turnNum;
-	private boolean diceLike, hardcore, over, conqLimit;
+	private boolean diceLike, hardcore, over, fow, capital;
 	private Game game;
 	private HashMap<Integer, Territory> territories;
 	private HashMap<Integer, Player> players;
@@ -75,6 +76,7 @@ public class MapActivity extends Activity {
 		ColorMap.put(2,new PorterDuffColorFilter(Color.RED, PorterDuff.Mode.OVERLAY));
 		ColorMap.put(3,new PorterDuffColorFilter(Color.GREEN, PorterDuff.Mode.OVERLAY));
 		ColorMap.put(4,new PorterDuffColorFilter(Color.YELLOW, PorterDuff.Mode.OVERLAY));
+		ColorMap.put(999, new PorterDuffColorFilter(Color.BLACK, PorterDuff.Mode.OVERLAY));
 		
 		over = false;
 		
@@ -102,7 +104,8 @@ public class MapActivity extends Activity {
 		level = details.getInt("lvl", 1);
 		diff = details.getInt("diff", 0);
 		diceLike = details.getBoolean("dice", false);
-		conqLimit = details.getBoolean("conqLimit", false);
+		fow = details.getBoolean("fow", false);
+		capital = details.getBoolean("capital", false);
 		hardcore = details.getBoolean("hardcore", false);
 		levelDetails = details.getStringArray("levelDetails");
 
@@ -134,7 +137,7 @@ public class MapActivity extends Activity {
 			startingRes[i-8] = Integer.parseInt(levelDetails[i]);
 		}
 		
-		game = new Game(diff, diceLike, conqLimit, Integer.parseInt(levelDetails[5]), startingRes, false, startingRes, territoryDetails);
+		game = new Game(diff, diceLike, Integer.parseInt(levelDetails[5]), startingRes, false, startingRes, territoryDetails);
 		territories = game.getTerritories();
 		numTerritories = territories.size();
 		players = game.getPlayers();
@@ -154,7 +157,8 @@ public class MapActivity extends Activity {
 		level = details.getInt("lvl", 1);
 		diff = details.getInt("diff", 1);
 		diceLike = details.getBoolean("dice", false);
-		conqLimit = details.getBoolean("conqLimit", false);
+		fow = details.getBoolean("fow", false);
+		capital = details.getBoolean("capital", false);
 		hardcore = details.getBoolean("hardcore", false);
 		int numPlayers = details.getInt("numPlayers", 2);
 		int[] res = details.getIntArray("res");
@@ -185,8 +189,8 @@ public class MapActivity extends Activity {
 		setFields();
 		loadTerritoryButtons();
 		
-		game = new Game(diff, diceLike, conqLimit, numPlayers, res, true, terr, territoryDetails);
-		if(!conqLimit) game.setTerritoriesConq(terrConq);
+		game = new Game(diff, diceLike, numPlayers, res, true, terr, territoryDetails);
+		game.setTerritoriesConq(terrConq);
 		territories = game.getTerritories();
 		numTerritories = territories.size();
 		players = game.getPlayers();
@@ -216,7 +220,7 @@ public class MapActivity extends Activity {
 			// creates the territory buttons and puts them at their corresponding location
 			Button territoryButton = new Button(this);
 			territoryButton.setText(tDetails[2]);
-			RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(70*buttonScale, 70*buttonScale);
+			RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(100*buttonScale, 100*buttonScale);
 			params.leftMargin = Integer.parseInt(tDetails[3])*buttonScale;
 			params.topMargin = Integer.parseInt(tDetails[4])*buttonScale;
 			map.addView(territoryButton, params);
@@ -283,22 +287,93 @@ public class MapActivity extends Activity {
 		won = true;
 		lost = true;
 		
-		for(int i = 0; i < numTerritories; i++){
-			Button b = (Button) map.getChildAt(i);
-			Territory t = territories.get(i+1);
-			int owner = t.getOwner();
-			if(owner != 1 & owner != 0){
-				won = false;
+		// display with fog of war
+		if(fow){
+			boolean[] visibility = new boolean[numTerritories];
+			Arrays.fill(visibility, false);
+			for(int i = 1; i <= numTerritories; i++){
+				Territory t = territories.get(i);
+				if(t.getOwner() == 1){
+					visibility[i-1] = true;
+					ArrayList<Integer> neighbours = t.getNeighbourIDs();
+					Iterator<Integer> n = neighbours.iterator();
+					while(n.hasNext()){
+						int next = n.next();
+						visibility[next - 1] = true;
+					}
+				}
 			}
-			else if(owner == 1){
-				lost = false;
-			}
-			b.setText(t.getAbbrvName() + "\n" + t.getNumUnits());
-			b.getBackground().setColorFilter(ColorMap.get(t.getOwner()));
 			
-			res.setText("Resources:\n" + players.get(1).getNumResources());
-			turnsLeft.setText("Turn Number:\n" + Integer.toString(turnNum));
+			for(int i = 0; i < numTerritories; i++){
+				Button b = (Button) map.getChildAt(i);
+				Territory t = territories.get(i+1);
+				int owner = t.getOwner();
+				if(owner != 1 & owner != 0){
+					won = false;
+				}
+				else if(owner == 1){
+					lost = false;
+				}
+				
+				if(visibility[i]){
+					if(t.isCapital()){
+						b.setText("*" + t.getAbbrvName() + "*" + "\n" + t.getNumUnits());
+					}
+					else{
+						b.setText(t.getAbbrvName() + "\n" + t.getNumUnits());
+					}
+					b.getBackground().setColorFilter(ColorMap.get(t.getOwner()));
+				}
+				
+				else {
+					b.setText(t.getAbbrvName() + "\n" + "?");
+					b.getBackground().setColorFilter(ColorMap.get(999));
+				}
+			
+				res.setText("Resources:\n" + players.get(1).getNumResources());
+				turnsLeft.setText("Turn Number:\n" + Integer.toString(turnNum));
+			}
 		}
+		
+		// display without fog of war
+		else{
+			for(int i = 0; i < numTerritories; i++){
+				Button b = (Button) map.getChildAt(i);
+				Territory t = territories.get(i+1);
+				int owner = t.getOwner();
+				if(owner != 1 & owner != 0){
+					won = false;
+				}
+				else if(owner == 1){
+					lost = false;
+				}
+				
+				if(t.isCapital()){
+					b.setText("*" + t.getAbbrvName() + "*" + "\n" + t.getNumUnits());
+				}
+				else{
+					b.setText(t.getAbbrvName() + "\n" + t.getNumUnits());
+				}
+				
+				b.getBackground().setColorFilter(ColorMap.get(t.getOwner()));
+			
+				res.setText("Resources:\n" + players.get(1).getNumResources());
+				turnsLeft.setText("Turn Number:\n" + Integer.toString(turnNum));
+			}
+		}
+		
+		if(!game.getPlayers().get(1).isActive()){
+			lost = true;
+		}
+		
+		HashMap<Integer, Player> players = game.getPlayers();
+		boolean eliminated = true;
+		for(int i = 2; i <= players.size(); i++){
+			Player p = players.get(i);
+			if(p.isActive()) eliminated = false;
+		}
+		
+		if(eliminated) won = true;
 		
 		if(won){
 			final FragmentManager fm = getFragmentManager();
@@ -344,7 +419,8 @@ public class MapActivity extends Activity {
 			try{
 				fos = openFileOutput("savegame",Context.MODE_PRIVATE);
 				fos.write((Integer.toString(turnNum) + "," + Integer.toString(level) + "," + 
-						Boolean.toString(hardcore) + "," + Boolean.toString(conqLimit) + "\n").getBytes());
+						Boolean.toString(hardcore) + "," + Boolean.toString(fow) + "," + Boolean.toString(capital) +
+						"\n").getBytes());
 				fos.write(gameSave.getBytes());
 				fos.flush();
 				fos.close();

@@ -113,14 +113,23 @@ public class MainActivity extends Activity {
 					}
 					resumeLaunch.putExtra("hardcore", hardcore);
 					
-					boolean conqLimit;
+					boolean fow;
 					if(globalDetails[3].equals("true")){
-						conqLimit = true;
+						fow = true;
 					}
 					else{
-						conqLimit = false;
+						fow = false;
 					}
-					resumeLaunch.putExtra("conqLimit", conqLimit);
+					resumeLaunch.putExtra("fow", fow);
+					
+					boolean capital;
+					if(globalDetails[4].equals("true")){
+						capital = true;
+					}
+					else{
+						capital = false;
+					}
+					resumeLaunch.putExtra("capital", capital);
 				
 					String[] gameDetails = saveDetails.get(1);
 					resumeLaunch.putExtra("diff", Integer.parseInt(gameDetails[0]));

@@ -13,12 +13,12 @@ public class Game implements Serializable {
 	static final long serialVersionUID = 1; // use this as a version number
 	private int numPlayers, currPlayerID;
 	private HashMap<Integer, Player> playersMap = new HashMap<Integer, Player>();
-	private boolean isDice, conqLimit;
+	private boolean isDice;
 	private double diff;
 	private HashMap<Integer, Territory> territoriesMap = new HashMap<Integer, Territory>();
 	private Random rand = new Random();
 
-	public Game(int diff, boolean diceLike, boolean conqLimit, int numPlayersToAdd, int[] startingResources, 
+	public Game(int diff, boolean diceLike, int numPlayersToAdd, int[] startingResources, 
 			boolean fromSave, int[] savedTerrs, ArrayList<String[]> mapDetails) {
 		
 		// sets AI resource generation based on selected difficulty
@@ -34,7 +34,6 @@ public class Game implements Serializable {
 			break;
 		}
 		
-		this.conqLimit = conqLimit;
 		isDice = diceLike;
 		this.numPlayers = numPlayersToAdd;
 		Iterator<String[]> territoryIterator = mapDetails.iterator();
@@ -73,6 +72,11 @@ public class Game implements Serializable {
 	public int getCurrPlayer() {
 		return currPlayerID;
 	}
+	
+	public void deactivatePlayer(int player){
+		Player p = playersMap.get(player);
+		p.deactivate();
+	}
 
 	// This method is called when a new player needs to start his turn
 	public void startPlayerTurn(int playerID, boolean addRes) {
@@ -81,11 +85,9 @@ public class Game implements Serializable {
 		int playerNumTerrOwned = player.getNumTerritoriesOwned();
 		
 		// resets conquered attribute for each territory
-		if(!conqLimit){
-			for(int i = 1; i <= territoriesMap.size(); i++){
-				Territory t = territoriesMap.get(i);
-				t.setConquered(false);
-			}
+		for(int i = 1; i <= territoriesMap.size(); i++){
+			Territory t = territoriesMap.get(i);
+			t.setConquered(false);
 		}
 
 		// Updates new number of turns for player
@@ -173,8 +175,13 @@ public class Game implements Serializable {
 			// attacker wins
 			else{
 				terrB.setNumUnits(numUnits);
-				terrB.setOwner(terrA.getOwner());
-				if(!conqLimit) terrB.setConquered(true);
+				terrB.setOwner(playerID1);
+				terrB.setConquered(true);
+				
+				if(terrB.isCapital()){
+					deactivatePlayer(playerID2);
+					terrB.capitalConquered();
+				}
 				
 				playerA.setNumTerritoriesOwned(playerA.getNumTerritoriesOwned() + 1); // Adjusts number of territories
 //				playerA.addTerritoryID(territory2ID); //owned per player
@@ -194,7 +201,12 @@ public class Game implements Serializable {
 															
 				terrB.setNumUnits(finalNumUnits); // Set number of units left
 				terrB.setOwner(terrA.getOwner()); // Change owner to winner of fight
-				if(!conqLimit) terrB.setConquered(true);
+				terrB.setConquered(true);
+				
+				if(terrB.isCapital()){
+					deactivatePlayer(playerID2);
+					terrB.capitalConquered();
+				}
 			
 				playerA.setNumTerritoriesOwned(playerA.getNumTerritoriesOwned() + 1); // Adjusts number of territories
 //				playerA.addTerritoryID(territory2ID); //owned per player
@@ -243,6 +255,8 @@ public class Game implements Serializable {
 	
 	// AI function
 	public void AIMoves(Player player) {
+		
+		if(!player.isActive()) return;
 		
 		ArrayList<Territory> owned = new ArrayList<Territory>();
 		int limit = player.getNumResources() / 10;
@@ -316,73 +330,6 @@ public class Game implements Serializable {
 			}
 			
 		}
-		
-//		int rscSplit1;
-//		int rscSplit2;
-//		ArrayList<Territory> tempStorage = new ArrayList<Territory>();
-//		for (int i = 1; i <= territoriesMap.size(); i++) { // Adds to temp storage
-//			Territory currTerr = territoriesMap.get(i);
-//			if (currTerr.getOwner() == player.getPlayerID()) {
-//				tempStorage.add(currTerr);
-//			}
-//		}
-//		do {
-//			boolean executedAttack = false;
-//			//ADDS RESOURCES IF AVAILABLE TO RANDOM 2 TERRITORIES IT HAS OR IF ONLY HAS 1, ADD TO 1
-//			if (player.getNumResources() > 0) {
-//
-//				if (player.getNumTerritoriesOwned() > 1) {
-//					// Use up all resources on 2 random territories it has.
-//					if (player.getNumResources() % 2 == 0) { // Split resources for 2 terr
-//						rscSplit1 = player.getNumResources() / 2;
-//						rscSplit2 = rscSplit1;
-//					} else {
-//						rscSplit1 = player.getNumResources() / 2;
-//						rscSplit2 = rscSplit1 + 1;
-//					}																
-//					ArrayList<Territory> rscTempStorage = new ArrayList<Territory>();
-//					rscTempStorage = (ArrayList<Territory>) tempStorage.clone();
-//					int indexRandom = rand.nextInt(player.getNumTerritoriesOwned()); // Get random index									
-//					Territory chosen = rscTempStorage.get(indexRandom);
-//					executeTerritoryAddUnits(player.getPlayerID(),chosen.getId(), rscSplit1 / 10);
-//					rscTempStorage.remove(indexRandom);
-//					indexRandom = rand.nextInt(player.getNumTerritoriesOwned() - 1);
-//					chosen = rscTempStorage.get(indexRandom);
-//					executeTerritoryAddUnits(player.getPlayerID(),chosen.getId(), rscSplit2 / 10);
-//				}
-//				else {
-//					for (int i = 1; i <= territoriesMap.size(); i++) {
-//						Territory currTerr = territoriesMap.get(i);
-//						if (currTerr.getOwner() == player.getPlayerID()) {
-//							executeTerritoryAddUnits(player.getPlayerID(),currTerr.getId(), player.getNumResources() / 10);
-//						}
-//					}
-//				}
-//			}
-//
-//			//EXECUTE ATTACK IF POSSIBLE
-//			for ( int i = 0; i < player.getNumTerritoriesOwned(); i++){  //Loops through all owned territories it has
-//				Territory currTerr = tempStorage.get(i);
-//				ArrayList<Integer> AtkTempStorage = new ArrayList<Integer>();
-//				AtkTempStorage = (ArrayList<Integer>) currTerr.getNeighbourIDs().clone();  //Stores neighbor IDs for curr terr
-//				for ( int j = 0; j < AtkTempStorage.size(); j++){  //Loops through all its neighbors
-//					if ( currTerr.getNumUnits() >= territoriesMap.get(AtkTempStorage.get(j)).getNumUnits()){
-//						executeTerritoryAttack(player.getPlayerID(), territoriesMap.get(AtkTempStorage.get(j)).getOwner(),
-//								currTerr.getId(), AtkTempStorage.get(j), currTerr.getNumUnits() );
-//						executedAttack = true;
-//					}					
-//				}
-//			}
-//			if ( !executedAttack ){
-//				break;
-//			}
-//			else{
-//				executedAttack = false;
-//			}
-//			
-//
-//		} while (!player.isTurnEnded());
-		
 	}
 	
 	public void setTerritoriesConq(boolean[] values){

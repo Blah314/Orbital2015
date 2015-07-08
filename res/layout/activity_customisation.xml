@@ -72,12 +72,6 @@
                 android:onClick="checkBoxListener"
                 android:text="@string/choose_ai" />
 
-            <CheckBox
-                android:id="@+id/conqueredCheckBox"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:onClick="checkBoxListener"
-                android:text="@string/choose_conq" />
 
             <CheckBox
                 android:id="@+id/upgradesCheckBox"

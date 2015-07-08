@@ -8,9 +8,9 @@ public class Territory implements Serializable {
 	
 	static final long serialVersionUID = 1; // use this as a version number
 	private String name, abbrvName;
-	private int id, owner, numUnits;
+	private int id, owner, numUnits, originalOwner;
 	private ArrayList<Integer> neighbourIDs;
-	private boolean recentlyConquered;
+	private boolean recentlyConquered, isCapital;
 	private String[] baseDetails;
 	
 	// Territory detail format is in mapformat.txt	
@@ -22,7 +22,11 @@ public class Territory implements Serializable {
 		name = details[1];
 		abbrvName = details[2];
 		id = Integer.parseInt(details[0]);
+		if(Integer.parseInt(details[5]) == 1){
+			isCapital = true;
+		}
 		owner = Integer.parseInt(details[8]);
+		if(isCapital) originalOwner = Integer.parseInt(details[8]);
 		numUnits = Integer.parseInt(details[9]);  		
 		for (int i = 12; i < details.length; i++){
 			neighbourIDs.add(Integer.parseInt(details[i]));
@@ -50,8 +54,16 @@ public class Territory implements Serializable {
 		return numUnits;
 	}
 	
+	public int getOriginalOwner(){
+		return originalOwner;
+	}
+	
 	public boolean isConq(){
 		return recentlyConquered;
+	}
+	
+	public boolean isCapital(){
+		return isCapital;
 	}
 	
 	public ArrayList<Integer> getNeighbourIDs(){
@@ -61,6 +73,10 @@ public class Territory implements Serializable {
 	// set functions for game to manipulate	
 	public void setConquered(boolean setting){
 		recentlyConquered = setting;
+	}
+	
+	public void capitalConquered(){
+		isCapital = false;
 	}
 	
 	public void addUnits(int unit){

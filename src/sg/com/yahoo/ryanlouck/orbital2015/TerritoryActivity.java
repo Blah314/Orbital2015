@@ -48,7 +48,12 @@ public class TerritoryActivity extends Activity {
 		actionButtons = (TableLayout) findViewById(R.id.actionButtons);
 		backButton = (Button) findViewById(R.id.backToMapButton);
 		
-		tName.setText(t.getName());
+		if(t.isCapital()){
+			tName.setText(t.getName() + "\nCAPITAL");
+		}
+		else{
+			tName.setText(t.getName());
+		}
 		
 		ColorTable.put(0, new PorterDuffColorFilter(Color.GRAY,PorterDuff.Mode.OVERLAY));
 		ColorTable.put(1, new PorterDuffColorFilter(Color.BLUE,PorterDuff.Mode.OVERLAY));
@@ -67,13 +72,6 @@ public class TerritoryActivity extends Activity {
 	public void displayActions(){
 		
 		actionButtons.removeAllViews();	
-		
-		if(t.getOwner() != 1){
-			TextView rejected = new TextView(this);
-			rejected.setText(getResources().getString(R.string.reject));
-			actionButtons.addView(rejected);
-			return;
-		}
 		
 		TableRow head1 = new TableRow(this);
 		TextView unitHead = new TextView(this);
