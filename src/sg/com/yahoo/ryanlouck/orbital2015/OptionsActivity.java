@@ -35,6 +35,25 @@ public class OptionsActivity extends Activity {
 	    save = (Button) findViewById(R.id.saveButton);
 	    optionsMaster = (LinearLayout) findViewById(R.id.optionsMaster);
 	    
+	    // sets initial size of territory button
+	    switch(territorySize){
+		case 1:
+			t.setHeight(100);
+			t.setWidth(100);
+			optionsMaster.invalidate();
+			break;
+		case 3:
+			t.setHeight(300);
+			t.setWidth(300);
+			optionsMaster.invalidate();
+			break;
+		case 5:
+			t.setHeight(500);
+			t.setWidth(500);
+			optionsMaster.invalidate();
+			break;
+	    }
+		
 	    ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
 		        R.array.territory_sizes, android.R.layout.simple_spinner_item);
 		adapter.setDropDownViewResource(android.R.layout.simple_spinner_item);

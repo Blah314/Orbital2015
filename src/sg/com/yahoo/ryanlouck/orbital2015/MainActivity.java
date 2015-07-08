@@ -82,6 +82,7 @@ public class MainActivity extends Activity {
 					}
 					br.close();
 				}
+				
 				// file not found - raise a toast and set fileFound to false
 				catch(FileNotFoundException fnfe){
 					Context c = getApplicationContext();

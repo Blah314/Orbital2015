@@ -73,6 +73,7 @@ public class Game implements Serializable {
 		return currPlayerID;
 	}
 	
+	// called when a player's capital is conquered
 	public void deactivatePlayer(int player){
 		Player p = playersMap.get(player);
 		p.deactivate();
@@ -256,7 +257,7 @@ public class Game implements Serializable {
 	// AI function
 	public void AIMoves(Player player) {
 		
-		if(!player.isActive()) return;
+		if(!player.isActive()) return; // dead AIs don't move
 		
 		ArrayList<Territory> owned = new ArrayList<Territory>();
 		int limit = player.getNumResources() / 10;
@@ -332,6 +333,7 @@ public class Game implements Serializable {
 		}
 	}
 	
+	// used during game resume to set conquered status of territories
 	public void setTerritoriesConq(boolean[] values){
 		for(int i = 1; i <= territoriesMap.size(); i++){
 			Territory t = territoriesMap.get(i);
@@ -339,9 +341,11 @@ public class Game implements Serializable {
 		}
 	}
 	
+	// used for game saving
 	public String toString(){
 		StringBuilder sb = new StringBuilder();
 		
+		// game details occupy row 1
 		if(diff == 0.7){
 			sb.append("0");
 		}
@@ -368,6 +372,7 @@ public class Game implements Serializable {
 		
 		sb.append("\n");
 		
+		// player details on row 2
 		for(int i = 1; i <= playersMap.size(); i++){
 			sb.append(Integer.toString(playersMap.get(i).getNumTerritoriesOwned()));
 			if(i != playersMap.size()) sb.append(",");
@@ -375,6 +380,7 @@ public class Game implements Serializable {
 		
 		sb.append("\n");
 		
+		// territory conquered status on row 3
 		for(int i = 1; i <= territoriesMap.size(); i++){
 			sb.append(Boolean.toString(territoriesMap.get(i).isConq()));
 			if(i != territoriesMap.size()) sb.append(",");
@@ -382,6 +388,7 @@ public class Game implements Serializable {
 		
 		sb.append("\n");
 		
+		// territory info on the rest of the rows
 		for(int i = 1; i <= territoriesMap.size(); i++){
 			sb.append(territoriesMap.get(i).toString());
 			sb.append("\n");

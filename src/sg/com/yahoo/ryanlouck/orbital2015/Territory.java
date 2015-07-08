@@ -91,6 +91,7 @@ public class Territory implements Serializable {
 		numUnits = toSetUnits;
 	}
 	
+	// used during game saving - translates the territory back into a String[]
 	public String toString(){
 		StringBuilder sb = new StringBuilder();
 		for(int i = 0; i < 12; i++){

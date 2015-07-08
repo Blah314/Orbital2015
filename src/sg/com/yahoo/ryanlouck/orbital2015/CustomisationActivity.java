@@ -88,7 +88,7 @@ public class CustomisationActivity extends Activity {
 		this.finish();
 	}
 	
-	// checkbox listener
+	// listener for all the checkboxes
 	public void checkBoxListener(View v){
 		boolean checked = ((CheckBox) v).isChecked();
 		

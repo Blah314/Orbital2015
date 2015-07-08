@@ -76,7 +76,7 @@ public class MapActivity extends Activity {
 		ColorMap.put(2,new PorterDuffColorFilter(Color.RED, PorterDuff.Mode.OVERLAY));
 		ColorMap.put(3,new PorterDuffColorFilter(Color.GREEN, PorterDuff.Mode.OVERLAY));
 		ColorMap.put(4,new PorterDuffColorFilter(Color.YELLOW, PorterDuff.Mode.OVERLAY));
-		ColorMap.put(999, new PorterDuffColorFilter(Color.BLACK, PorterDuff.Mode.OVERLAY));
+		ColorMap.put(999, new PorterDuffColorFilter(Color.BLACK, PorterDuff.Mode.OVERLAY)); // 999 is for fog of war
 		
 		over = false;
 		
@@ -88,6 +88,7 @@ public class MapActivity extends Activity {
 		Bundle details = getIntent().getExtras();
 		resumed = details.getBoolean("resumed", false);
 		
+		// decide which function to call
 		if(!resumed){
 			startNewGame();
 		}
@@ -99,7 +100,7 @@ public class MapActivity extends Activity {
 	// Initialization method - creates the map and a new game
 	public void startNewGame(){
 		
-		// getting the stuff passed from CustomisationActivity or ContinueGameButton
+		// getting the stuff passed from CustomisationActivity
 		Bundle details = getIntent().getExtras();
 		level = details.getInt("lvl", 1);
 		diff = details.getInt("diff", 0);
@@ -279,7 +280,7 @@ public class MapActivity extends Activity {
 		});
 	}
 	
-	// updates the values on each button and the text fields at the end of every move
+	// updates the values (and colours) on each button and the text fields at the end of every move
 	public void update(){
 		territories = game.getTerritories();
 		boolean won, lost;
@@ -291,6 +292,8 @@ public class MapActivity extends Activity {
 		if(fow){
 			boolean[] visibility = new boolean[numTerritories];
 			Arrays.fill(visibility, false);
+			
+			// finds all territories that are visible to the player
 			for(int i = 1; i <= numTerritories; i++){
 				Territory t = territories.get(i);
 				if(t.getOwner() == 1){
@@ -304,6 +307,7 @@ public class MapActivity extends Activity {
 				}
 			}
 			
+			// lights up visible territories + win/lose checking
 			for(int i = 0; i < numTerritories; i++){
 				Button b = (Button) map.getChildAt(i);
 				Territory t = territories.get(i+1);
@@ -362,10 +366,12 @@ public class MapActivity extends Activity {
 			}
 		}
 		
+		// if you capital is destroyed - game over
 		if(!game.getPlayers().get(1).isActive()){
 			lost = true;
 		}
 		
+		// if you have destroyed all other player's capitals - you win
 		HashMap<Integer, Player> players = game.getPlayers();
 		boolean eliminated = true;
 		for(int i = 2; i <= players.size(); i++){
@@ -375,6 +381,7 @@ public class MapActivity extends Activity {
 		
 		if(eliminated) won = true;
 		
+		// end game screens
 		if(won){
 			final FragmentManager fm = getFragmentManager();
 			EndGameFragment win = new EndGameFragment(true);
@@ -390,6 +397,7 @@ public class MapActivity extends Activity {
 		}
 	}
 	
+	// handles actions from player
 	public void onNewIntent(Intent intent){
 		Bundle details = intent.getExtras();
 		if(details == null) return;
