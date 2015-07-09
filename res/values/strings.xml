@@ -3,7 +3,6 @@
 
     <string name="app_name">Orbit Wars</string>
     <string name="hello_world">Hello world!</string>
-    <string name="action_settings">Settings</string>
     <string name="newGameMenu">New Game</string>
     <string name="continueGameMenu">Continue Game</string>
     <string name="no_save_game">No game has been saved yet.</string>
@@ -53,6 +52,9 @@
     <string name="reject">You do not own this territory. Conquer this territory to issue orders here.</string>
     <string name="conquered_territory">You have just conquered this territory. You can\'t issue orders from here until your next turn.</string>
     <string name="out_of_turns">You are out of turns, press the End Turn button.</string>
+    <string name="log_menu">LOG</string>
+    <string name="log_blocked">Your current settings have disabled the log. No cheating!</string>
+    <string name="close_log">Close Log</string>
     <string name="unit_head">Add Units</string>
     <string name="unit1_name">Army Unit</string>
     <string name="unit1_desc">A basic Army Unit - the backbone of your power. Cost: 10</string>

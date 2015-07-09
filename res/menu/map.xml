@@ -4,9 +4,9 @@
     tools:context="sg.com.yahoo.ryanlouck.orbital2015.MapActivity" >
 
     <item
-        android:id="@+id/action_settings"
-        android:orderInCategory="100"
-        android:title="@string/action_settings"
-        app:showAsAction="never"/>
+        android:id="@+id/game_log"
+        android:title="@string/log_menu"
+        android:icon="@drawable/ic_log" 
+        android:showAsAction="always"/>
 
 </menu>

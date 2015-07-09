@@ -12,11 +12,14 @@ public class Game implements Serializable {
 	
 	static final long serialVersionUID = 1; // use this as a version number
 	private int numPlayers, currPlayerID;
+	private ArrayList<StringBuilder> log;
+	private StringBuilder logTurn;
 	private HashMap<Integer, Player> playersMap = new HashMap<Integer, Player>();
 	private boolean isDice;
 	private double diff;
 	private HashMap<Integer, Territory> territoriesMap = new HashMap<Integer, Territory>();
 	private Random rand = new Random();
+	private HashMap<Integer, String> AINames = new HashMap<Integer, String>();
 
 	public Game(int diff, boolean diceLike, int numPlayersToAdd, int[] startingResources, 
 			boolean fromSave, int[] savedTerrs, ArrayList<String[]> mapDetails) {
@@ -57,7 +60,17 @@ public class Game implements Serializable {
 			else{
 				playersMap.put(i, new Player(i, startingResources[i-1], startingTerritories[i]));
 			}
-		}		
+		}
+		
+		// creates a new log and a new log line
+		log = new ArrayList<StringBuilder>();
+		logTurn = new StringBuilder();
+		
+		// names for the AI players
+		AINames.put(2, "Kenneth");
+		AINames.put(3, "Nicholas");
+		AINames.put(4, "Ryan");
+		AINames.put(5, "QX");
 	}
 	
 	// get functions for use by other classes
@@ -104,12 +117,17 @@ public class Game implements Serializable {
 		
 		if(currPlayerID != 1){ // AI resource adding and movement
 			int res = (int) (playerNumTerrOwned * 10 * diff);
-			player.addResources(res); 
+			player.addResources(res);
+			logTurn.append("AI " + AINames.get(currPlayerID) + " gained " + 
+			Integer.toString(res) + " resources from " + Integer.toString(playerNumTerrOwned) + 
+			" territories.\n");
 			AIMoves(player);
 			turnEnds();
 		}
 		else if(addRes){ // player resource adding
 			player.addResources(playerNumTerrOwned * 10);
+			logTurn.append("You gained " + Integer.toString(playerNumTerrOwned * 10) + " resources from " 
+			+ Integer.toString(playerNumTerrOwned) + " territories.\n");
 		}
 	}
 	
@@ -120,6 +138,17 @@ public class Game implements Serializable {
 		Player currPlayer = playersMap.get(playerID);
 		territoriesMap.get(territoryID).addUnits(numUnits);
 		currPlayer.minusResources(numUnits*10);
+		
+		if(playerID == 1){
+			logTurn.append("You added " + Integer.toString(numUnits) + " units to " + 
+			territoriesMap.get(territoryID).getName() + ".\n");
+		}
+		
+		else{
+			logTurn.append("AI " + AINames.get(playerID) + " added " + Integer.toString(numUnits) + 
+			" units to " + territoriesMap.get(territoryID).getName() + ".\n");
+		}
+		
 //		currPlayer.minusNumTurns();
 //		
 //		if (currPlayer.isTurnEnded() & playerID != 1) {
@@ -171,6 +200,15 @@ public class Game implements Serializable {
 			// defender wins
 			if(numUnits == 0){
 				terrB.setNumUnits(numUnitsB);
+				
+				if(playerID1 == 1){
+					logTurn.append("You failed to conquer " + terrB.getName() + ".\n");
+				}
+				
+				else{
+					logTurn.append("AI " + AINames.get(playerID1) + " failed to conquer " + 
+					terrB.getName() + ".\n");
+				}
 			}
 			
 			// attacker wins
@@ -179,9 +217,25 @@ public class Game implements Serializable {
 				terrB.setOwner(playerID1);
 				terrB.setConquered(true);
 				
+				if(playerID1 == 1){
+					logTurn.append("You conquered " + terrB.getName() + ".\n");
+				}
+				
+				else{
+					logTurn.append("AI " + AINames.get(playerID1) + " conquered " + terrB.getName() + 
+					".\n");
+				}
+				
 				if(terrB.isCapital()){
 					deactivatePlayer(playerID2);
 					terrB.capitalConquered();
+					if(playerID2 == 1){
+						logTurn.append("You lost your capital. Game over. :(\n");
+					}
+					else{
+						logTurn.append("AI " + AINames.get(playerID2) + 
+						" lost their capital. They are eliminated.\n");
+					}
 				}
 				
 				playerA.setNumTerritoriesOwned(playerA.getNumTerritoriesOwned() + 1); // Adjusts number of territories
@@ -204,9 +258,26 @@ public class Game implements Serializable {
 				terrB.setOwner(terrA.getOwner()); // Change owner to winner of fight
 				terrB.setConquered(true);
 				
+				if(playerID1 == 1){
+					logTurn.append("You conquered " + terrB.getName() + ".\n");
+				}
+				
+				else{
+					logTurn.append("AI " + AINames.get(playerID1) + " conquered " + terrB.getName() + 
+					".\n");
+				}
+				
 				if(terrB.isCapital()){
 					deactivatePlayer(playerID2);
 					terrB.capitalConquered();
+					
+					if(playerID2 == 1){
+						logTurn.append("You lost your capital. Game over. :(\n");
+					}
+					else{
+						logTurn.append("AI " + AINames.get(playerID2) + 
+						" lost their capital. They are eliminated.\n");
+					}
 				}
 			
 				playerA.setNumTerritoriesOwned(playerA.getNumTerritoriesOwned() + 1); // Adjusts number of territories
@@ -222,6 +293,15 @@ public class Game implements Serializable {
 			else{
 				int finalNumUnits = numUnitsB - numUnits;
 				terrB.setNumUnits(finalNumUnits);
+				
+				if(playerID1 == 1){
+					logTurn.append("You failed to conquer " + terrB.getName() + ".\n");
+				}
+				
+				else{
+					logTurn.append("AI " + AINames.get(playerID1) + " failed to conquer " + 
+					terrB.getName() + ".\n");
+				}
 			}
 		
 //			playersMap.get(playerID1).minusNumTurns();
@@ -239,6 +319,16 @@ public class Game implements Serializable {
 		Territory B = territoriesMap.get(territory2ID);
 		A.setNumUnits(A.getNumUnits() - numUnitsToMove);
 		B.setNumUnits(B.getNumUnits() + numUnitsToMove);
+		
+		if(playerID == 1){
+			logTurn.append("You moved " + Integer.toString(numUnitsToMove) + " units from " + 
+			A.getName() + " to " + B.getName() + ".\n");
+		}
+		
+		else{
+			logTurn.append("AI " + AINames.get(playerID) + " moved " + Integer.toString(numUnitsToMove) + 
+			" units from " + A.getName() + " to " + B.getName() + ".\n");
+		}
 //		playersMap.get(playerID).minusNumTurns();
 //		if (playersMap.get(playerID).isTurnEnded() & playerID != 1) {
 //			turnEnds();
@@ -248,8 +338,17 @@ public class Game implements Serializable {
 	// called by end turn button or AI finishing - causes the next player's turn to start
 	public void turnEnds() {
 		currPlayerID++;
-		if(currPlayerID > numPlayers){
+		
+		// everyone has taken a turn - update the log and create a new line for the next turn
+		if(currPlayerID > numPlayers){ 
 			currPlayerID = 1;
+			log.add(logTurn);
+			logTurn = new StringBuilder();
+		}
+		
+		// add a blank line to the log
+		else{
+			logTurn.append("\n");
 		}
 		startPlayerTurn(currPlayerID, true);
 	}
@@ -287,7 +386,7 @@ public class Game implements Serializable {
 				
 				// enemy territory next door - add armies here if possible
 				if(neighbour.getOwner() != player.getPlayerID()){
-					int addAmt = rand.nextInt(limit);
+					int addAmt = rand.nextInt(limit + 1);
 					if(addAmt != 0) executeTerritoryAddUnits(player.getPlayerID(), t.getId(), addAmt);
 					limit -= addAmt;
 					
@@ -300,7 +399,7 @@ public class Game implements Serializable {
 						executeTerritoryAttack(player.getPlayerID(), neighbour.getOwner(), t.getId(), neighbour.getId(), t.getNumUnits());
 					}
 					
-					else if(chooseAtk == 0){
+					else if(chooseAtk == 0 & t.getNumUnits() != 0){
 						executeTerritoryAttack(player.getPlayerID(), neighbour.getOwner(), t.getId(), neighbour.getId(), t.getNumUnits());
 					}
 				}
@@ -324,7 +423,7 @@ public class Game implements Serializable {
 					}
 					
 					// move all armies to neighbour
-					if(frontLine){
+					if(frontLine & t.getNumUnits() != 0){
 						executeMoveUnits(player.getPlayerID(), t.getId(), neighbour.getId(), t.getNumUnits());
 					}
 				}
@@ -339,6 +438,20 @@ public class Game implements Serializable {
 			Territory t = territoriesMap.get(i);
 			t.setConquered(values[i-1]);
 		}
+	}
+	
+	// shows the current game log. Log is not saved, so it will be lost on quit.
+	public String gameLog(){
+		StringBuilder totalLog = new StringBuilder();
+		
+		for(int i = 0; i < log.size(); i++){
+			totalLog.insert(0, "\n----------\n");
+			totalLog.insert(0, "Turn End.");
+			totalLog.insert(0, log.get(i).toString());
+			totalLog.insert(0, "Turn Start.\n");
+		}
+		
+		return totalLog.toString();
 	}
 	
 	// used for game saving

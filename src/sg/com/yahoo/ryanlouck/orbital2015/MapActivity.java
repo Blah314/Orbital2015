@@ -453,10 +453,21 @@ public class MapActivity extends Activity {
 		// as you specify a parent activity in AndroidManifest.xml.
 		int id = item.getItemId();
 		switch(id){
+		
+		// log button is pressed - display the log dialog or a message when fow is enabled
+		case R.id.game_log:
+			LogScreen ls;
+			if(fow){
+				ls = new LogScreen(getResources().getString(R.string.log_blocked));
+			}
+			else{
+				ls = new LogScreen(game.gameLog());
+			}
+			FragmentManager fm = getFragmentManager();
+			ls.show(fm, "log");
+			return true;
 		case android.R.id.home:
 			onBackPressed();
-			return true;
-		case R.id.action_settings:
 			return true;
 		}
 		return super.onOptionsItemSelected(item);

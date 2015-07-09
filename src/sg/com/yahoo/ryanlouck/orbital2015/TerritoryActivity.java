@@ -181,8 +181,6 @@ public class TerritoryActivity extends Activity {
 		case android.R.id.home:
 			onBackPressed();
 			return true;
-		case R.id.action_settings:
-			return true;
 		}
 		return super.onOptionsItemSelected(item);
 	}

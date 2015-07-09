@@ -48,11 +48,20 @@
         android:text="@string/end_turn" />
 
     <TextView
+        android:id="@+id/objectiveView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:text="@string/placeholder"
+        android:textAppearance="?android:attr/textAppearanceSmall" />
+
+    <TextView
         android:id="@+id/turnView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignRight="@+id/mapmaster"
-        android:layout_alignTop="@+id/endTurnButton"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
         android:text="@string/placeholder"
         android:textAppearance="?android:attr/textAppearanceSmall" />
 
@@ -60,17 +69,8 @@
         android:id="@+id/resourceView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/mapmaster"
-        android:layout_alignTop="@+id/endTurnButton"
-        android:text="@string/placeholder"
-        android:textAppearance="?android:attr/textAppearanceSmall" />
-
-    <TextView
-        android:id="@+id/objectiveView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
         android:text="@string/placeholder"
         android:textAppearance="?android:attr/textAppearanceSmall" />
 
