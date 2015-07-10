@@ -6,6 +6,7 @@ public class Player implements Serializable {
 	
 	static final long serialVersionUID = 1; // use this as a version number
 	private int playerID, numResources, numTurns, numTerritoriesOwned;
+	private int resourceRes, attackRes, defRes;
 	private boolean isActive;
 //	private ArrayList<Integer> territoriesOwnedID = new ArrayList<Integer>();
 	
@@ -14,6 +15,9 @@ public class Player implements Serializable {
 		numResources = resources;
 		numTerritoriesOwned = startingTerritories;
 		isActive = true;
+		resourceRes = 0;
+		attackRes = 0;
+		defRes = 0;
 	}
 	
 	// get functions for use by other classes
@@ -71,8 +75,46 @@ public class Player implements Serializable {
 		isActive = false;
 	}
 	
+	public void setResearch(int res, int atk, int def){
+		resourceRes = res;
+		attackRes = atk;
+		defRes = def;
+	}
+	
+	public double getResMod(){
+		double base = 1;
+		base += (0.05)*resourceRes;
+		return base;
+	}
+	
+	public int getAtkMod(){
+		int base = 100;
+		base -= attackRes*2;
+		return base;
+	}
+	
+	public int getDefMod(){
+		int base = 100;
+		base -= defRes*3;
+		return base;
+	}
+	
+	public void research(int type){
+		switch(type){
+		case 0:
+			resourceRes++;
+			break;
+		case 1:
+			attackRes++;
+			break;
+		case 2:
+			defRes++;
+			break;
+		}
+	}
+	
 	public String toString(){
-		return (Integer.toString(playerID) + "," + Integer.toString(numResources) + "," + Integer.toString(numTerritoriesOwned));
+		return (Integer.toString(resourceRes) + "," + Integer.toString(attackRes) + "," + Integer.toString(defRes));
 	}
 	
 //	public void addTerritoryID(int ID){

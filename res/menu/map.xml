@@ -7,6 +7,10 @@
         android:id="@+id/game_log"
         android:title="@string/log_menu"
         android:icon="@drawable/ic_log" 
-        android:showAsAction="always"/>
-
+        android:showAsAction="ifRoom"/>
+	<item
+	    android:id="@+id/research"
+	    android:title="@string/global_research"
+	    android:icon="@drawable/ic_research"
+	    android:showAsAction="ifRoom"/>
 </menu>

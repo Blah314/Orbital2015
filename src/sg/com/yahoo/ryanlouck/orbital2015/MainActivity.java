@@ -131,6 +131,15 @@ public class MainActivity extends Activity {
 						capital = false;
 					}
 					resumeLaunch.putExtra("capital", capital);
+					
+					boolean upgrades;
+					if(globalDetails[5].equals("true")){
+						upgrades = true;
+					}
+					else{
+						upgrades = false;
+					}
+					resumeLaunch.putExtra("upgrades", upgrades);
 				
 					String[] gameDetails = saveDetails.get(1);
 					resumeLaunch.putExtra("diff", Integer.parseInt(gameDetails[0]));
@@ -165,10 +174,14 @@ public class MainActivity extends Activity {
 					}
 					
 					resumeLaunch.putExtra("conq", territoriesConq);
+					
+					String[] playerRes = saveDetails.get(4);
+					
+					resumeLaunch.putExtra("resValues", playerRes);
 				
 					ArrayList<String[]> tDetails = new ArrayList<String[]>();
 				
-					for(int i = 4; i < saveDetails.size(); i++){
+					for(int i = 5; i < saveDetails.size(); i++){
 						tDetails.add(saveDetails.get(i));
 					}
 				

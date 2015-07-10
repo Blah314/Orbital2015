@@ -87,6 +87,7 @@ public class CustomisationActivity extends Activity {
 				gameLaunch.putExtra("lvl", level);
 				gameLaunch.putExtra("dice", diceLike);
 				gameLaunch.putExtra("capital", capital);
+				gameLaunch.putExtra("upgrades", upgrades);
 				gameLaunch.putExtra("fow", fow);
 				gameLaunch.putExtra("hardcore", hardcore);
 				gameLaunch.putExtra("levelDetails", levelDetails);

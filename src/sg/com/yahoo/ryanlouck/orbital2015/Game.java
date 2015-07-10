@@ -435,8 +435,7 @@ public class Game implements Serializable {
 						executeMoveUnits(player.getPlayerID(), t.getId(), neighbour.getId(), t.getNumUnits());
 					}
 				}
-			}
-			
+			}			
 		}
 	}
 	
@@ -445,6 +444,14 @@ public class Game implements Serializable {
 		for(int i = 1; i <= territoriesMap.size(); i++){
 			Territory t = territoriesMap.get(i);
 			t.setConquered(values[i-1]);
+		}
+	}
+	
+	// used during game resume to set research levels of players
+	public void setPlayerResearch(String[] values){
+		for(int i = 0; i < values.length; i++){
+			Player p = playersMap.get(i / 3 + 1);
+			p.setResearch(Integer.parseInt(values[i]), Integer.parseInt(values[i+1]), Integer.parseInt(values[i+2]));
 		}
 	}
 	
@@ -466,7 +473,13 @@ public class Game implements Serializable {
 	public String toString(){
 		StringBuilder sb = new StringBuilder();
 		
-		// game details occupy row 1
+		/* game details occupy row 1
+		 * 0 - difficulty
+		 * 1 - diceLike
+		 * 2 - numPlayers
+		 * 3 onwards - player territory counts
+		 */
+		
 		if(diff == 0.7){
 			sb.append("0");
 		}
@@ -475,7 +488,11 @@ public class Game implements Serializable {
 		}
 		else if(diff == 1.3){
 			sb.append("2");
-		}	
+		}
+		else if(diff == 1.5){
+			sb.append("3");
+		}
+		
 		sb.append(",");
 		
 		sb.append(Boolean.toString(isDice));
@@ -508,6 +525,13 @@ public class Game implements Serializable {
 		}
 		
 		sb.append("\n");
+		
+		// player research status on row 4
+		for(int i = 1; i <= playersMap.size(); i++){
+			sb.append(playersMap.get(i).toString() + ",");
+		}
+		
+		sb.append(true + "\n");
 		
 		// territory info on the rest of the rows
 		for(int i = 1; i <= territoriesMap.size(); i++){

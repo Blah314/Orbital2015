@@ -47,7 +47,7 @@ public class MapActivity extends Activity {
 	private ArrayList<String[]> territoryDetails;
 	
 	private int level, diff, numTerritories, turnNum;
-	private boolean diceLike, hardcore, over, fow, capital;
+	private boolean diceLike, hardcore, over, fow, capital, upgrades;
 	private Game game;
 	private HashMap<Integer, Territory> territories;
 	private HashMap<Integer, Player> players;
@@ -107,6 +107,7 @@ public class MapActivity extends Activity {
 		diceLike = details.getBoolean("dice", false);
 		fow = details.getBoolean("fow", false);
 		capital = details.getBoolean("capital", false);
+		upgrades = details.getBoolean("upgrades", false);
 		hardcore = details.getBoolean("hardcore", false);
 		levelDetails = details.getStringArray("levelDetails");
 
@@ -160,6 +161,7 @@ public class MapActivity extends Activity {
 		diceLike = details.getBoolean("dice", false);
 		fow = details.getBoolean("fow", false);
 		capital = details.getBoolean("capital", false);
+		upgrades = details.getBoolean("upgrades", false);
 		hardcore = details.getBoolean("hardcore", false);
 		int numPlayers = details.getInt("numPlayers", 2);
 		int[] res = details.getIntArray("res");
@@ -320,7 +322,7 @@ public class MapActivity extends Activity {
 				}
 				
 				if(visibility[i]){
-					if(t.isCapital() & capital){
+					if(t.isCapital() & capital){ // capitals get asterisks
 						b.setText("*" + t.getAbbrvName() + "*" + "\n" + t.getNumUnits());
 					}
 					else{
@@ -329,7 +331,7 @@ public class MapActivity extends Activity {
 					b.getBackground().setColorFilter(ColorMap.get(t.getOwner()));
 				}
 				
-				else {
+				else { // invisible territories are black and have a ?
 					b.setText(t.getAbbrvName() + "\n" + "?");
 					b.getBackground().setColorFilter(ColorMap.get(999));
 				}
@@ -352,7 +354,7 @@ public class MapActivity extends Activity {
 					lost = false;
 				}
 				
-				if(t.isCapital() & capital){
+				if(t.isCapital() & capital){ // capitals get asterisks
 					b.setText("*" + t.getAbbrvName() + "*" + "\n" + t.getNumUnits());
 				}
 				else{
@@ -383,13 +385,16 @@ public class MapActivity extends Activity {
 		
 		// end game screens
 		if(won){
+			// check if current difficulty is higher than previously attained
 			SharedPreferences settings = getSharedPreferences("levels", 0);
-			int achievementLevel = settings.getInt("level" + Integer.toString(level), 0);
+			int achievementLevel = settings.getInt("level" + Integer.toString(level - 1), 0);
 			boolean improved = false;
 			if(achievementLevel < diff + 1){
 				achievementLevel = diff + 1;
 				improved = true;
 			}
+			
+			// if there is an improvement - save it
 			SharedPreferences.Editor editor = settings.edit();
 		    editor.putInt("level" + Integer.toString(level - 1), achievementLevel);
 		    editor.commit();
@@ -437,9 +442,20 @@ public class MapActivity extends Activity {
 			FileOutputStream fos;
 			try{
 				fos = openFileOutput("savegame",Context.MODE_PRIVATE);
+				/*
+				 * Line 0 contains global data
+				 * 0 - turnNumber
+				 * 1 - levelNumber
+				 * 2 - hardcore
+				 * 3 - fog of war
+				 * 4 - capital
+				 * 5 - upgrades
+				 */
 				fos.write((Integer.toString(turnNum) + "," + Integer.toString(level) + "," + 
-						Boolean.toString(hardcore) + "," + Boolean.toString(fow) + "," + Boolean.toString(capital) +
-						"\n").getBytes());
+						Boolean.toString(hardcore) + "," + Boolean.toString(fow) + "," + 
+						Boolean.toString(capital) + "," + Boolean.toString(upgrades) + "\n").getBytes());
+				
+				// line 1 onwards contains the game save
 				fos.write(gameSave.getBytes());
 				fos.flush();
 				fos.close();
@@ -476,6 +492,8 @@ public class MapActivity extends Activity {
 			}
 			FragmentManager fm = getFragmentManager();
 			ls.show(fm, "log");
+			return true;
+		case R.id.research:
 			return true;
 		case android.R.id.home:
 			onBackPressed();

@@ -62,6 +62,7 @@
     <string name="log_menu">LOG</string>
     <string name="log_blocked">Your current settings have disabled the log. No cheating!</string>
     <string name="close_log">Close Log</string>
+    <string name="global_research">Research</string>
     <string name="unit_head">Add Units</string>
     <string name="unit1_name">Army Unit</string>
     <string name="unit1_desc">A basic Army Unit - the backbone of your power. Cost: 10</string>
