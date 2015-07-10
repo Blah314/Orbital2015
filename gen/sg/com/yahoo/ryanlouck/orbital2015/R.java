@@ -22,8 +22,9 @@ public final class R {
     }
     public static final class array {
         public static final int difficulty_levels=0x7f0c0001;
-        public static final int instruction_messages=0x7f0c0003;
-        public static final int instruction_titles=0x7f0c0002;
+        public static final int difficulty_levels_extra=0x7f0c0002;
+        public static final int instruction_messages=0x7f0c0004;
+        public static final int instruction_titles=0x7f0c0003;
         public static final int territory_sizes=0x7f0c0000;
     }
     public static final class attr {

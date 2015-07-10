@@ -36,6 +36,13 @@
         <item>Medium</item>
         <item>Hard</item>
     </string-array>
+    
+    <string-array name="difficulty_levels_extra">
+        <item>Easy</item>
+        <item>Medium</item>
+        <item>Hard</item>
+        <item>Impossible</item>
+    </string-array>
 
     <string name="choose_diff">Difficulty</string>
     <string name="choose_dice">Dice-Like?</string>
@@ -92,7 +99,7 @@
             Once you are done with your turn, press the end turn button. The AI player(s) will then take their turns and then play passes back to you. (If you are still alive at the end of their wrath.)</item>
         <item>An Orbit Wars game is highly customisable, allowing you to choose which mechanics you want active and which you don\'t. This is done via the Game Customisation screen shown after selecting a level.\n\n
             A detailed description of each modifier can be found below:\n\n
-            Difficulty: Determines the general difficulty of the AI players.\n\n
+            Difficulty: Determines the general difficulty of the AI players. Play higher difficulties to earn better medals for the level.\n\n
             Dice-Like: As with Risk, you can choose to have the outcomes of battles be determined by dice-rolls, adding a factor of luck into a battle. Battles are one-for-one by default.\n\n
             Capital Cities: One of your starting territories will be your capital. Lose it, and you lose the game. Same goes for your opponents. Capitals can be identified by asterisks on both sides of their name on the map.\n\n
             Upgrades: Enabling this will allow you to spend resources to upgrade your territories or armies.\n\n

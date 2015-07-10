@@ -9,8 +9,9 @@ int anim abc_slide_in_top 0x7f040007
 int anim abc_slide_out_bottom 0x7f040008
 int anim abc_slide_out_top 0x7f040009
 int array difficulty_levels 0x7f0c0001
-int array instruction_messages 0x7f0c0003
-int array instruction_titles 0x7f0c0002
+int array difficulty_levels_extra 0x7f0c0002
+int array instruction_messages 0x7f0c0004
+int array instruction_titles 0x7f0c0003
 int array territory_sizes 0x7f0c0000
 int attr actionBarDivider 0x7f010018
 int attr actionBarItemBackground 0x7f010019

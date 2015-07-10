@@ -138,7 +138,7 @@ public class MapActivity extends Activity {
 			startingRes[i-8] = Integer.parseInt(levelDetails[i]);
 		}
 		
-		game = new Game(diff, diceLike, Integer.parseInt(levelDetails[5]), startingRes, false, startingRes, territoryDetails);
+		game = new Game(diff, diceLike, capital, Integer.parseInt(levelDetails[5]), startingRes, false, startingRes, territoryDetails);
 		territories = game.getTerritories();
 		numTerritories = territories.size();
 		players = game.getPlayers();
@@ -190,7 +190,7 @@ public class MapActivity extends Activity {
 		setFields();
 		loadTerritoryButtons();
 		
-		game = new Game(diff, diceLike, numPlayers, res, true, terr, territoryDetails);
+		game = new Game(diff, diceLike, capital, numPlayers, res, true, terr, territoryDetails);
 		game.setTerritoriesConq(terrConq);
 		territories = game.getTerritories();
 		numTerritories = territories.size();
@@ -320,7 +320,7 @@ public class MapActivity extends Activity {
 				}
 				
 				if(visibility[i]){
-					if(t.isCapital()){
+					if(t.isCapital() & capital){
 						b.setText("*" + t.getAbbrvName() + "*" + "\n" + t.getNumUnits());
 					}
 					else{
@@ -352,7 +352,7 @@ public class MapActivity extends Activity {
 					lost = false;
 				}
 				
-				if(t.isCapital()){
+				if(t.isCapital() & capital){
 					b.setText("*" + t.getAbbrvName() + "*" + "\n" + t.getNumUnits());
 				}
 				else{
@@ -383,15 +383,26 @@ public class MapActivity extends Activity {
 		
 		// end game screens
 		if(won){
+			SharedPreferences settings = getSharedPreferences("levels", 0);
+			int achievementLevel = settings.getInt("level" + Integer.toString(level), 0);
+			boolean improved = false;
+			if(achievementLevel < diff + 1){
+				achievementLevel = diff + 1;
+				improved = true;
+			}
+			SharedPreferences.Editor editor = settings.edit();
+		    editor.putInt("level" + Integer.toString(level - 1), achievementLevel);
+		    editor.commit();
+		    
 			final FragmentManager fm = getFragmentManager();
-			EndGameFragment win = new EndGameFragment(true);
+			EndGameFragment win = improved ? new EndGameFragment(true, diff + 1) : new EndGameFragment(true, 0);
 			win.show(fm, "endGame");
 			over = true;
 		}
 		
 		if(lost){
 			final FragmentManager fm = getFragmentManager();
-			EndGameFragment lose = new EndGameFragment(false);
+			EndGameFragment lose = new EndGameFragment(false, 0);
 			lose.show(fm, "endGame");
 			over = true;
 		}

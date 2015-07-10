@@ -17,6 +17,7 @@ public class CustomisationActivity extends Activity {
 	
 	private int level = 0;
 	private int diff = 0;
+	private int achievementLevel;
 	private boolean diceLike, capital, upgrades, armies, ai, fow, turns, hardcore;
 	private String[] levelDetails;
 	
@@ -28,8 +29,9 @@ public class CustomisationActivity extends Activity {
 		// get the stuff the NewGameActivity passed over
 		Bundle details = getIntent().getExtras();
 		if(details != null){
-			level = details.getInt("level");
+			level = details.getInt("level", 1);
 			levelDetails = details.getStringArray("levelDetails");
+			achievementLevel = details.getInt("award");
 		}
 		
 		diceLike = false;
@@ -48,11 +50,21 @@ public class CustomisationActivity extends Activity {
 		
 		heading.setText(levelDetails[2]);
 		
-		// difficulty spinner code (0 - easy, 1 - medium, 2 - hard)
-		ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
-		        R.array.difficulty_levels, android.R.layout.simple_spinner_item);
-		adapter.setDropDownViewResource(android.R.layout.simple_spinner_item);
-		diffSelect.setAdapter(adapter);
+		if(achievementLevel >= 3){
+			// difficulty spinner code - extreme(0 - easy, 1 - medium, 2 - hard , 3 - impossible)
+			ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
+				R.array.difficulty_levels_extra, android.R.layout.simple_spinner_item);
+			adapter.setDropDownViewResource(android.R.layout.simple_spinner_item);
+			diffSelect.setAdapter(adapter);
+		}
+		else{
+			// difficulty spinner code - normal (0 - easy, 1 - medium, 2 - hard)
+			ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
+				R.array.difficulty_levels, android.R.layout.simple_spinner_item);
+			adapter.setDropDownViewResource(android.R.layout.simple_spinner_item);
+			diffSelect.setAdapter(adapter);
+		}
+		
 		diffSelect.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener(){
 		    
 			public void onItemSelected(AdapterView<?> parent, View view, 

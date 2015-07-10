@@ -65,20 +65,20 @@ public class OptionsActivity extends Activity {
 				switch(pos){
 				case 0:
 					territorySize = 1;
-					t.setHeight(70);
-					t.setWidth(70);
+					t.setHeight(100);
+					t.setWidth(100);
 					optionsMaster.invalidate();
 					break;
 				case 1:
 					territorySize = 3;
-					t.setHeight(210);
-					t.setWidth(210);
+					t.setHeight(300);
+					t.setWidth(300);
 					optionsMaster.invalidate();
 					break;
 				case 2:
 					territorySize = 5;
-					t.setHeight(350);
-					t.setWidth(350);
+					t.setHeight(500);
+					t.setWidth(500);
 					optionsMaster.invalidate();
 					break;
 				}

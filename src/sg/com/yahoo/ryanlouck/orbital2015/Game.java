@@ -15,13 +15,13 @@ public class Game implements Serializable {
 	private ArrayList<StringBuilder> log;
 	private StringBuilder logTurn;
 	private HashMap<Integer, Player> playersMap = new HashMap<Integer, Player>();
-	private boolean isDice;
+	private boolean isDice, capital;
 	private double diff;
 	private HashMap<Integer, Territory> territoriesMap = new HashMap<Integer, Territory>();
 	private Random rand = new Random();
 	private HashMap<Integer, String> AINames = new HashMap<Integer, String>();
 
-	public Game(int diff, boolean diceLike, int numPlayersToAdd, int[] startingResources, 
+	public Game(int diff, boolean diceLike, boolean capitals, int numPlayersToAdd, int[] startingResources, 
 			boolean fromSave, int[] savedTerrs, ArrayList<String[]> mapDetails) {
 		
 		// sets AI resource generation based on selected difficulty
@@ -35,9 +35,13 @@ public class Game implements Serializable {
 		case 2:
 			this.diff = 1.3;
 			break;
+		case 3:
+			this.diff = 1.5;
+			break;
 		}
 		
 		isDice = diceLike;
+		capital = capitals;
 		this.numPlayers = numPlayersToAdd;
 		Iterator<String[]> territoryIterator = mapDetails.iterator();
 		if(!fromSave) territoryIterator.next(); // removes invalid first row
@@ -80,6 +84,10 @@ public class Game implements Serializable {
 
 	public HashMap<Integer, Player> getPlayers() {
 		return playersMap;
+	}
+	
+	public boolean isCapital(){
+		return capital;
 	}
 
 	public int getCurrPlayer() {
@@ -226,7 +234,7 @@ public class Game implements Serializable {
 					".\n");
 				}
 				
-				if(terrB.isCapital()){
+				if(terrB.isCapital() & capital){
 					deactivatePlayer(playerID2);
 					terrB.capitalConquered();
 					if(playerID2 == 1){
@@ -267,7 +275,7 @@ public class Game implements Serializable {
 					".\n");
 				}
 				
-				if(terrB.isCapital()){
+				if(terrB.isCapital() & capital){
 					deactivatePlayer(playerID2);
 					terrB.capitalConquered();
 					

@@ -10,9 +10,13 @@ import android.os.Bundle;
 public class EndGameFragment extends DialogFragment {
 	
 	private boolean win;
+	private int medalWon;
+	private String[] awards;
 	
-	public EndGameFragment(boolean won){
+	public EndGameFragment(boolean won, int medal){
 		win = won;
+		medalWon = medal;
+		awards = new String[]{"None", "Bronze", "Silver", "Gold", "Platinum"};
 	}
 	
 	public Dialog onCreateDialog(Bundle savedInstanceState) {
@@ -21,7 +25,13 @@ public class EndGameFragment extends DialogFragment {
         // win dialog
         if(win){
         	builder.setTitle(getResources().getString(R.string.win));
-        	builder.setMessage(getResources().getString(R.string.win_text));
+        	if(medalWon != 0){
+        		builder.setMessage(getResources().getString(R.string.win_text) + 
+        		"\nYou won the " + awards[medalWon] + " medal.");
+        	}
+        	else{
+        		builder.setMessage(getResources().getString(R.string.win_text));
+        	}
         	builder.setPositiveButton(R.string.exit_win, new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int id) {
                 	getActivity().getApplicationContext().deleteFile("savegame");

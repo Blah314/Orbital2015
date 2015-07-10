@@ -4,10 +4,15 @@ import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.Hashtable;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.AssetManager;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
+import android.graphics.PorterDuffColorFilter;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -23,12 +28,25 @@ public class NewGameActivity extends Activity {
 	private View.OnClickListener levelButtonLoader;
 	private int selectedLevel = 0;
 	private ArrayList<String[]> levelDetails;
+	private Hashtable<Integer, PorterDuffColorFilter> ColorMap;
+	private String[] awards;
+	private int[] levelAwards;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_new_game);
 		getActionBar().setDisplayHomeAsUpEnabled(true);
+		
+		// colours to display the achievement levels for each level
+		ColorMap = new Hashtable<Integer, PorterDuffColorFilter>();
+		ColorMap.put(0, new PorterDuffColorFilter(Color.TRANSPARENT, PorterDuff.Mode.OVERLAY));
+		ColorMap.put(1, new PorterDuffColorFilter(Color.rgb(205, 127, 50), PorterDuff.Mode.OVERLAY));
+		ColorMap.put(2, new PorterDuffColorFilter(Color.rgb(192, 192, 192), PorterDuff.Mode.OVERLAY));
+		ColorMap.put(3, new PorterDuffColorFilter(Color.rgb(255, 215, 0), PorterDuff.Mode.OVERLAY));
+		ColorMap.put(4, new PorterDuffColorFilter(Color.rgb(229, 228, 226), PorterDuff.Mode.OVERLAY));
+		
+		awards = new String[]{"Bronze", "Silver", "Gold", "Platinum"};
 		
 		// levelDetailsView displays level details when a level button is clicked
 		final TextView levelDetailsView = (TextView) findViewById(R.id.levelText);
@@ -54,6 +72,14 @@ public class NewGameActivity extends Activity {
 		
 		numLevels = levelDetails.size() - 1;
 		
+		// getting the highest award achieved for each level so far
+		levelAwards = new int[numLevels];
+		SharedPreferences settings = getSharedPreferences("levels", 0);
+		
+		for(int i = 0; i < numLevels; i++){
+			levelAwards[i] = settings.getInt("level" + Integer.toString(i), 0);
+		}
+		
 		// levels is the view containing all the level buttons
 		final ViewGroup levels = (ViewGroup) (findViewById(R.id.buttonScroller).findViewById(R.id.levelButtons));
 		
@@ -69,7 +95,16 @@ public class NewGameActivity extends Activity {
 						selectedLevel = ID + 1;
 					}
 				}
-				levelDetailsView.setText(levelDetails.get(selectedLevel)[2] + ": " + levelDetails.get(selectedLevel)[6]);				
+				if(levelAwards[ID] != 0){
+					levelDetailsView.setText(levelDetails.get(selectedLevel)[2] + ":\n" + 
+						levelDetails.get(selectedLevel)[6] + "\n\nYou have achieved the " + 
+						awards[levelAwards[ID] - 1] + " medal for this level.");
+				}
+				else{
+					levelDetailsView.setText(levelDetails.get(selectedLevel)[2] + ":\n" + 
+						levelDetails.get(selectedLevel)[6] + 
+						"\n\nYou have not earned any medal for this level yet."); 
+				}
 			}
 		};
 		
@@ -77,6 +112,7 @@ public class NewGameActivity extends Activity {
 		for(int i = 1; i <= numLevels; i++){
 			Button b = new Button(this);
 			b.setText(levelDetails.get(i)[2]);
+			b.getBackground().setColorFilter(ColorMap.get(levelAwards[i-1]));
 			b.setOnClickListener(levelButtonLoader);
 			levels.addView(b);		
 		}
@@ -88,13 +124,11 @@ public class NewGameActivity extends Activity {
 				if(selectedLevel == 0){
 					levelDetailsView.setText("Select a Level above first.");
 				}
-//				else if(selectedLevel != 1){
-//					levelDetailsView.setText("Sorry. This level is not available yet.");
-//				}
 				else{
 					Intent customisationLaunch = new Intent(getApplicationContext(), CustomisationActivity.class);
 					customisationLaunch.putExtra("level", selectedLevel);
 					customisationLaunch.putExtra("levelDetails", levelDetails.get(selectedLevel));
+					customisationLaunch.putExtra("award", levelAwards[selectedLevel - 1]);
 					startActivity(customisationLaunch);
 				}
 			}

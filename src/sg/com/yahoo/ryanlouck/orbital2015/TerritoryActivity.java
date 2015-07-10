@@ -48,7 +48,7 @@ public class TerritoryActivity extends Activity {
 		actionButtons = (TableLayout) findViewById(R.id.actionButtons);
 		backButton = (Button) findViewById(R.id.backToMapButton);
 		
-		if(t.isCapital()){
+		if(t.isCapital() & g.isCapital()){
 			tName.setText(t.getName() + "\nCAPITAL");
 		}
 		else{
