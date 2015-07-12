@@ -274,7 +274,7 @@ public class MapActivity extends Activity {
 		endTurn.setOnClickListener(new View.OnClickListener() {
 			
 			@Override
-			public void onClick(View v) {
+			public void onClick(View v) {			
 				turnNum++;
 				game.turnEnds();
 				update();
@@ -417,22 +417,36 @@ public class MapActivity extends Activity {
 	public void onNewIntent(Intent intent){
 		Bundle details = intent.getExtras();
 		if(details == null) return;
-		boolean add = details.getBoolean("add", false);
-		boolean move = details.getBoolean("move", false);
-		boolean attack = details.getBoolean("attack", false);
-		int target = details.getInt("target", 0);
-		int requested = details.getInt("request", 0);
-		int origin = details.getInt("origin", 0);
+		boolean isUpgrade = details.getBoolean("isupgrade", false);
 		
-		if(add){
-			game.executeTerritoryAddUnits(1, origin, requested);
+		if(isUpgrade){
+			int cost = details.getInt("cost", 0);
+			int type = details.getInt("upgrade", 0);
+			Player p = game.getPlayers().get(1);
+			
+			p.research(type);
+			p.minusResources(cost);
 		}
-		else if(move){
-			game.executeMoveUnits(1, origin, target, requested);
-		}
-		else if(attack){
-			game.executeTerritoryAttack(1, territories.get(target).getOwner(), origin, target, requested);
-		}
+		
+		else{
+			
+			boolean add = details.getBoolean("add", false);
+			boolean move = details.getBoolean("move", false);
+			boolean attack = details.getBoolean("attack", false);
+			int target = details.getInt("target", 0);
+			int requested = details.getInt("request", 0);
+			int origin = details.getInt("origin", 0);
+			
+			if(add){
+				game.executeTerritoryAddUnits(1, origin, requested);
+			}
+			else if(move){
+				game.executeMoveUnits(1, origin, target, requested);
+			}
+			else if(attack){
+				game.executeTerritoryAttack(1, territories.get(target).getOwner(), origin, target, requested);
+			}
+		}	
 		
 		update();
 		
@@ -494,6 +508,20 @@ public class MapActivity extends Activity {
 			ls.show(fm, "log");
 			return true;
 		case R.id.research:
+			if(upgrades){
+				Player p = game.getPlayers().get(1);
+				Intent upgradesLaunch = new Intent(getApplicationContext(), UpgradesActivity.class);
+				upgradesLaunch.putExtra("player", p);
+				startActivity(upgradesLaunch);
+			}
+			else{
+				Context c = getApplicationContext();
+				CharSequence text = getResources().getString(R.string.upgrades_off);
+				int duration = Toast.LENGTH_SHORT;
+				
+				Toast t = Toast.makeText(c, text, duration);
+				t.show();
+			}
 			return true;
 		case android.R.id.home:
 			onBackPressed();

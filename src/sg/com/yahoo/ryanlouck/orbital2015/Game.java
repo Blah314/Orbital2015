@@ -124,7 +124,7 @@ public class Game implements Serializable {
 //																				// lowbound(inclusive)
 		
 		if(currPlayerID != 1){ // AI resource adding and movement
-			int res = (int) (playerNumTerrOwned * 10 * diff);
+			int res = (int) (playerNumTerrOwned * 10 * diff * player.getResMod());
 			player.addResources(res);
 			logTurn.append("AI " + AINames.get(currPlayerID) + " gained " + 
 			Integer.toString(res) + " resources from " + Integer.toString(playerNumTerrOwned) + 
@@ -133,8 +133,9 @@ public class Game implements Serializable {
 			turnEnds();
 		}
 		else if(addRes){ // player resource adding
-			player.addResources(playerNumTerrOwned * 10);
-			logTurn.append("You gained " + Integer.toString(playerNumTerrOwned * 10) + " resources from " 
+			int res = (int) (playerNumTerrOwned * 10 * player.getResMod());
+			player.addResources(res);
+			logTurn.append("You gained " + Integer.toString(res) + " resources from " 
 			+ Integer.toString(playerNumTerrOwned) + " territories.\n");
 		}
 	}
@@ -175,16 +176,8 @@ public class Game implements Serializable {
 															// territory
 		Territory terrB = territoriesMap.get(territory2ID); // Being attacked
 															// territory
-		// RNG to make it less boring
-		
 		int numUnitsA = terrA.getNumUnits();
 		int numUnitsB = terrB.getNumUnits();
-		
-//		int numUnitsARevised = (int) Math.floor(terrA.getNumUnits()
-//				* (1 + (Math.random() / 10.0)));
-//		int numUnitsBRevised = (int) Math.floor(terrB.getNumUnits()
-//				* (1 + (Math.random() / 10.0)));
-		 //If the attacker has more units
 		
 		terrA.setNumUnits(numUnitsA - numUnits);
 		
@@ -260,7 +253,7 @@ public class Game implements Serializable {
 		else{
 			// attacker wins
 			if (numUnits > numUnitsB) {
-				int finalNumUnits = numUnits - numUnitsB; // number of suriving units
+				int finalNumUnits = numUnits - numUnitsB; // number of surviving units
 															
 				terrB.setNumUnits(finalNumUnits); // Set number of units left
 				terrB.setOwner(terrA.getOwner()); // Change owner to winner of fight

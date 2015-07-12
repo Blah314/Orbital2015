@@ -81,6 +81,10 @@ public class Player implements Serializable {
 		defRes = def;
 	}
 	
+	public int[] getResLevels(){
+		return new int[]{resourceRes, attackRes, defRes};
+	}
+	
 	public double getResMod(){
 		double base = 1;
 		base += (0.05)*resourceRes;
@@ -101,13 +105,13 @@ public class Player implements Serializable {
 	
 	public void research(int type){
 		switch(type){
-		case 0:
+		case 1:
 			resourceRes++;
 			break;
-		case 1:
+		case 2:
 			attackRes++;
 			break;
-		case 2:
+		case 3:
 			defRes++;
 			break;
 		}

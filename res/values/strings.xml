@@ -3,16 +3,21 @@
 
     <string name="app_name">Orbit Wars</string>
     <string name="hello_world">Hello world!</string>
+    <string name="placeholder">PH</string>
+
+    <!-- Main Menu Strings -->
     <string name="newGameMenu">New Game</string>
     <string name="continueGameMenu">Continue Game</string>
+    <string name="optionsMenu">Options</string>
+    <string name="instructions_menu">Instructions</string>
     <string name="no_save_game">No game has been saved yet.</string>
     <string name="overwrite">Overwrite saved game?</string>
     <string name="overwrite_desc">You currently have a saved game. Starting a new game will overwrite it.\n\n
         Still proceed?</string>
     <string name="y">Yes</string>
     <string name="n">No</string>
-    <string name="optionsMenu">Options</string>
-    <string name="instructions_menu">Instructions</string>
+
+    <!-- Options Menu Strings -->
     <string name="title_activity_options">Options</string>
     <string name="territory_size">Territory Size</string>
     <string name="demo_territory">ORB\n56/23/10</string>
@@ -25,9 +30,10 @@
     </string-array>
 
     <string name="save_options">Save Options</string>
+
+    <!-- NewGameActivity + CustomisationActivity Strings -->
     <string name="title_activity_new_game">New Game</string>
     <string name="select_level">Select a Level</string>
-    <string name="placeholder">PH</string>
     <string name="start_level">START</string>
     <string name="title_activity_customisation">Game Customisation</string>
 
@@ -36,7 +42,6 @@
         <item>Medium</item>
         <item>Hard</item>
     </string-array>
-    
     <string-array name="difficulty_levels_extra">
         <item>Easy</item>
         <item>Medium</item>
@@ -49,20 +54,25 @@
     <string name="choose_capital">Capital Cities?</string>
     <string name="choose_upgrades">Upgrades Enabled?</string>
     <string name="choose_armies">Multiple Army Types?</string>
-	<string name="choose_ai">AI Personalities?</string>
-	<string name="choose_fow">Fog of War?</string>
-	<string name="choose_turns">Turn Limit?</string>
+    <string name="choose_ai">AI Personalities?</string>
+    <string name="choose_fow">Fog of War?</string>
+    <string name="choose_turns">Turn Limit?</string>
     <string name="choose_hardcore">Hardcore?</string>
+
+    <!-- MapActivty + TerritoryActivity Strings -->
     <string name="title_activity_map">MAP</string>
     <string name="end_turn">End Turn</string>
     <string name="title_activity_territory">Territory</string>
     <string name="reject">You do not own this territory. Conquer this territory to issue orders here.</string>
     <string name="conquered_territory">You have just conquered this territory. You can\'t issue orders from here until your next turn.</string>
     <string name="out_of_turns">You are out of turns, press the End Turn button.</string>
+    <!-- LOG -->
     <string name="log_menu">LOG</string>
     <string name="log_blocked">Your current settings have disabled the log. No cheating!</string>
     <string name="close_log">Close Log</string>
+    <!-- Research -->
     <string name="global_research">Research</string>
+    <!-- Actions -->
     <string name="unit_head">Add Units</string>
     <string name="unit1_name">Army Unit</string>
     <string name="unit1_desc">A basic Army Unit - the backbone of your power. Cost: 10</string>
@@ -76,6 +86,7 @@
     <string name="move_desc">Move units to this territory.</string>
     <string name="move">Move</string>
     <string name="cancel">Cancel</string>
+    <!-- EndGameFragment -->
     <string name="win">Victory!</string>
     <string name="win_text">Congratulations! Nice going!</string>
     <string name="lose">Defeat!</string>
@@ -83,13 +94,13 @@
     <string name="exit_win">Yay!</string>
     <string name="exit_lose">Dang!</string>
     <string name="exit_map">Back to Map</string>
-	
+
+    <!-- InstructionsActivity Strings -->
     <string-array name="instruction_titles">
         <item>Welcome!</item>
         <item>The Basics</item>
         <item>Customisation</item>
     </string-array>
-    
     <string-array name="instruction_messages">
         <item>Hello and welcome to Orbit Wars! This instructions page will contain all the info you will need to learn how to play the game.\n\n
             Orbit Wars is a Risk-like turn-based 4X game, where you control a faction and have to complete certain objectives to acheive victory. If you have played Risk before, gameplay should come naturally to you.\n\n
@@ -116,5 +127,18 @@
     <string name="next_inst">Next</string>
     <string name="first_page">This is the first page.</string>
     <string name="last_page">This is the last page.</string>
-
+    
+    <!-- UpgradesActivity Strings -->
+    <string name="title_activity_upgrades">Upgrades</string>
+    <string name="upgrades_title">Global Upgrades</string>
+    <string name="upgrades_desc">Here you can spend resources on upgrades to boost your chances of victory.</string>
+    <string name="res_upgrade">Resources</string>
+    <string name="res_upgrade_desc">Upgrade your resource gathering, increasing your overall gathering rate by 5% per level.</string>
+    <string name="atk_upgrade">Weapons</string>
+    <string name="atk_upgrade_desc">Upgrade the weapons your armies use slightly. Giving them a 2% chance per level to kill 2 enemy units instead of one.</string>
+    <string name="def_upgrade">Defences</string>
+    <string name="def_upgrade_desc">Improve your defences slightly, giving your armies a 3% chance per level to survive an attack.</string>
+	<string name="upgrades_off">Turn on Upgrades to use this feature.</string>
+	<string name="upgrade_reject">You cannot afford this upgrade.</string>
+    
 </resources>
