@@ -167,6 +167,7 @@ public class MapActivity extends Activity {
 		int[] res = details.getIntArray("res");
 		int[] terr = details.getIntArray("terr");
 		boolean[] terrConq = details.getBooleanArray("conq");
+		String[] upgradeVals = details.getStringArray("resValues");
 		territoryDetails = (ArrayList<String[]>) details.getSerializable("rest");
 		
 		// loading up the level details to get some basic info
@@ -194,6 +195,7 @@ public class MapActivity extends Activity {
 		
 		game = new Game(diff, diceLike, capital, numPlayers, res, true, terr, territoryDetails);
 		game.setTerritoriesConq(terrConq);
+		if(upgrades) game.setPlayerResearch(upgradeVals);
 		territories = game.getTerritories();
 		numTerritories = territories.size();
 		players = game.getPlayers();
@@ -274,7 +276,7 @@ public class MapActivity extends Activity {
 		endTurn.setOnClickListener(new View.OnClickListener() {
 			
 			@Override
-			public void onClick(View v) {			
+			public void onClick(View v) {				
 				turnNum++;
 				game.turnEnds();
 				update();

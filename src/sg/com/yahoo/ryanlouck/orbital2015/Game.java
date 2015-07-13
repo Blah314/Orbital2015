@@ -180,138 +180,124 @@ public class Game implements Serializable {
 		int numUnitsB = terrB.getNumUnits();
 		
 		terrA.setNumUnits(numUnitsA - numUnits);
-		
-		// dice-like logic
-		if(isDice){
 			
-			// keep fighting till one person's units reaches 0
-			while(numUnits != 0 & numUnitsB != 0){
+		// keep fighting till one person's units reaches 0
+		while(numUnits != 0 & numUnitsB != 0){
+			
+			// diceLike logic
+			if(isDice){
 				int rollAttack = rand.nextInt(6);
 				int rollDef = rand.nextInt(6);
 				
 				// attacker only wins if his roll is higher
 				if(rollAttack > rollDef){
-					numUnitsB--;
+					// check playerB's army survival chances - generate a random number from 1 to 100
+					int survivalVal = rand.nextInt(100) + 1;
+					
+					// playerB's army survives due to upgrades
+					if(playerID2 != 0 && survivalVal > playerB.getDefMod()){
+						continue;
+					}
+					
+					// playerB's army does not survive - see if playerA can get a 2x kill
+					else{
+						int doubleKillVal = rand.nextInt(100) + 1;
+						if(doubleKillVal > playerA.getAtkMod()){ // playerA gets a 2x kill
+							numUnitsB -= 2;
+							if(numUnitsB < 0){
+								numUnitsB = 0;
+							}
+						}
+						else{ // normal kill
+							numUnitsB--;
+						}
+					}
 				}
-				else{
+				
+				else{ // attacker lost
 					numUnits--;
 				}
 			}
 			
-			// defender wins
-			if(numUnits == 0){
-				terrB.setNumUnits(numUnitsB);
-				
-				if(playerID1 == 1){
-					logTurn.append("You failed to conquer " + terrB.getName() + ".\n");
-				}
-				
-				else{
-					logTurn.append("AI " + AINames.get(playerID1) + " failed to conquer " + 
-					terrB.getName() + ".\n");
-				}
-			}
-			
-			// attacker wins
+			// non-diceLike logic
 			else{
-				terrB.setNumUnits(numUnits);
-				terrB.setOwner(playerID1);
-				terrB.setConquered(true);
+				// check playerB's army survival chances - generate a random number from 1 to 100
+				int survivalVal = rand.nextInt(100) + 1;
 				
-				if(playerID1 == 1){
-					logTurn.append("You conquered " + terrB.getName() + ".\n");
+				// playerB's army survives due to upgrades
+				if(playerID2 != 0 && survivalVal > playerB.getDefMod()){
+					continue;
 				}
 				
+				// playerB's army does not survive - see if playerA can get a 2x kill
 				else{
-					logTurn.append("AI " + AINames.get(playerID1) + " conquered " + terrB.getName() + 
-					".\n");
-				}
-				
-				if(terrB.isCapital() & capital){
-					deactivatePlayer(playerID2);
-					terrB.capitalConquered();
-					if(playerID2 == 1){
-						logTurn.append("You lost your capital. Game over. :(\n");
+					int doubleKillVal = rand.nextInt(100) + 1;
+					if(doubleKillVal > playerA.getAtkMod()){ // playerA gets a 2x kill
+						numUnitsB -= 2;
+						numUnits--;
+						if(numUnitsB < 0){
+							numUnitsB = 0;
+						}
 					}
-					else{
-						logTurn.append("AI " + AINames.get(playerID2) + 
-						" lost their capital. They are eliminated.\n");
+					else{ // normal kill
+						numUnitsB--;
+						numUnits--;
 					}
 				}
-				
-				playerA.setNumTerritoriesOwned(playerA.getNumTerritoriesOwned() + 1); // Adjusts number of territories
-//				playerA.addTerritoryID(territory2ID); //owned per player
-			
-				if(playerID2 != 0){ // player 0 is the neutral party - no player representing it
-					playerB.setNumTerritoriesOwned(playerB.getNumTerritoriesOwned() - 1);
-//					playerB.removeTerritoryID(territory2ID);
-				}	
 			}
 		}
-		
-		// non dice-like logic
-		else{
-			// attacker wins
-			if (numUnits > numUnitsB) {
-				int finalNumUnits = numUnits - numUnitsB; // number of surviving units
-															
-				terrB.setNumUnits(finalNumUnits); // Set number of units left
-				terrB.setOwner(terrA.getOwner()); // Change owner to winner of fight
-				terrB.setConquered(true);
-				
-				if(playerID1 == 1){
-					logTurn.append("You conquered " + terrB.getName() + ".\n");
-				}
-				
-				else{
-					logTurn.append("AI " + AINames.get(playerID1) + " conquered " + terrB.getName() + 
-					".\n");
-				}
-				
-				if(terrB.isCapital() & capital){
-					deactivatePlayer(playerID2);
-					terrB.capitalConquered();
-					
-					if(playerID2 == 1){
-						logTurn.append("You lost your capital. Game over. :(\n");
-					}
-					else{
-						logTurn.append("AI " + AINames.get(playerID2) + 
-						" lost their capital. They are eliminated.\n");
-					}
-				}
 			
-				playerA.setNumTerritoriesOwned(playerA.getNumTerritoriesOwned() + 1); // Adjusts number of territories
-//				playerA.addTerritoryID(territory2ID); //owned per player
-			
-				if(playerID2 != 0){ // player 0 is the neutral party - no player representing it
-					playerB.setNumTerritoriesOwned(playerB.getNumTerritoriesOwned() - 1);
-//					playerB.removeTerritoryID(territory2ID);
-				}	
+		// defender wins
+		if(numUnits == 0){
+			terrB.setNumUnits(numUnitsB);
+				
+			if(playerID1 == 1){
+				logTurn.append("You failed to conquer " + terrB.getName() + ".\n");
 			}
-		
-			// defender wins
+				
 			else{
-				int finalNumUnits = numUnitsB - numUnits;
-				terrB.setNumUnits(finalNumUnits);
+				logTurn.append("AI " + AINames.get(playerID1) + " failed to conquer " + 
+				terrB.getName() + ".\n");
+			}
+		}
+			
+		// attacker wins
+		else{
+			terrB.setNumUnits(numUnits);
+			terrB.setOwner(playerID1);
+			terrB.setConquered(true);
 				
-				if(playerID1 == 1){
-					logTurn.append("You failed to conquer " + terrB.getName() + ".\n");
+			if(playerID1 == 1){
+				logTurn.append("You conquered " + terrB.getName() + ".\n");
+			}
+				
+			else{
+				logTurn.append("AI " + AINames.get(playerID1) + " conquered " + terrB.getName() + 
+				".\n");
+			}
+				
+			if(terrB.isCapital() & capital){
+				deactivatePlayer(playerID2);
+				terrB.capitalConquered();
+				if(playerID2 == 1){
+					logTurn.append("You lost your capital. Game over. :(\n");
 				}
-				
 				else{
-					logTurn.append("AI " + AINames.get(playerID1) + " failed to conquer " + 
-					terrB.getName() + ".\n");
+					logTurn.append("AI " + AINames.get(playerID2) + 
+					" lost their capital. They are eliminated.\n");
 				}
 			}
-		
-//			playersMap.get(playerID1).minusNumTurns();
-		
-//			if (playerA.isTurnEnded() & playerID1 != 1) {
-//				turnEnds();
-//			}
+				
+			playerA.setNumTerritoriesOwned(playerA.getNumTerritoriesOwned() + 1); // Adjusts number of territories
+//			playerA.addTerritoryID(territory2ID); //owned per player
+			
+			if(playerID2 != 0){ // player 0 is the neutral party - no player representing it
+				playerB.setNumTerritoriesOwned(playerB.getNumTerritoriesOwned() - 1);
+//				playerB.removeTerritoryID(territory2ID);
+			}	
 		}
 	}
+
 	
 	// execute movement
 	public void executeMoveUnits(int playerID, int territory1ID,
@@ -442,7 +428,7 @@ public class Game implements Serializable {
 	
 	// used during game resume to set research levels of players
 	public void setPlayerResearch(String[] values){
-		for(int i = 0; i < values.length; i++){
+		for(int i = 0; i < values.length; i += 3){
 			Player p = playersMap.get(i / 3 + 1);
 			p.setResearch(Integer.parseInt(values[i]), Integer.parseInt(values[i+1]), Integer.parseInt(values[i+2]));
 		}
@@ -521,10 +507,11 @@ public class Game implements Serializable {
 		
 		// player research status on row 4
 		for(int i = 1; i <= playersMap.size(); i++){
-			sb.append(playersMap.get(i).toString() + ",");
+			sb.append(playersMap.get(i).toString());
+			if(i != playersMap.size()) sb.append(",");
 		}
 		
-		sb.append(true + "\n");
+		sb.append("\n");
 		
 		// territory info on the rest of the rows
 		for(int i = 1; i <= territoriesMap.size(); i++){
