@@ -126,9 +126,6 @@ public class Game implements Serializable {
 		if(currPlayerID != 1){ // AI resource adding and movement
 			int res = (int) (playerNumTerrOwned * 10 * diff * player.getResMod());
 			player.addResources(res);
-			logTurn.append("AI " + AINames.get(currPlayerID) + " gained " + 
-			Integer.toString(res) + " resources from " + Integer.toString(playerNumTerrOwned) + 
-			" territories.\n");
 			AIMoves(player);
 			turnEnds();
 		}
@@ -346,9 +343,110 @@ public class Game implements Serializable {
 		if(!player.isActive()) return; // dead AIs don't move
 		
 		ArrayList<Territory> owned = new ArrayList<Territory>();
+		ArrayList<Territory> frontLine = new ArrayList<Territory>();
+		ArrayList<Territory> danger = new ArrayList<Territory>();		
 		int limit = player.getNumResources() / 10;
+		int partitions = 0;
 		
-		// find territories that I have
+		if(limit < 6){
+			partitions = 1;
+		}
+		else if(limit < 15){
+			partitions = 2;
+		}
+		else{
+			partitions = 3;
+		}
+		
+		// stage 1 - find territories that I have
+		for(int i = 1; i <= territoriesMap.size(); i++){
+			Territory t = territoriesMap.get(i);
+			if(t.getOwner() == player.getPlayerID()){
+				owned.add(t);
+			}
+		}
+		System.out.println("Executed Stage 1");
+		
+		Iterator<Territory> tIterator = owned.iterator();
+		
+		// stage 2 - find the territories that are bordering opponents and among those which are in danger
+		while(tIterator.hasNext()){
+			Territory t = tIterator.next();
+			ArrayList<Integer> n = t.getNeighbourIDs();
+			Iterator<Integer> nI = n.iterator();
+			
+			while(nI.hasNext()){
+				int currTerr = nI.next();
+				Territory neighbour = territoriesMap.get(currTerr);
+				
+				if(neighbour.getOwner() != player.getPlayerID()){
+					
+					if(!frontLine.contains(t)) frontLine.add(t);
+					if(neighbour.getNumUnits() > t.getNumUnits() & neighbour.getOwner() != 0){
+						if(!danger.contains(t)) danger.add(t);
+					}
+				}
+			}			
+		}
+		System.out.println("Executed Stage 2");
+		
+		// stage 3 - for the territories in danger, add armies to defend/attack back
+		Collections.shuffle(danger);
+		Iterator<Territory> dangerTs = danger.iterator();
+		
+		while(dangerTs.hasNext()){			
+			Territory t = dangerTs.next();
+			if(partitions > 0) {
+				int add = limit / partitions;
+				executeTerritoryAddUnits(player.getPlayerID(), t.getId(), add);
+				limit -= add;
+				partitions--;
+			}
+		}
+		System.out.println("Executed Stage 3");
+		
+		// stage 4 - if there are resources left, continue to reinforce frontLine territories	
+		Collections.shuffle(frontLine);
+		Iterator<Territory> frontLineTs = frontLine.iterator();
+		
+		while(frontLineTs.hasNext() & partitions > 0){
+			Territory t = frontLineTs.next();
+			int add = limit / partitions;
+			executeTerritoryAddUnits(player.getPlayerID(), t.getId(), add);
+			limit -= add;
+			partitions--;
+		}
+		System.out.println("Executed Stage 4");
+		
+		// stage 5 - go through the frontLine territories and execute attacks
+		Collections.shuffle(frontLine);
+		frontLineTs = frontLine.iterator();
+		while(frontLineTs.hasNext()){
+			Territory t = frontLineTs.next();
+			if(t.getNumUnits() == 0) continue;
+			ArrayList<Integer> n = t.getNeighbourIDs();
+			Collections.shuffle(n);
+			Iterator<Integer> nI = n.iterator();
+			
+			while(nI.hasNext()){
+				Territory neighbour = territoriesMap.get(nI.next());
+				if(neighbour.getOwner() != t.getOwner()){
+					if(t.getNumUnits() > neighbour.getNumUnits()){
+						executeTerritoryAttack(player.getPlayerID(), neighbour.getOwner(), t.getId(), neighbour.getId(), t.getNumUnits());
+					}
+					else{
+						int attackChance = rand.nextInt(3);
+						if(attackChance == 0 & t.getNumUnits() != 0) executeTerritoryAttack(player.getPlayerID(), neighbour.getOwner(), t.getId(), neighbour.getId(), t.getNumUnits());
+					}
+				}
+			}
+		}
+		System.out.println("Executed Stage 5");
+		
+		// stage 6 - get new owned, frontLine and danger territories
+		owned.clear();
+		frontLine.clear();
+		danger.clear();
 		for(int i = 1; i <= territoriesMap.size(); i++){
 			Territory t = territoriesMap.get(i);
 			if(t.getOwner() == player.getPlayerID()){
@@ -356,66 +454,50 @@ public class Game implements Serializable {
 			}
 		}
 		
-		Collections.shuffle(owned);
-		Iterator<Territory> tIterator = owned.iterator();
+		tIterator = owned.iterator();
 		
-		// go through each territory and do stuff
 		while(tIterator.hasNext()){
 			Territory t = tIterator.next();
-			
 			ArrayList<Integer> n = t.getNeighbourIDs();
-			Collections.shuffle(n);
 			Iterator<Integer> nI = n.iterator();
 			
 			while(nI.hasNext()){
 				int currTerr = nI.next();
 				Territory neighbour = territoriesMap.get(currTerr);
 				
-				// enemy territory next door - add armies here if possible
 				if(neighbour.getOwner() != player.getPlayerID()){
-					int addAmt = rand.nextInt(limit + 1);
-					if(addAmt != 0) executeTerritoryAddUnits(player.getPlayerID(), t.getId(), addAmt);
-					limit -= addAmt;
 					
-					// if will win - attack neighbouring territory
-					// if will lose - 1/3 chance to attack
-					
-					int chooseAtk = rand.nextInt(3);
-					
-					if(neighbour.getNumUnits() < t.getNumUnits()){
-						executeTerritoryAttack(player.getPlayerID(), neighbour.getOwner(), t.getId(), neighbour.getId(), t.getNumUnits());
-					}
-					
-					else if(chooseAtk == 0 & t.getNumUnits() != 0){
-						executeTerritoryAttack(player.getPlayerID(), neighbour.getOwner(), t.getId(), neighbour.getId(), t.getNumUnits());
-					}
-				}
-				
-				// friendly territory next door - see if it has hostile neighbours
-				else{
-					
-					boolean frontLine = false;
-					ArrayList<Integer> n2 = neighbour.getNeighbourIDs();
-					Collections.shuffle(n2);
-					Iterator<Integer> n2I = n2.iterator();
-					
-					while(n2I.hasNext()){
-						int next = n2I.next();
-						Territory n3 = territoriesMap.get(next);
-						
-						// check if this neighbour of neighbour is hostile
-						if(n3.getOwner() != player.getPlayerID()){
-							frontLine = true;
-						}
-					}
-					
-					// move all armies to neighbour
-					if(frontLine & t.getNumUnits() != 0){
-						executeMoveUnits(player.getPlayerID(), t.getId(), neighbour.getId(), t.getNumUnits());
+					if(!frontLine.contains(t)) frontLine.add(t);
+					if(neighbour.getNumUnits() > t.getNumUnits() & neighbour.getOwner() != 0){
+						if(!danger.contains(t)) danger.add(t);
 					}
 				}
 			}			
 		}
+		System.out.println("Executed Stage 6");
+		
+		// stage 7 - move any armies not in a frontLine territory back to the frontLine if 1 step away
+		Collections.shuffle(owned);
+		Iterator<Territory> newOwned = owned.iterator();
+		
+		while(newOwned.hasNext()){
+			Territory t = newOwned.next();
+			if(frontLine.contains(t)) continue;
+			if(t.getNumUnits() == 0) continue;
+			ArrayList<Integer> tN = t.getNeighbourIDs();
+			Collections.shuffle(tN);
+			Iterator<Integer> nI = tN.iterator();
+			while(nI.hasNext()){
+				Territory n = territoriesMap.get(nI.next());
+				if(!frontLine.contains(n)){
+					continue;
+				}
+				else{
+					executeMoveUnits(player.getPlayerID(), t.getId(), n.getId(), t.getNumUnits());
+				}
+			}
+		}
+		System.out.println("Executed Stage 7");
 	}
 	
 	// used during game resume to set conquered status of territories
