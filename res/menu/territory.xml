@@ -2,5 +2,10 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="sg.com.yahoo.ryanlouck.orbital2015.TerritoryActivity" >
-
+	
+    <item
+	    android:id="@+id/regions"
+	    android:title="@string/regions_display"
+	    android:icon="@drawable/ic_region_display"
+	    android:showAsAction="ifRoom"/>
 </menu>

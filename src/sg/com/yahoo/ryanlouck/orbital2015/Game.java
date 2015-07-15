@@ -11,7 +11,7 @@ import java.util.Random;
 public class Game implements Serializable {
 	
 	static final long serialVersionUID = 1; // use this as a version number
-	private int numPlayers, currPlayerID;
+	private int numPlayers, currPlayerID, numRegions;
 	private ArrayList<StringBuilder> log;
 	private StringBuilder logTurn;
 	private HashMap<Integer, Player> playersMap = new HashMap<Integer, Player>();
@@ -22,7 +22,7 @@ public class Game implements Serializable {
 	private HashMap<Integer, String> AINames = new HashMap<Integer, String>();
 
 	public Game(int diff, boolean diceLike, boolean capitals, int numPlayersToAdd, int[] startingResources, 
-			boolean fromSave, int[] savedTerrs, ArrayList<String[]> mapDetails) {
+			boolean fromSave, int[] savedTerrs, int numRegions, ArrayList<String[]> mapDetails) {
 		
 		// sets AI resource generation based on selected difficulty
 		switch(diff){
@@ -43,6 +43,7 @@ public class Game implements Serializable {
 		isDice = diceLike;
 		capital = capitals;
 		this.numPlayers = numPlayersToAdd;
+		this.numRegions = numRegions;
 		Iterator<String[]> territoryIterator = mapDetails.iterator();
 		if(!fromSave) territoryIterator.next(); // removes invalid first row
 		int[] startingTerritories = new int[numPlayers + 1];
@@ -107,9 +108,11 @@ public class Game implements Serializable {
 		int playerNumTerrOwned = player.getNumTerritoriesOwned();
 		
 		// resets conquered attribute for each territory
-		for(int i = 1; i <= territoriesMap.size(); i++){
-			Territory t = territoriesMap.get(i);
-			t.setConquered(false);
+		if(addRes){
+			for(int i = 1; i <= territoriesMap.size(); i++){
+				Territory t = territoriesMap.get(i);
+				t.setConquered(false);
+			}
 		}
 
 		// Updates new number of turns for player
@@ -126,6 +129,7 @@ public class Game implements Serializable {
 		if(currPlayerID != 1){ // AI resource adding and movement
 			int res = (int) (playerNumTerrOwned * 10 * diff * player.getResMod());
 			player.addResources(res);
+			player.addResources(checkRegions(player.getPlayerID()));
 			AIMoves(player);
 			turnEnds();
 		}
@@ -134,6 +138,9 @@ public class Game implements Serializable {
 			player.addResources(res);
 			logTurn.append("You gained " + Integer.toString(res) + " resources from " 
 			+ Integer.toString(playerNumTerrOwned) + " territories.\n");
+			int bonus = checkRegions(1);
+			player.addResources(bonus);
+			logTurn.append("You gained " + Integer.toString(bonus) + " bonus resources from holding regions.\n");
 		}
 	}
 	
@@ -498,6 +505,38 @@ public class Game implements Serializable {
 			}
 		}
 		System.out.println("Executed Stage 7");
+	}
+	
+	// see how many regions a certain player owns, and then determines the number of bonus resources he gets
+	public int checkRegions(int playerID){
+		boolean[] ownedRegions = new boolean[numRegions];
+		Arrays.fill(ownedRegions, true);
+		for(int i = 1; i <= territoriesMap.size(); i++){
+			Territory t = territoriesMap.get(i);
+			if(t.getOwner() != playerID){
+				ownedRegions[t.getRegion() - 1] = false;
+			}
+		}
+		
+		int ownedCount = 0;
+		for(boolean b : ownedRegions){
+			if(b == true){
+				ownedCount++;
+			}
+		}
+		
+		return ownedCount*10;
+	}
+	
+	public ArrayList<Territory> getRegion(int region){
+		ArrayList<Territory> regionTs = new ArrayList<Territory>();
+		for(int i = 1; i <= territoriesMap.size(); i++){
+			Territory t = territoriesMap.get(i);
+			if(t.getRegion() == region){
+				regionTs.add(t);
+			}
+		}
+		return regionTs;
 	}
 	
 	// used during game resume to set conquered status of territories

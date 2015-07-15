@@ -178,6 +178,11 @@ public class TerritoryActivity extends Activity {
 		// as you specify a parent activity in AndroidManifest.xml.
 		int id = item.getItemId();
 		switch(id){
+		case R.id.regions:
+			RegionsScreen rs = new RegionsScreen(g, t.getRegion());
+			FragmentManager fm = getFragmentManager();
+			rs.show(fm, "regions");
+			return true;
 		case android.R.id.home:
 			onBackPressed();
 			return true;

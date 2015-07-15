@@ -8,7 +8,7 @@ public class Territory implements Serializable {
 	
 	static final long serialVersionUID = 1; // use this as a version number
 	private String name, abbrvName;
-	private int id, owner, numUnits, originalOwner;
+	private int id, owner, numUnits, originalOwner, regionNo;
 	private ArrayList<Integer> neighbourIDs;
 	private boolean recentlyConquered, isCapital;
 	private String[] baseDetails;
@@ -27,6 +27,7 @@ public class Territory implements Serializable {
 		}
 		owner = Integer.parseInt(details[8]);
 		if(isCapital) originalOwner = Integer.parseInt(details[8]);
+		regionNo = Integer.parseInt(details[7]);
 		numUnits = Integer.parseInt(details[9]);  		
 		for (int i = 12; i < details.length; i++){
 			neighbourIDs.add(Integer.parseInt(details[i]));
@@ -56,6 +57,10 @@ public class Territory implements Serializable {
 	
 	public int getOriginalOwner(){
 		return originalOwner;
+	}
+	
+	public int getRegion(){
+		return regionNo;
 	}
 	
 	public boolean isConq(){

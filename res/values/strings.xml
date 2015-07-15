@@ -72,6 +72,10 @@
     <string name="close_log">Close Log</string>
     <!-- Research -->
     <string name="global_research">Research</string>
+    <!-- Regions -->
+    <string name="regions_display">Regions</string>
+    <string name="regions_desc">Hold this territory plus all the others in its region to earn bonus resources.\nThe territories in this territory\'s region are as below:\n</string>
+    <string name="close_regions">Close</string>
     <!-- Actions -->
     <string name="unit_head">Add Units</string>
     <string name="unit1_name">Army Unit</string>

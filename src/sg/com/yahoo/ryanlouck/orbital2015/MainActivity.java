@@ -140,6 +140,9 @@ public class MainActivity extends Activity {
 						upgrades = false;
 					}
 					resumeLaunch.putExtra("upgrades", upgrades);
+					
+					int numRegions = Integer.parseInt(globalDetails[6]);
+					resumeLaunch.putExtra("numRegions", numRegions);
 				
 					String[] gameDetails = saveDetails.get(1);
 					resumeLaunch.putExtra("diff", Integer.parseInt(gameDetails[0]));

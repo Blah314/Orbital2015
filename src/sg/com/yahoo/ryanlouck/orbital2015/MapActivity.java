@@ -46,7 +46,7 @@ public class MapActivity extends Activity {
 	private String[] levelDetails;
 	private ArrayList<String[]> territoryDetails;
 	
-	private int level, diff, numTerritories, turnNum;
+	private int level, diff, numTerritories, turnNum, numRegions;
 	private boolean diceLike, hardcore, over, fow, capital, upgrades;
 	private Game game;
 	private HashMap<Integer, Territory> territories;
@@ -133,13 +133,14 @@ public class MapActivity extends Activity {
 		setFields();
 		loadTerritoryButtons();
 		
-		// create new game	
+		// create new game
+		numRegions = Integer.parseInt(levelDetails[7]);
 		int[] startingRes = new int[levelDetails.length - 8];
 		for(int i = 8; i < levelDetails.length; i++){
 			startingRes[i-8] = Integer.parseInt(levelDetails[i]);
 		}
 		
-		game = new Game(diff, diceLike, capital, Integer.parseInt(levelDetails[5]), startingRes, false, startingRes, territoryDetails);
+		game = new Game(diff, diceLike, capital, Integer.parseInt(levelDetails[5]), startingRes, false, startingRes, numRegions, territoryDetails);
 		territories = game.getTerritories();
 		numTerritories = territories.size();
 		players = game.getPlayers();
@@ -164,6 +165,7 @@ public class MapActivity extends Activity {
 		upgrades = details.getBoolean("upgrades", false);
 		hardcore = details.getBoolean("hardcore", false);
 		int numPlayers = details.getInt("numPlayers", 2);
+		numRegions = details.getInt("numRegions", 3);
 		int[] res = details.getIntArray("res");
 		int[] terr = details.getIntArray("terr");
 		boolean[] terrConq = details.getBooleanArray("conq");
@@ -193,7 +195,7 @@ public class MapActivity extends Activity {
 		setFields();
 		loadTerritoryButtons();
 		
-		game = new Game(diff, diceLike, capital, numPlayers, res, true, terr, territoryDetails);
+		game = new Game(diff, diceLike, capital, numPlayers, res, true, terr, numRegions, territoryDetails);
 		game.setTerritoriesConq(terrConq);
 		if(upgrades) game.setPlayerResearch(upgradeVals);
 		territories = game.getTerritories();
@@ -466,11 +468,12 @@ public class MapActivity extends Activity {
 				 * 3 - fog of war
 				 * 4 - capital
 				 * 5 - upgrades
+				 * 6 - numRegions
 				 */
 				fos.write((Integer.toString(turnNum) + "," + Integer.toString(level) + "," + 
 						Boolean.toString(hardcore) + "," + Boolean.toString(fow) + "," + 
-						Boolean.toString(capital) + "," + Boolean.toString(upgrades) + "\n").getBytes());
-				
+						Boolean.toString(capital) + "," + Boolean.toString(upgrades) + "," + 
+						Integer.toString(numRegions) + "\n").getBytes());
 				// line 1 onwards contains the game save
 				fos.write(gameSave.getBytes());
 				fos.flush();

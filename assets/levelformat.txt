@@ -15,5 +15,5 @@ Each level occupies one line, with the line having at least 10 parameters.
 4 - ObjectiveNum (Replaces the X for game modes 1,2,3)
 5 - NumPlayers (We need NumPlayers - 1 AI players)
 6 - Description (Level description seen by the player)
-7 - MapID (The ID of the map to use)
+7 - Number of regions on the map.
 8 onwards - Starting resources of players.
