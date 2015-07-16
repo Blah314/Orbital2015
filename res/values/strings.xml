@@ -57,6 +57,7 @@
     <string name="choose_ai">AI Personalities?</string>
     <string name="choose_fow">Fog of War?</string>
     <string name="choose_turns">Turn Limit?</string>
+    <string name="choose_regions">Region bonuses?</string>
     <string name="choose_hardcore">Hardcore?</string>
 
     <!-- MapActivty + TerritoryActivity Strings -->

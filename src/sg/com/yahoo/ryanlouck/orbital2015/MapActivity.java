@@ -47,7 +47,7 @@ public class MapActivity extends Activity {
 	private ArrayList<String[]> territoryDetails;
 	
 	private int level, diff, numTerritories, turnNum, numRegions;
-	private boolean diceLike, hardcore, over, fow, capital, upgrades;
+	private boolean diceLike, hardcore, over, fow, capital, upgrades, regions;
 	private Game game;
 	private HashMap<Integer, Territory> territories;
 	private HashMap<Integer, Player> players;
@@ -109,6 +109,7 @@ public class MapActivity extends Activity {
 		capital = details.getBoolean("capital", false);
 		upgrades = details.getBoolean("upgrades", false);
 		hardcore = details.getBoolean("hardcore", false);
+		regions = details.getBoolean("regions", false);
 		levelDetails = details.getStringArray("levelDetails");
 
 		territoryDetails = new ArrayList<String[]>();
@@ -140,7 +141,7 @@ public class MapActivity extends Activity {
 			startingRes[i-8] = Integer.parseInt(levelDetails[i]);
 		}
 		
-		game = new Game(diff, diceLike, capital, Integer.parseInt(levelDetails[5]), startingRes, false, startingRes, numRegions, territoryDetails);
+		game = new Game(diff, diceLike, capital, regions, Integer.parseInt(levelDetails[5]), startingRes, false, startingRes, numRegions, territoryDetails);
 		territories = game.getTerritories();
 		numTerritories = territories.size();
 		players = game.getPlayers();
@@ -166,6 +167,7 @@ public class MapActivity extends Activity {
 		hardcore = details.getBoolean("hardcore", false);
 		int numPlayers = details.getInt("numPlayers", 2);
 		numRegions = details.getInt("numRegions", 3);
+		regions = details.getBoolean("regions", false);
 		int[] res = details.getIntArray("res");
 		int[] terr = details.getIntArray("terr");
 		boolean[] terrConq = details.getBooleanArray("conq");
@@ -195,7 +197,7 @@ public class MapActivity extends Activity {
 		setFields();
 		loadTerritoryButtons();
 		
-		game = new Game(diff, diceLike, capital, numPlayers, res, true, terr, numRegions, territoryDetails);
+		game = new Game(diff, diceLike, capital, regions, numPlayers, res, true, terr, numRegions, territoryDetails);
 		game.setTerritoriesConq(terrConq);
 		if(upgrades) game.setPlayerResearch(upgradeVals);
 		territories = game.getTerritories();
@@ -469,11 +471,12 @@ public class MapActivity extends Activity {
 				 * 4 - capital
 				 * 5 - upgrades
 				 * 6 - numRegions
+				 * 7 - regions
 				 */
 				fos.write((Integer.toString(turnNum) + "," + Integer.toString(level) + "," + 
 						Boolean.toString(hardcore) + "," + Boolean.toString(fow) + "," + 
 						Boolean.toString(capital) + "," + Boolean.toString(upgrades) + "," + 
-						Integer.toString(numRegions) + "\n").getBytes());
+						Integer.toString(numRegions) + "," + Boolean.toString(regions) + "\n").getBytes());
 				// line 1 onwards contains the game save
 				fos.write(gameSave.getBytes());
 				fos.flush();

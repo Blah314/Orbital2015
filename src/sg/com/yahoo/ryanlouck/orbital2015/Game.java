@@ -15,14 +15,15 @@ public class Game implements Serializable {
 	private ArrayList<StringBuilder> log;
 	private StringBuilder logTurn;
 	private HashMap<Integer, Player> playersMap = new HashMap<Integer, Player>();
-	private boolean isDice, capital;
+	private boolean isDice, capital, regions;
 	private double diff;
 	private HashMap<Integer, Territory> territoriesMap = new HashMap<Integer, Territory>();
 	private Random rand = new Random();
 	private HashMap<Integer, String> AINames = new HashMap<Integer, String>();
 
-	public Game(int diff, boolean diceLike, boolean capitals, int numPlayersToAdd, int[] startingResources, 
-			boolean fromSave, int[] savedTerrs, int numRegions, ArrayList<String[]> mapDetails) {
+	public Game(int diff, boolean diceLike, boolean capitals, boolean regions, int numPlayersToAdd, 
+			int[] startingResources, boolean fromSave, int[] savedTerrs, int numRegions, 
+			ArrayList<String[]> mapDetails) {
 		
 		// sets AI resource generation based on selected difficulty
 		switch(diff){
@@ -42,6 +43,7 @@ public class Game implements Serializable {
 		
 		isDice = diceLike;
 		capital = capitals;
+		this.regions = regions;
 		this.numPlayers = numPlayersToAdd;
 		this.numRegions = numRegions;
 		Iterator<String[]> territoryIterator = mapDetails.iterator();
@@ -129,7 +131,7 @@ public class Game implements Serializable {
 		if(currPlayerID != 1){ // AI resource adding and movement
 			int res = (int) (playerNumTerrOwned * 10 * diff * player.getResMod());
 			player.addResources(res);
-			player.addResources(checkRegions(player.getPlayerID()));
+			if(regions) player.addResources(checkRegions(player.getPlayerID()));
 			AIMoves(player);
 			turnEnds();
 		}
@@ -138,9 +140,11 @@ public class Game implements Serializable {
 			player.addResources(res);
 			logTurn.append("You gained " + Integer.toString(res) + " resources from " 
 			+ Integer.toString(playerNumTerrOwned) + " territories.\n");
-			int bonus = checkRegions(1);
-			player.addResources(bonus);
-			logTurn.append("You gained " + Integer.toString(bonus) + " bonus resources from holding regions.\n");
+			if(regions){
+				int bonus = checkRegions(1);
+				player.addResources(bonus);
+				logTurn.append("You gained " + Integer.toString(bonus) + " bonus resources from holding regions.\n");
+			}	
 		}
 	}
 	

@@ -143,6 +143,15 @@ public class MainActivity extends Activity {
 					
 					int numRegions = Integer.parseInt(globalDetails[6]);
 					resumeLaunch.putExtra("numRegions", numRegions);
+					
+					boolean regions;
+					if(globalDetails[7].equals("true")){
+						regions = true;
+					}
+					else{
+						regions = false;
+					}
+					resumeLaunch.putExtra("regions", regions);
 				
 					String[] gameDetails = saveDetails.get(1);
 					resumeLaunch.putExtra("diff", Integer.parseInt(gameDetails[0]));

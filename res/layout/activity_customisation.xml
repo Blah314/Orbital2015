@@ -100,7 +100,14 @@
                 android:layout_height="wrap_content"
                 android:onClick="checkBoxListener"
                 android:text="@string/choose_turns" />
-
+			
+			<CheckBox
+                android:id="@+id/regionsCheckBox"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="checkBoxListener"
+                android:text="@string/choose_regions" />
+                    
             <CheckBox
                 android:id="@+id/hardcoreCheckBox"
                 android:layout_width="wrap_content"
