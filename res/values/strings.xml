@@ -33,7 +33,15 @@
 
     <!-- NewGameActivity + CustomisationActivity Strings -->
     <string name="title_activity_new_game">New Game</string>
-    <string name="select_level">Select a Level</string>
+    <string name="select_level_pack">Level Pack</string>
+    
+    <string-array name="level_packs">
+        <item>Story Levels</item>
+        <item>Bonus Campaign</item>
+        <item>Challenges</item>
+    </string-array>
+    
+    <string name="select_level">Level Select</string>
     <string name="start_level">START</string>
     <string name="title_activity_customisation">Game Customisation</string>
 

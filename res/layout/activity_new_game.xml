@@ -9,16 +9,6 @@
     tools:context="sg.com.yahoo.ryanlouck.orbital2015.NewGameActivity" >
 
     <TextView
-        android:id="@+id/levelText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/buttonScroller"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="20dp"
-        android:text=""
-        android:textAppearance="?android:attr/textAppearanceMedium" />
-
-    <TextView
         android:id="@+id/levelSelectTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -35,12 +25,28 @@
         android:layout_centerHorizontal="true"
         android:text="@string/start_level" />
 
+    <TextView
+        android:id="@+id/packSelect"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/levelSelectTitle"
+        android:text="@string/select_level_pack"
+        android:textAppearance="?android:attr/textAppearanceSmall" />
+
+    <Spinner
+        android:id="@+id/packSpinner"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/packSelect" />
+
     <HorizontalScrollView
         android:id="@+id/buttonScroller"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/levelSelectTitle"
-        android:layout_centerHorizontal="true" >
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/packSpinner" >
 
         <LinearLayout
             android:id="@+id/levelButtons"
@@ -49,5 +55,14 @@
             android:orientation="horizontal" >
         </LinearLayout>
     </HorizontalScrollView>
+
+    <TextView
+        android:id="@+id/levelText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/buttonScroller"
+        android:layout_centerHorizontal="true"
+        android:text=""
+        android:textAppearance="?android:attr/textAppearanceMedium" />
 
 </RelativeLayout>

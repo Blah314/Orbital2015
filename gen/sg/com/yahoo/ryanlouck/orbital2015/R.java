@@ -21,12 +21,13 @@ public final class R {
         public static final int abc_slide_out_top=0x7f040009;
     }
     public static final class array {
-        public static final int difficulty_levels=0x7f0c0001;
-        public static final int difficulty_levels_extra=0x7f0c0002;
-        public static final int instruction_messages=0x7f0c0004;
+        public static final int difficulty_levels=0x7f0c0002;
+        public static final int difficulty_levels_extra=0x7f0c0003;
+        public static final int instruction_messages=0x7f0c0005;
         /**  InstructionsActivity Strings 
          */
-        public static final int instruction_titles=0x7f0c0003;
+        public static final int instruction_titles=0x7f0c0004;
+        public static final int level_packs=0x7f0c0001;
         public static final int territory_sizes=0x7f0c0000;
     }
     public static final class attr {
@@ -1916,7 +1917,7 @@ containing a value of this type.
         public static final int ic_research=0x7f02003e;
     }
     public static final class id {
-        public static final int actionButtons=0x7f09007d;
+        public static final int actionButtons=0x7f09007f;
         public static final int action_bar=0x7f090040;
         public static final int action_bar_activity_content=0x7f090003;
         public static final int action_bar_container=0x7f09003f;
@@ -1935,13 +1936,13 @@ containing a value of this type.
         public static final int alertTitle=0x7f090030;
         public static final int always=0x7f090019;
         public static final int armiesCheckBox=0x7f090055;
-        public static final int atkButton=0x7f090082;
-        public static final int atkLevel=0x7f090087;
-        public static final int atkText=0x7f090083;
-        public static final int backToMapButton=0x7f09007c;
+        public static final int atkButton=0x7f090084;
+        public static final int atkLevel=0x7f090089;
+        public static final int atkText=0x7f090085;
+        public static final int backToMapButton=0x7f09007e;
         public static final int beginning=0x7f090020;
         public static final int buttonPanel=0x7f090036;
-        public static final int buttonScroller=0x7f090071;
+        public static final int buttonScroller=0x7f090074;
         public static final int capitalCheckBox=0x7f090058;
         public static final int checkbox=0x7f090038;
         public static final int collapseActionView=0x7f09001a;
@@ -1951,9 +1952,9 @@ containing a value of this type.
         public static final int customPanel=0x7f090034;
         public static final int customisationTitle=0x7f090050;
         public static final int decor_content_parent=0x7f09003e;
-        public static final int defButton=0x7f090084;
-        public static final int defLevel=0x7f090089;
-        public static final int defText=0x7f090085;
+        public static final int defButton=0x7f090086;
+        public static final int defLevel=0x7f09008b;
+        public static final int defText=0x7f090087;
         public static final int default_activity_button=0x7f090029;
         public static final int dialog=0x7f09001e;
         public static final int diceCheckbox=0x7f090054;
@@ -1967,7 +1968,7 @@ containing a value of this type.
         public static final int expand_activities_button=0x7f090027;
         public static final int expanded_menu=0x7f090037;
         public static final int fowCheckBox=0x7f090059;
-        public static final int game_log=0x7f09008a;
+        public static final int game_log=0x7f09008c;
         public static final int hScroll1=0x7f09006c;
         public static final int hardcoreCheckBox=0x7f09005c;
         public static final int home=0x7f090000;
@@ -1979,9 +1980,9 @@ containing a value of this type.
         public static final int instructionScroll=0x7f090060;
         public static final int instructionTitle=0x7f09005d;
         public static final int instructionsButon=0x7f090066;
-        public static final int levelButtons=0x7f090074;
-        public static final int levelSelectTitle=0x7f090072;
-        public static final int levelText=0x7f090070;
+        public static final int levelButtons=0x7f090075;
+        public static final int levelSelectTitle=0x7f090070;
+        public static final int levelText=0x7f090076;
         public static final int listMode=0x7f09000a;
         public static final int list_item=0x7f09002a;
         public static final int map=0x7f09006d;
@@ -1996,22 +1997,24 @@ containing a value of this type.
         public static final int normal=0x7f09000b;
         public static final int objectiveView=0x7f090069;
         public static final int optionsButton=0x7f090065;
-        public static final int optionsMaster=0x7f090075;
+        public static final int optionsMaster=0x7f090077;
+        public static final int packSelect=0x7f090072;
+        public static final int packSpinner=0x7f090073;
         public static final int pageNum=0x7f090062;
         public static final int parentPanel=0x7f09002d;
         public static final int prevButton=0x7f09005e;
         public static final int progress_circular=0x7f090007;
         public static final int progress_horizontal=0x7f090008;
         public static final int radio=0x7f09003a;
-        public static final int regions=0x7f09008c;
+        public static final int regions=0x7f09008e;
         public static final int regionsCheckBox=0x7f09005b;
-        public static final int resAmt=0x7f090086;
-        public static final int resButton=0x7f090081;
-        public static final int resLevel=0x7f090088;
-        public static final int resText=0x7f090080;
-        public static final int research=0x7f09008b;
+        public static final int resAmt=0x7f090088;
+        public static final int resButton=0x7f090083;
+        public static final int resLevel=0x7f09008a;
+        public static final int resText=0x7f090082;
+        public static final int research=0x7f09008d;
         public static final int resourceView=0x7f09006f;
-        public static final int saveButton=0x7f09007a;
+        public static final int saveButton=0x7f09007c;
         public static final int screen=0x7f090015;
         public static final int scrollView=0x7f090032;
         public static final int scrollView1=0x7f090051;
@@ -2035,14 +2038,14 @@ containing a value of this type.
         public static final int src_in=0x7f090017;
         public static final int src_over=0x7f090018;
         public static final int startButton=0x7f09004f;
-        public static final int startGameButton=0x7f090073;
+        public static final int startGameButton=0x7f090071;
         public static final int submit_area=0x7f09004b;
         public static final int tabMode=0x7f09000c;
-        public static final int territoryDemo=0x7f090079;
-        public static final int territoryDesc=0x7f090077;
-        public static final int territoryName=0x7f09007b;
-        public static final int territorySpinner=0x7f090078;
-        public static final int territoryTitle=0x7f090076;
+        public static final int territoryDemo=0x7f09007b;
+        public static final int territoryDesc=0x7f090079;
+        public static final int territoryName=0x7f09007d;
+        public static final int territorySpinner=0x7f09007a;
+        public static final int territoryTitle=0x7f090078;
         public static final int textSpacerNoButtons=0x7f090033;
         public static final int title=0x7f09002c;
         public static final int title_template=0x7f09002f;
@@ -2050,8 +2053,8 @@ containing a value of this type.
         public static final int turnCheckBox=0x7f09005a;
         public static final int turnView=0x7f09006e;
         public static final int up=0x7f090001;
-        public static final int upgradeDesc=0x7f09007f;
-        public static final int upgradeTitle=0x7f09007e;
+        public static final int upgradeDesc=0x7f090081;
+        public static final int upgradeTitle=0x7f090080;
         public static final int upgradesCheckBox=0x7f090057;
         public static final int useLogo=0x7f090013;
         public static final int vScroll1=0x7f09006b;
@@ -2196,105 +2199,106 @@ containing a value of this type.
         /**  Content description for the Toolbar icon used to collapse an expanded action mode. [CHAR LIMIT=NONE] 
          */
         public static final int abc_toolbar_collapse_description=0x7f0a0004;
-        public static final int add_num=0x7f0a0040;
-        public static final int add_units=0x7f0a0041;
+        public static final int add_num=0x7f0a0041;
+        public static final int add_units=0x7f0a0042;
         public static final int app_name=0x7f0a0011;
-        public static final int atk_upgrade=0x7f0a005b;
-        public static final int atk_upgrade_desc=0x7f0a005c;
-        public static final int attack=0x7f0a0045;
-        public static final int attack_desc=0x7f0a0044;
-        public static final int attack_head=0x7f0a0042;
-        public static final int attack_num=0x7f0a0043;
-        public static final int cancel=0x7f0a0049;
-        public static final int choose_ai=0x7f0a002b;
-        public static final int choose_armies=0x7f0a002a;
-        public static final int choose_capital=0x7f0a0028;
-        public static final int choose_dice=0x7f0a0027;
-        public static final int choose_diff=0x7f0a0026;
-        public static final int choose_fow=0x7f0a002c;
-        public static final int choose_hardcore=0x7f0a002f;
-        public static final int choose_regions=0x7f0a002e;
-        public static final int choose_turns=0x7f0a002d;
-        public static final int choose_upgrades=0x7f0a0029;
-        public static final int close_log=0x7f0a0038;
-        public static final int close_regions=0x7f0a003c;
-        public static final int conquered_territory=0x7f0a0034;
+        public static final int atk_upgrade=0x7f0a005c;
+        public static final int atk_upgrade_desc=0x7f0a005d;
+        public static final int attack=0x7f0a0046;
+        public static final int attack_desc=0x7f0a0045;
+        public static final int attack_head=0x7f0a0043;
+        public static final int attack_num=0x7f0a0044;
+        public static final int cancel=0x7f0a004a;
+        public static final int choose_ai=0x7f0a002c;
+        public static final int choose_armies=0x7f0a002b;
+        public static final int choose_capital=0x7f0a0029;
+        public static final int choose_dice=0x7f0a0028;
+        public static final int choose_diff=0x7f0a0027;
+        public static final int choose_fow=0x7f0a002d;
+        public static final int choose_hardcore=0x7f0a0030;
+        public static final int choose_regions=0x7f0a002f;
+        public static final int choose_turns=0x7f0a002e;
+        public static final int choose_upgrades=0x7f0a002a;
+        public static final int close_log=0x7f0a0039;
+        public static final int close_regions=0x7f0a003d;
+        public static final int conquered_territory=0x7f0a0035;
         public static final int continueGameMenu=0x7f0a0015;
-        public static final int def_upgrade=0x7f0a005d;
-        public static final int def_upgrade_desc=0x7f0a005e;
+        public static final int def_upgrade=0x7f0a005e;
+        public static final int def_upgrade_desc=0x7f0a005f;
         public static final int demo_territory=0x7f0a001f;
-        public static final int end_turn=0x7f0a0031;
-        public static final int exit_lose=0x7f0a004f;
-        public static final int exit_map=0x7f0a0050;
-        public static final int exit_win=0x7f0a004e;
-        public static final int first_page=0x7f0a0054;
+        public static final int end_turn=0x7f0a0032;
+        public static final int exit_lose=0x7f0a0050;
+        public static final int exit_map=0x7f0a0051;
+        public static final int exit_win=0x7f0a004f;
+        public static final int first_page=0x7f0a0055;
         /**  Research 
          */
-        public static final int global_research=0x7f0a0039;
+        public static final int global_research=0x7f0a003a;
         public static final int hello_world=0x7f0a0012;
         public static final int instructions_menu=0x7f0a0017;
-        public static final int last_page=0x7f0a0055;
-        public static final int log_blocked=0x7f0a0037;
+        public static final int last_page=0x7f0a0056;
+        public static final int log_blocked=0x7f0a0038;
         /**  LOG 
          */
-        public static final int log_menu=0x7f0a0036;
-        public static final int lose=0x7f0a004c;
-        public static final int lose_text=0x7f0a004d;
-        public static final int move=0x7f0a0048;
-        public static final int move_desc=0x7f0a0047;
-        public static final int move_num=0x7f0a0046;
+        public static final int log_menu=0x7f0a0037;
+        public static final int lose=0x7f0a004d;
+        public static final int lose_text=0x7f0a004e;
+        public static final int move=0x7f0a0049;
+        public static final int move_desc=0x7f0a0048;
+        public static final int move_num=0x7f0a0047;
         public static final int n=0x7f0a001c;
         /**  Main Menu Strings 
          */
         public static final int newGameMenu=0x7f0a0014;
-        public static final int next_inst=0x7f0a0053;
+        public static final int next_inst=0x7f0a0054;
         public static final int no_save_game=0x7f0a0018;
         public static final int optionsMenu=0x7f0a0016;
-        public static final int out_of_turns=0x7f0a0035;
+        public static final int out_of_turns=0x7f0a0036;
         public static final int overwrite=0x7f0a0019;
         public static final int overwrite_desc=0x7f0a001a;
         public static final int placeholder=0x7f0a0013;
-        public static final int prev_inst=0x7f0a0052;
-        public static final int regions_desc=0x7f0a003b;
+        public static final int prev_inst=0x7f0a0053;
+        public static final int regions_desc=0x7f0a003c;
         /**  Regions 
          */
-        public static final int regions_display=0x7f0a003a;
-        public static final int reject=0x7f0a0033;
-        public static final int res_upgrade=0x7f0a0059;
-        public static final int res_upgrade_desc=0x7f0a005a;
+        public static final int regions_display=0x7f0a003b;
+        public static final int reject=0x7f0a0034;
+        public static final int res_upgrade=0x7f0a005a;
+        public static final int res_upgrade_desc=0x7f0a005b;
         public static final int save_options=0x7f0a0021;
-        public static final int select_level=0x7f0a0023;
-        public static final int start_level=0x7f0a0024;
+        public static final int select_level=0x7f0a0024;
+        public static final int select_level_pack=0x7f0a0023;
+        public static final int start_level=0x7f0a0025;
         public static final int territory_size=0x7f0a001e;
         public static final int territory_size_desc=0x7f0a0020;
-        public static final int title_activity_customisation=0x7f0a0025;
-        public static final int title_activity_instructions=0x7f0a0051;
+        public static final int title_activity_customisation=0x7f0a0026;
+        public static final int title_activity_instructions=0x7f0a0052;
         /**  MapActivty + TerritoryActivity Strings 
          */
-        public static final int title_activity_map=0x7f0a0030;
+        public static final int title_activity_map=0x7f0a0031;
         /**  NewGameActivity + CustomisationActivity Strings 
          */
         public static final int title_activity_new_game=0x7f0a0022;
         /**  Options Menu Strings 
          */
         public static final int title_activity_options=0x7f0a001d;
-        public static final int title_activity_territory=0x7f0a0032;
+        public static final int title_activity_territory=0x7f0a0033;
         /**  UpgradesActivity Strings 
          */
-        public static final int title_activity_upgrades=0x7f0a0056;
-        public static final int unit1_desc=0x7f0a003f;
-        public static final int unit1_name=0x7f0a003e;
+        public static final int title_activity_upgrades=0x7f0a0057;
+        public static final int unit1_desc=0x7f0a0040;
+        public static final int unit1_name=0x7f0a003f;
         /**  Actions 
          */
-        public static final int unit_head=0x7f0a003d;
-        public static final int upgrade_reject=0x7f0a0060;
-        public static final int upgrades_desc=0x7f0a0058;
-        public static final int upgrades_off=0x7f0a005f;
-        public static final int upgrades_title=0x7f0a0057;
+        public static final int unit_head=0x7f0a003e;
+        public static final int upgrade_reject=0x7f0a0061;
+        public static final int upgrades_desc=0x7f0a0059;
+        public static final int upgrades_off=0x7f0a0060;
+        public static final int upgrades_title=0x7f0a0058;
         /**  EndGameFragment 
          */
-        public static final int win=0x7f0a004a;
-        public static final int win_text=0x7f0a004b;
+        public static final int win=0x7f0a004b;
+        public static final int win_text=0x7f0a004c;
         public static final int y=0x7f0a001b;
     }
     public static final class style {

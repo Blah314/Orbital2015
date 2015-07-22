@@ -4,7 +4,7 @@ Each level occupies one line, with the line having at least 10 parameters.
 (Add more if we make it more complicated)
 
 0 - LevelID (Used to lookup the level chosen)
-1 - LevelSet (Not used yet - will be used to separate levels into different sets later on)
+1 - LevelSet (Used to indicate which campaign a level belongs in)
 2 - LevelName (The name displayed to the player)
 3 - Objective (What needs to be done to complete the level:
 	0 - Eliminate everybody

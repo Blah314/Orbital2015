@@ -18,7 +18,10 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 public class NewGameActivity extends Activity {
@@ -27,10 +30,17 @@ public class NewGameActivity extends Activity {
 	private int numLevels;
 	private View.OnClickListener levelButtonLoader;
 	private int selectedLevel = 0;
+	private int selectedPack = 0;
 	private ArrayList<String[]> levelDetails;
 	private Hashtable<Integer, PorterDuffColorFilter> ColorMap;
+	private Hashtable<Button, Integer> LevelMap;
 	private String[] awards;
 	private int[] levelAwards;
+	
+	private TextView levelDetailsView;
+	private Button startButton;
+	private Spinner packSelect;
+	private ViewGroup levels;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -46,12 +56,32 @@ public class NewGameActivity extends Activity {
 		ColorMap.put(3, new PorterDuffColorFilter(Color.rgb(255, 215, 0), PorterDuff.Mode.OVERLAY));
 		ColorMap.put(4, new PorterDuffColorFilter(Color.rgb(229, 228, 226), PorterDuff.Mode.OVERLAY));
 		
+		LevelMap = new Hashtable<Button, Integer>();
 		awards = new String[]{"Bronze", "Silver", "Gold", "Platinum"};
 		
 		// levelDetailsView displays level details when a level button is clicked
-		final TextView levelDetailsView = (TextView) findViewById(R.id.levelText);
-		final Button startButton = (Button) findViewById(R.id.startGameButton);
+		levelDetailsView = (TextView) findViewById(R.id.levelText);
+		startButton = (Button) findViewById(R.id.startGameButton);
+		packSelect = (Spinner) findViewById(R.id.packSpinner);
 		
+		ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.level_packs, 
+			android.R.layout.simple_spinner_item);
+		adapter.setDropDownViewResource(android.R.layout.simple_spinner_item);
+		packSelect.setAdapter(adapter);
+		
+		packSelect.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener(){
+		    
+			public void onItemSelected(AdapterView<?> parent, View view, 
+		            int pos, long id) {
+		        selectedPack = pos;
+		        loadPack();
+		    }
+
+		    public void onNothingSelected(AdapterView<?> parent) {
+		    	selectedPack = 0;
+		    }
+		});	
+			
 		levelDetails = new ArrayList<String[]>();
 		
 		// read levelDetails from file
@@ -73,32 +103,26 @@ public class NewGameActivity extends Activity {
 		numLevels = levelDetails.size() - 1;
 		
 		// getting the highest award achieved for each level so far
-		levelAwards = new int[numLevels];
+		levelAwards = new int[numLevels + 1];
 		SharedPreferences settings = getSharedPreferences("levels", 0);
 		
-		for(int i = 0; i < numLevels; i++){
+		for(int i = 1; i <= numLevels; i++){
 			levelAwards[i] = settings.getInt("level" + Integer.toString(i), 0);
 		}
 		
 		// levels is the view containing all the level buttons
-		final ViewGroup levels = (ViewGroup) (findViewById(R.id.buttonScroller).findViewById(R.id.levelButtons));
+		levels = (ViewGroup) (findViewById(R.id.buttonScroller).findViewById(R.id.levelButtons));
 		
 		// levelButtonLoader makes the buttons load up the details for their appropriate level
 		levelButtonLoader = new View.OnClickListener() {
 			
 			@Override
 			public void onClick(View v) {
-				int ID = 0;
-				for(int i = 0; i <= numLevels; i++){
-					if(v == levels.getChildAt(i)){
-						ID = i;
-						selectedLevel = ID + 1;
-					}
-				}
-				if(levelAwards[ID] != 0){
+				selectedLevel = LevelMap.get(v);
+				if(levelAwards[selectedLevel] != 0){
 					levelDetailsView.setText(levelDetails.get(selectedLevel)[2] + ":\n" + 
 						levelDetails.get(selectedLevel)[6] + "\n\nYou have achieved the " + 
-						awards[levelAwards[ID] - 1] + " medal for this level.");
+						awards[levelAwards[selectedLevel] - 1] + " medal for this level.");
 				}
 				else{
 					levelDetailsView.setText(levelDetails.get(selectedLevel)[2] + ":\n" + 
@@ -107,15 +131,6 @@ public class NewGameActivity extends Activity {
 				}
 			}
 		};
-		
-		// setting the buttons text to the levelName as well as assigning levelButtonLoader to them
-		for(int i = 1; i <= numLevels; i++){
-			Button b = new Button(this);
-			b.setText(levelDetails.get(i)[2]);
-			b.getBackground().setColorFilter(ColorMap.get(levelAwards[i-1]));
-			b.setOnClickListener(levelButtonLoader);
-			levels.addView(b);		
-		}
 		
 		// startButton code - launches the customization screen if a level is selected		
 		startButton.setOnClickListener(new View.OnClickListener(){
@@ -133,6 +148,26 @@ public class NewGameActivity extends Activity {
 				}
 			}
 		});
+		
+		loadPack();
+	}
+	
+	public void loadPack(){
+		
+		levels.removeAllViews();
+		
+		// setting the buttons text to the levelName as well as assigning levelButtonLoader to them
+		// only loads levels that are in the current pack
+		for(int i = 1; i <= numLevels; i++){
+			if(Integer.parseInt(levelDetails.get(i)[1]) == selectedPack){
+				Button b = new Button(this);
+				b.setText(levelDetails.get(i)[2]);
+				b.getBackground().setColorFilter(ColorMap.get(levelAwards[i]));
+				b.setOnClickListener(levelButtonLoader);
+				LevelMap.put(b, i);
+				levels.addView(b);
+			}
+		}
 	}
 	
 	public void onPause(){

@@ -393,7 +393,7 @@ public class MapActivity extends Activity {
 		if(won){
 			// check if current difficulty is higher than previously attained
 			SharedPreferences settings = getSharedPreferences("levels", 0);
-			int achievementLevel = settings.getInt("level" + Integer.toString(level - 1), 0);
+			int achievementLevel = settings.getInt("level" + Integer.toString(level), 0);
 			boolean improved = false;
 			if(achievementLevel < diff + 1){
 				achievementLevel = diff + 1;
