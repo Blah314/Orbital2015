@@ -8,7 +8,7 @@ public class Territory implements Serializable {
 	
 	static final long serialVersionUID = 1; // use this as a version number
 	private String name, abbrvName;
-	private int id, owner, numUnits, originalOwner, regionNo;
+	private int id, owner, numUnits, resValue, originalOwner, regionNo;
 	private ArrayList<Integer> neighbourIDs;
 	private boolean recentlyConquered, isCapital;
 	private String[] baseDetails;
@@ -28,6 +28,7 @@ public class Territory implements Serializable {
 		owner = Integer.parseInt(details[8]);
 		if(isCapital) originalOwner = Integer.parseInt(details[8]);
 		regionNo = Integer.parseInt(details[7]);
+		resValue = Integer.parseInt(details[6]);
 		numUnits = Integer.parseInt(details[9]);  		
 		for (int i = 12; i < details.length; i++){
 			neighbourIDs.add(Integer.parseInt(details[i]));
@@ -49,6 +50,10 @@ public class Territory implements Serializable {
 	
 	public int getOwner(){
 		return owner;
+	}
+	
+	public int getValue(){
+		return resValue;
 	}
 	
 	public int getNumUnits(){
@@ -113,10 +118,11 @@ public class Territory implements Serializable {
 			case 3:
 			case 4:
 			case 5:
-			case 6:
 			case 7:	
 				sb.append(baseDetails[i]);
 				break;
+			case 6:
+				sb.append(resValue);
 			case 8:
 				sb.append(Integer.toString(owner));
 				break;

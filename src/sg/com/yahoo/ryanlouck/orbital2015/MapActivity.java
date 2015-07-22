@@ -36,7 +36,6 @@ public class MapActivity extends Activity {
 	
 	private float mx, my, currX, currY;
 	private int buttonScale;
-	private boolean resumed;
 	private ScrollView vScroll;
 	private HorizontalScrollView hScroll;
 	private ViewGroup map;
@@ -46,8 +45,9 @@ public class MapActivity extends Activity {
 	private String[] levelDetails;
 	private ArrayList<String[]> territoryDetails;
 	
-	private int level, diff, numTerritories, turnNum, numRegions;
-	private boolean diceLike, hardcore, over, fow, capital, upgrades, regions;
+	private int level, diff, numTerritories, turnNum, numRegions, numPlayers;
+	private boolean over, resumed;
+	private boolean diceLike, armies, upgrades, capital, fow, regions, hardcore;
 	private Game game;
 	private HashMap<Integer, Territory> territories;
 	private HashMap<Integer, Player> players;
@@ -105,11 +105,12 @@ public class MapActivity extends Activity {
 		level = details.getInt("lvl", 1);
 		diff = details.getInt("diff", 0);
 		diceLike = details.getBoolean("dice", false);
-		fow = details.getBoolean("fow", false);
-		capital = details.getBoolean("capital", false);
+		armies = details.getBoolean("armies", false);
 		upgrades = details.getBoolean("upgrades", false);
-		hardcore = details.getBoolean("hardcore", false);
+		capital = details.getBoolean("capital", false);
+		fow = details.getBoolean("fow", false);
 		regions = details.getBoolean("regions", false);
+		hardcore = details.getBoolean("hardcore", false);
 		levelDetails = details.getStringArray("levelDetails");
 
 		territoryDetails = new ArrayList<String[]>();
@@ -135,13 +136,17 @@ public class MapActivity extends Activity {
 		loadTerritoryButtons();
 		
 		// create new game
+		numPlayers = Integer.parseInt(levelDetails[5]);
 		numRegions = Integer.parseInt(levelDetails[7]);
 		int[] startingRes = new int[levelDetails.length - 8];
 		for(int i = 8; i < levelDetails.length; i++){
 			startingRes[i-8] = Integer.parseInt(levelDetails[i]);
 		}
 		
-		game = new Game(diff, diceLike, capital, regions, Integer.parseInt(levelDetails[5]), startingRes, false, startingRes, numRegions, territoryDetails);
+		game = new Game(false, numPlayers, numRegions,
+			diff, diceLike, armies, capital, regions, 
+			startingRes, territoryDetails);
+		
 		territories = game.getTerritories();
 		numTerritories = territories.size();
 		players = game.getPlayers();
@@ -165,11 +170,10 @@ public class MapActivity extends Activity {
 		capital = details.getBoolean("capital", false);
 		upgrades = details.getBoolean("upgrades", false);
 		hardcore = details.getBoolean("hardcore", false);
-		int numPlayers = details.getInt("numPlayers", 2);
+		numPlayers = details.getInt("numPlayers", 2);
 		numRegions = details.getInt("numRegions", 3);
 		regions = details.getBoolean("regions", false);
 		int[] res = details.getIntArray("res");
-		int[] terr = details.getIntArray("terr");
 		boolean[] terrConq = details.getBooleanArray("conq");
 		String[] upgradeVals = details.getStringArray("resValues");
 		territoryDetails = (ArrayList<String[]>) details.getSerializable("rest");
@@ -197,9 +201,12 @@ public class MapActivity extends Activity {
 		setFields();
 		loadTerritoryButtons();
 		
-		game = new Game(diff, diceLike, capital, regions, numPlayers, res, true, terr, numRegions, territoryDetails);
+		game = new Game(true, numPlayers, numRegions,
+				diff, diceLike, armies, capital, regions, 
+				res, territoryDetails);
+		
 		game.setTerritoriesConq(terrConq);
-		if(upgrades) game.setPlayerResearch(upgradeVals);
+		game.setPlayerResearch(upgradeVals);
 		territories = game.getTerritories();
 		numTerritories = territories.size();
 		players = game.getPlayers();

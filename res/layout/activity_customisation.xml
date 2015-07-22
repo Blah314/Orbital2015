@@ -66,14 +66,6 @@
                 android:text="@string/choose_armies" />
 
             <CheckBox
-                android:id="@+id/aiCheckBox"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:onClick="checkBoxListener"
-                android:text="@string/choose_ai" />
-
-
-            <CheckBox
                 android:id="@+id/upgradesCheckBox"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -94,12 +86,6 @@
                 android:onClick="checkBoxListener"
                 android:text="@string/choose_fow" />
 
-            <CheckBox
-                android:id="@+id/turnCheckBox"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:onClick="checkBoxListener"
-                android:text="@string/choose_turns" />
 			
 			<CheckBox
                 android:id="@+id/regionsCheckBox"

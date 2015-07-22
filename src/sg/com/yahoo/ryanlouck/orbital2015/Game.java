@@ -15,15 +15,15 @@ public class Game implements Serializable {
 	private ArrayList<StringBuilder> log;
 	private StringBuilder logTurn;
 	private HashMap<Integer, Player> playersMap = new HashMap<Integer, Player>();
-	private boolean isDice, capital, regions;
+	private boolean isDice, armies, capital, regions;
 	private double diff;
 	private HashMap<Integer, Territory> territoriesMap = new HashMap<Integer, Territory>();
 	private Random rand = new Random();
 	private HashMap<Integer, String> AINames = new HashMap<Integer, String>();
 
-	public Game(int diff, boolean diceLike, boolean capitals, boolean regions, int numPlayersToAdd, 
-			int[] startingResources, boolean fromSave, int[] savedTerrs, int numRegions, 
-			ArrayList<String[]> mapDetails) {
+	public Game(boolean fromSave, int numPlayers, int numRegions, 
+			int diff, boolean dice, boolean armies, boolean capitals, boolean regions,
+			int[] startingResources, ArrayList<String[]> mapDetails) {
 		
 		// sets AI resource generation based on selected difficulty
 		switch(diff){
@@ -41,32 +41,25 @@ public class Game implements Serializable {
 			break;
 		}
 		
-		isDice = diceLike;
+		isDice = dice;
+		this.armies = armies;
 		capital = capitals;
 		this.regions = regions;
-		this.numPlayers = numPlayersToAdd;
+		this.numPlayers = numPlayers;
 		this.numRegions = numRegions;
 		Iterator<String[]> territoryIterator = mapDetails.iterator();
 		if(!fromSave) territoryIterator.next(); // removes invalid first row
-		int[] startingTerritories = new int[numPlayers + 1];
-		Arrays.fill(startingTerritories, 0);
 		
-		// create territories as well as setting the players initial starting territories.		
+		// create territories	
 		while (territoryIterator.hasNext()) {
 			String[] currTerritory = territoryIterator.next();
 			Territory tempTerritory = new Territory(currTerritory);
-			startingTerritories[tempTerritory.getOwner()] += 1;
 			territoriesMap.put(tempTerritory.getId(), tempTerritory);
 		}
 		
-		// creating players with the number of starting territories determined
+		// creating the players
 		for (int i = 1; i <= numPlayers; i++) {
-			if(fromSave){
-				playersMap.put(i, new Player(i, startingResources[i-1], savedTerrs[i-1]));
-			}
-			else{
-				playersMap.put(i, new Player(i, startingResources[i-1], startingTerritories[i]));
-			}
+			playersMap.put(i, new Player(i, startingResources[i-1]));
 		}
 		
 		// creates a new log and a new log line
@@ -107,7 +100,6 @@ public class Game implements Serializable {
 	public void startPlayerTurn(int playerID, boolean addRes) {
 		currPlayerID = playerID;
 		Player player = playersMap.get(playerID);
-		int playerNumTerrOwned = player.getNumTerritoriesOwned();
 		
 		// resets conquered attribute for each territory
 		if(addRes){
@@ -116,34 +108,21 @@ public class Game implements Serializable {
 				t.setConquered(false);
 			}
 		}
-
-		// Updates new number of turns for player
-//		int lowerBound = (playerNumTerrOwned / 2); // Number of turns player
-//													// gets...
-//		int upperBound = playerNumTerrOwned + 1; // is between half of
-//													// numTerrowned and
-//													// numTerrowned
-//		player.setNumTurns(rand.nextInt(upperBound - lowerBound) + lowerBound + 1); // Between
-//																				// upbound(exclusive)
-//																				// and
-//																				// lowbound(inclusive)
 		
 		if(currPlayerID != 1){ // AI resource adding and movement
-			int res = (int) (playerNumTerrOwned * 10 * diff * player.getResMod());
-			player.addResources(res);
-			if(regions) player.addResources(checkRegions(player.getPlayerID()));
+			int[] res = addRes(currPlayerID);
+			player.addResources(res[0]);
+			if(regions) player.addResources(res[1]);
 			AIMoves(player);
 			turnEnds();
 		}
 		else if(addRes){ // player resource adding
-			int res = (int) (playerNumTerrOwned * 10 * player.getResMod());
-			player.addResources(res);
-			logTurn.append("You gained " + Integer.toString(res) + " resources from " 
-			+ Integer.toString(playerNumTerrOwned) + " territories.\n");
+			int[] res = addRes(currPlayerID);
+			player.addResources(res[0]);
+			logTurn.append("You gained " + Integer.toString(res[0]) + " resources from your territories.\n");
 			if(regions){
-				int bonus = checkRegions(1);
-				player.addResources(bonus);
-				logTurn.append("You gained " + Integer.toString(bonus) + " bonus resources from holding regions.\n");
+				player.addResources(res[1]);
+				logTurn.append("You gained " + Integer.toString(res[1]) + " bonus resources from holding regions.\n");
 			}	
 		}
 	}
@@ -165,12 +144,6 @@ public class Game implements Serializable {
 			logTurn.append("AI " + AINames.get(playerID) + " added " + Integer.toString(numUnits) + 
 			" units to " + territoriesMap.get(territoryID).getName() + ".\n");
 		}
-		
-//		currPlayer.minusNumTurns();
-//		
-//		if (currPlayer.isTurnEnded() & playerID != 1) {
-//			turnEnds();
-//		}
 	}
 
 	//attack execution code
@@ -295,17 +268,8 @@ public class Game implements Serializable {
 					" lost their capital. They are eliminated.\n");
 				}
 			}
-				
-			playerA.setNumTerritoriesOwned(playerA.getNumTerritoriesOwned() + 1); // Adjusts number of territories
-//			playerA.addTerritoryID(territory2ID); //owned per player
-			
-			if(playerID2 != 0){ // player 0 is the neutral party - no player representing it
-				playerB.setNumTerritoriesOwned(playerB.getNumTerritoriesOwned() - 1);
-//				playerB.removeTerritoryID(territory2ID);
-			}	
 		}
 	}
-
 	
 	// execute movement
 	public void executeMoveUnits(int playerID, int territory1ID,
@@ -324,10 +288,6 @@ public class Game implements Serializable {
 			logTurn.append("AI " + AINames.get(playerID) + " moved " + Integer.toString(numUnitsToMove) + 
 			" units from " + A.getName() + " to " + B.getName() + ".\n");
 		}
-//		playersMap.get(playerID).minusNumTurns();
-//		if (playersMap.get(playerID).isTurnEnded() & playerID != 1) {
-//			turnEnds();
-//		}
 	}
 	
 	// called by end turn button or AI finishing - causes the next player's turn to start
@@ -511,14 +471,18 @@ public class Game implements Serializable {
 		System.out.println("Executed Stage 7");
 	}
 	
-	// see how many regions a certain player owns, and then determines the number of bonus resources he gets
-	public int checkRegions(int playerID){
+	// determines the number of resources a player gets at the end of every turn - using both territories owned and regions owned
+	public int[] addRes(int playerID){
+		int res = 0;
 		boolean[] ownedRegions = new boolean[numRegions];
 		Arrays.fill(ownedRegions, true);
 		for(int i = 1; i <= territoriesMap.size(); i++){
 			Territory t = territoriesMap.get(i);
 			if(t.getOwner() != playerID){
 				ownedRegions[t.getRegion() - 1] = false;
+			}
+			else{
+				res += t.getValue();
 			}
 		}
 		
@@ -529,18 +493,7 @@ public class Game implements Serializable {
 			}
 		}
 		
-		return ownedCount*10;
-	}
-	
-	public ArrayList<Territory> getRegion(int region){
-		ArrayList<Territory> regionTs = new ArrayList<Territory>();
-		for(int i = 1; i <= territoriesMap.size(); i++){
-			Territory t = territoriesMap.get(i);
-			if(t.getRegion() == region){
-				regionTs.add(t);
-			}
-		}
-		return regionTs;
+		return new int[]{res, ownedCount*10};
 	}
 	
 	// used during game resume to set conquered status of territories
@@ -557,6 +510,18 @@ public class Game implements Serializable {
 			Player p = playersMap.get(i / 3 + 1);
 			p.setResearch(Integer.parseInt(values[i]), Integer.parseInt(values[i+1]), Integer.parseInt(values[i+2]));
 		}
+	}
+	
+	// returns all territories in a particular region
+	public ArrayList<Territory> getRegion(int region){
+		ArrayList<Territory> regionTs = new ArrayList<Territory>();
+		for(int i = 1; i <= territoriesMap.size(); i++){
+			Territory t = territoriesMap.get(i);
+			if(t.getRegion() == region){
+				regionTs.add(t);
+			}
+		}
+		return regionTs;
 	}
 	
 	// shows the current game log. Log is not saved, so it will be lost on quit.
@@ -614,15 +579,7 @@ public class Game implements Serializable {
 		
 		sb.append("\n");
 		
-		// player details on row 2
-		for(int i = 1; i <= playersMap.size(); i++){
-			sb.append(Integer.toString(playersMap.get(i).getNumTerritoriesOwned()));
-			if(i != playersMap.size()) sb.append(",");
-		}
-		
-		sb.append("\n");
-		
-		// territory conquered status on row 3
+		// territory conquered status on row 2
 		for(int i = 1; i <= territoriesMap.size(); i++){
 			sb.append(Boolean.toString(territoriesMap.get(i).isConq()));
 			if(i != territoriesMap.size()) sb.append(",");
@@ -630,7 +587,7 @@ public class Game implements Serializable {
 		
 		sb.append("\n");
 		
-		// player research status on row 4
+		// player research status on row 3
 		for(int i = 1; i <= playersMap.size(); i++){
 			sb.append(playersMap.get(i).toString());
 			if(i != playersMap.size()) sb.append(",");

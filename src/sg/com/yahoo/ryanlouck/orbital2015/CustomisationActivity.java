@@ -18,7 +18,7 @@ public class CustomisationActivity extends Activity {
 	private int level = 0;
 	private int diff = 0;
 	private int achievementLevel;
-	private boolean diceLike, capital, upgrades, armies, ai, fow, turns, regions, hardcore;
+	private boolean diceLike, capital, upgrades, armies, fow, regions, hardcore;
 	private String[] levelDetails;
 	
 	@Override
@@ -38,9 +38,7 @@ public class CustomisationActivity extends Activity {
 		capital = false;
 		upgrades = false;
 		armies = false;
-		ai = false;
 		fow = false;
-		turns = false;
 		regions = false;
 		hardcore = false;
 		
@@ -84,11 +82,12 @@ public class CustomisationActivity extends Activity {
 			@Override
 			public void onClick(View v){
 				Intent gameLaunch = new Intent(getApplicationContext(), MapActivity.class);
-				gameLaunch.putExtra("diff", diff);
 				gameLaunch.putExtra("lvl", level);
+				gameLaunch.putExtra("diff", diff);
 				gameLaunch.putExtra("dice", diceLike);
-				gameLaunch.putExtra("capital", capital);
+				gameLaunch.putExtra("armies", armies);
 				gameLaunch.putExtra("upgrades", upgrades);
+				gameLaunch.putExtra("capital", capital);
 				gameLaunch.putExtra("fow", fow);
 				gameLaunch.putExtra("regions", regions);
 				gameLaunch.putExtra("hardcore", hardcore);
@@ -120,14 +119,8 @@ public class CustomisationActivity extends Activity {
 		case R.id.armiesCheckBox:
 			armies = checked;
 			break;
-		case R.id.aiCheckBox:
-			ai = checked;
-			break;
 		case R.id.fowCheckBox:
 			fow = checked;
-			break;
-		case R.id.turnCheckBox:
-			turns = checked;
 			break;
 		case R.id.regionsCheckBox:
 			regions = checked;

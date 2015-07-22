@@ -164,16 +164,8 @@ public class MainActivity extends Activity {
 					}
 				
 					resumeLaunch.putExtra("res", resources);
-				
-					String[] territoryOwned = saveDetails.get(2);
-					int[] territoriesOwned = new int[Integer.parseInt(gameDetails[2])];
-					for(int i = 0; i < territoriesOwned.length; i++){
-						territoriesOwned[i] = Integer.parseInt(territoryOwned[i]);
-					}	
-				
-					resumeLaunch.putExtra("terr", territoriesOwned);
 					
-					String[] terrConq = saveDetails.get(3);
+					String[] terrConq = saveDetails.get(2);
 					
 					boolean[] territoriesConq = new boolean[terrConq.length];
 					for(int i = 0; i < terrConq.length; i++){
@@ -187,13 +179,13 @@ public class MainActivity extends Activity {
 					
 					resumeLaunch.putExtra("conq", territoriesConq);
 					
-					String[] playerRes = saveDetails.get(4);
+					String[] playerRes = saveDetails.get(3);
 					
 					resumeLaunch.putExtra("resValues", playerRes);
 				
 					ArrayList<String[]> tDetails = new ArrayList<String[]>();
 				
-					for(int i = 5; i < saveDetails.size(); i++){
+					for(int i = 4; i < saveDetails.size(); i++){
 						tDetails.add(saveDetails.get(i));
 					}
 				

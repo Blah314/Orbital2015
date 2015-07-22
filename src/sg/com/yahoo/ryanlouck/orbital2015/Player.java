@@ -5,15 +5,13 @@ import java.io.Serializable;
 public class Player implements Serializable {
 	
 	static final long serialVersionUID = 1; // use this as a version number
-	private int playerID, numResources, numTurns, numTerritoriesOwned;
+	private int playerID, numResources;
 	private int resourceRes, attackRes, defRes;
 	private boolean isActive;
-//	private ArrayList<Integer> territoriesOwnedID = new ArrayList<Integer>();
 	
-	public Player(int ID, int resources, int startingTerritories){
+	public Player(int ID, int resources){
 		playerID = ID;
 		numResources = resources;
-		numTerritoriesOwned = startingTerritories;
 		isActive = true;
 		resourceRes = 0;
 		attackRes = 0;
@@ -29,25 +27,8 @@ public class Player implements Serializable {
 		return numResources;
 	}
 	
-	public int getNumTerritoriesOwned(){
-		return numTerritoriesOwned;
-	}
-	
 	public boolean isActive(){
 		return isActive;
-	}
-	
-	public int getNumTurns(){
-		return numTurns;
-	}
-	
-	public boolean isTurnEnded(){
-		if ( numTurns == 0){
-			return true;
-		}
-		else{
-			return false;
-		}		
 	}
 	
 	// set functions for game to manipulate
@@ -57,18 +38,6 @@ public class Player implements Serializable {
 	
 	public void minusResources(int resourcesToMinus){
 		numResources -= resourcesToMinus;
-	}
-	
-	public void minusNumTurns(){
-		numTurns--;
-	}
-	
-	public void setNumTerritoriesOwned(int numTerr){
-		numTerritoriesOwned = numTerr;
-	}
-	
-	public void setNumTurns(int newNumTurns){
-		numTurns = newNumTurns;
 	}
 	
 	public void deactivate(){
@@ -120,16 +89,4 @@ public class Player implements Serializable {
 	public String toString(){
 		return (Integer.toString(resourceRes) + "," + Integer.toString(attackRes) + "," + Integer.toString(defRes));
 	}
-	
-//	public void addTerritoryID(int ID){
-//		territoriesOwnedID.add(ID);
-//	}
-	
-//	public void removeTerritoryID(int ID){
-//		territoriesOwnedID.remove(ID);
-//	}
-	
-//	public int getTerritoryID(int index){
-//		return territoriesOwnedID.get(index);		
-//	}
 }
