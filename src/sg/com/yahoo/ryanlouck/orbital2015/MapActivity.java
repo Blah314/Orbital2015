@@ -76,6 +76,8 @@ public class MapActivity extends Activity {
 		ColorMap.put(2,new PorterDuffColorFilter(Color.RED, PorterDuff.Mode.OVERLAY));
 		ColorMap.put(3,new PorterDuffColorFilter(Color.GREEN, PorterDuff.Mode.OVERLAY));
 		ColorMap.put(4,new PorterDuffColorFilter(Color.YELLOW, PorterDuff.Mode.OVERLAY));
+		ColorMap.put(5,new PorterDuffColorFilter(Color.CYAN, PorterDuff.Mode.OVERLAY));
+		ColorMap.put(6,new PorterDuffColorFilter(Color.MAGENTA, PorterDuff.Mode.OVERLAY));
 		ColorMap.put(999, new PorterDuffColorFilter(Color.BLACK, PorterDuff.Mode.OVERLAY)); // 999 is for fog of war
 		
 		over = false;
@@ -238,6 +240,9 @@ public class MapActivity extends Activity {
 			break;
 		case 2:
 			obj.setText("Objective: Survive for " + Integer.toString(objectiveAmt) + " turns.");
+			break;
+		case 3:
+			obj.setText("Objective: Eliminate opponents in " + Integer.toString(objectiveAmt) + " turns.");
 			break;
 		}
 		obj.setGravity(17);
@@ -415,6 +420,7 @@ public class MapActivity extends Activity {
 		
 		if(eliminated) won = true;
 		
+		// special objective win/lose checking
 		if(objective == 1){
 			if(territoriesOwned >= objectiveAmt){
 				won = true;
@@ -424,6 +430,12 @@ public class MapActivity extends Activity {
 		if(objective == 2){
 			if(turnNum >= objectiveAmt){
 				won = true;
+			}
+		}
+		
+		if(objective == 3){
+			if(turnNum >= objectiveAmt){
+				lost = true;
 			}
 		}
 		

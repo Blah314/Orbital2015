@@ -5,3 +5,5 @@ LEVELID,LEVELSET,LEVELNAME,OBJECTIVE,OBJECTIVEAMT,NUMPLAYERS,DESCRIPTION,NUMTERR
 3,2,Sandwiched,0,0,3,You're sandwiched between your enemies. Survive and defeat them both.,5,100,50,50
 4,1,Expanse,0,0,2,A large map with your opponent on the other side. Good luck.,7,0,0
 5,2,The Red Hammer,2,10,2,Your opponent has landed a massive force on your shores and caught you by surprise. Hold out until your reinforcements arrive.,4,0,0
+6,2,The Blue Hammer,3,10,2,The roles are reversed now. Can you eliminate your enemy in time?,4,0,0
+7,1,Staking a Claim,1,15,6,You are one of six new nations. Stake a claim before your opponents gain the upper hand.,9,100,80,80,80,80,80

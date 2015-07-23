@@ -71,6 +71,7 @@ public class Game implements Serializable {
 		AINames.put(3, "Nicholas");
 		AINames.put(4, "Ryan");
 		AINames.put(5, "QX");
+		AINames.put(6, "GQ");
 	}
 	
 	// get functions for use by other classes

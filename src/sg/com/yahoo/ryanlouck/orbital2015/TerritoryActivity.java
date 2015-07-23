@@ -60,6 +60,8 @@ public class TerritoryActivity extends Activity {
 		ColorTable.put(2, new PorterDuffColorFilter(Color.RED,PorterDuff.Mode.OVERLAY));
 		ColorTable.put(3, new PorterDuffColorFilter(Color.GREEN,PorterDuff.Mode.OVERLAY));
 		ColorTable.put(4, new PorterDuffColorFilter(Color.YELLOW,PorterDuff.Mode.OVERLAY));
+		ColorTable.put(5,new PorterDuffColorFilter(Color.CYAN, PorterDuff.Mode.OVERLAY));
+		ColorTable.put(6,new PorterDuffColorFilter(Color.MAGENTA, PorterDuff.Mode.OVERLAY));
 		
 		displayActions();
 	}
