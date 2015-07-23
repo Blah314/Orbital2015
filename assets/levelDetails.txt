@@ -1,6 +1,7 @@
 LEVELID,LEVELSET,LEVELNAME,OBJECTIVE,OBJECTIVEAMT,NUMPLAYERS,DESCRIPTION,NUMTERRITORIES,MAPID,STARTINGRESP1,STARTINGRESP2,...
-0,0,Training Simulation,0,0,2,An introductory stage. Your opponent should be a walkover.,3,100,50
+0,0,Training,0,0,2,An introductory stage. Your opponent should be a walkover.,3,100,50
 1,0,Distractions,0,0,3,You can't take both your opponents on at once. Let them fight among themselves first.,3,0,20,20
 2,0,Four Forts,0,0,4,All of you are quite evenly matched. Tactics matter here.,5,50,50,50,50
 3,2,Sandwiched,0,0,3,You're sandwiched between your enemies. Survive and defeat them both.,5,100,50,50
 4,1,Expanse,0,0,2,A large map with your opponent on the other side. Good luck.,7,0,0
+5,2,The Red Hammer,2,10,2,Your opponent has landed a massive force on your shores and caught you by surprise. Hold out until your reinforcements arrive.,4,0,0

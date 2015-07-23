@@ -45,7 +45,7 @@ public class MapActivity extends Activity {
 	private String[] levelDetails;
 	private ArrayList<String[]> territoryDetails;
 	
-	private int level, diff, numTerritories, turnNum, numRegions, numPlayers;
+	private int level, diff, numTerritories, turnNum, numRegions, numPlayers, objective, objectiveAmt;
 	private boolean over, resumed;
 	private boolean diceLike, armies, upgrades, capital, fow, regions, hardcore;
 	private Game game;
@@ -132,6 +132,9 @@ public class MapActivity extends Activity {
 			e.printStackTrace();
 		}
 		
+		objective = Integer.parseInt(levelDetails[3]);
+		objectiveAmt = Integer.parseInt(levelDetails[4]);
+		
 		setFields();
 		loadTerritoryButtons();
 		
@@ -198,6 +201,9 @@ public class MapActivity extends Activity {
 			e.printStackTrace();
 		}
 		
+		objective = Integer.parseInt(levelDetails[3]);
+		objectiveAmt = Integer.parseInt(levelDetails[4]);
+		
 		setFields();
 		loadTerritoryButtons();
 		
@@ -223,7 +229,17 @@ public class MapActivity extends Activity {
 	public void setFields(){
 		getActionBar().setTitle(levelDetails[2]);
 		
-		obj.setText("Objective: Defeat all opponents.");
+		switch(objective){
+		case 0:
+			obj.setText("Objective: Defeat all opponents.");
+			break;
+		case 1:
+			obj.setText("Objective: Conquer " + Integer.toString(objectiveAmt) + " territories.");
+			break;
+		case 2:
+			obj.setText("Objective: Survive for " + Integer.toString(objectiveAmt) + " turns.");
+			break;
+		}
 		obj.setGravity(17);
 	}
 	
@@ -302,6 +318,7 @@ public class MapActivity extends Activity {
 		
 		won = true;
 		lost = true;
+		int territoriesOwned = 0;
 		
 		// display with fog of war
 		if(fow){
@@ -332,6 +349,7 @@ public class MapActivity extends Activity {
 				}
 				else if(owner == 1){
 					lost = false;
+					territoriesOwned++;
 				}
 				
 				if(visibility[i]){
@@ -365,6 +383,7 @@ public class MapActivity extends Activity {
 				}
 				else if(owner == 1){
 					lost = false;
+					territoriesOwned++;
 				}
 				
 				if(t.isCapital() & capital){ // capitals get asterisks
@@ -395,6 +414,18 @@ public class MapActivity extends Activity {
 		}
 		
 		if(eliminated) won = true;
+		
+		if(objective == 1){
+			if(territoriesOwned >= objectiveAmt){
+				won = true;
+			}
+		}
+		
+		if(objective == 2){
+			if(turnNum >= objectiveAmt){
+				won = true;
+			}
+		}
 		
 		// end game screens
 		if(won){
@@ -522,6 +553,7 @@ public class MapActivity extends Activity {
 			FragmentManager fm = getFragmentManager();
 			ls.show(fm, "log");
 			return true;
+		
 		case R.id.research:
 			if(upgrades){
 				Player p = game.getPlayers().get(1);
@@ -538,6 +570,7 @@ public class MapActivity extends Activity {
 				t.show();
 			}
 			return true;
+
 		case android.R.id.home:
 			onBackPressed();
 			return true;
