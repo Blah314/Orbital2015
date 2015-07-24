@@ -55,13 +55,16 @@ public class TerritoryActivity extends Activity {
 			tName.setText(t.getName());
 		}
 		
-		ColorTable.put(0, new PorterDuffColorFilter(Color.GRAY,PorterDuff.Mode.OVERLAY));
-		ColorTable.put(1, new PorterDuffColorFilter(Color.BLUE,PorterDuff.Mode.OVERLAY));
-		ColorTable.put(2, new PorterDuffColorFilter(Color.RED,PorterDuff.Mode.OVERLAY));
-		ColorTable.put(3, new PorterDuffColorFilter(Color.GREEN,PorterDuff.Mode.OVERLAY));
-		ColorTable.put(4, new PorterDuffColorFilter(Color.YELLOW,PorterDuff.Mode.OVERLAY));
+		ColorTable.put(0,new PorterDuffColorFilter(Color.GRAY,PorterDuff.Mode.OVERLAY));
+		ColorTable.put(1,new PorterDuffColorFilter(Color.BLUE,PorterDuff.Mode.OVERLAY));
+		ColorTable.put(2,new PorterDuffColorFilter(Color.RED,PorterDuff.Mode.OVERLAY));
+		ColorTable.put(3,new PorterDuffColorFilter(Color.GREEN,PorterDuff.Mode.OVERLAY));
+		ColorTable.put(4,new PorterDuffColorFilter(Color.YELLOW,PorterDuff.Mode.OVERLAY));
 		ColorTable.put(5,new PorterDuffColorFilter(Color.CYAN, PorterDuff.Mode.OVERLAY));
 		ColorTable.put(6,new PorterDuffColorFilter(Color.MAGENTA, PorterDuff.Mode.OVERLAY));
+		ColorTable.put(7,new PorterDuffColorFilter(Color.rgb(255,165,0), PorterDuff.Mode.OVERLAY));
+		ColorTable.put(8,new PorterDuffColorFilter(Color.rgb(165,42,42), PorterDuff.Mode.OVERLAY));
+		ColorTable.put(9,new PorterDuffColorFilter(Color.rgb(160,32,240), PorterDuff.Mode.OVERLAY));
 		
 		displayActions();
 	}

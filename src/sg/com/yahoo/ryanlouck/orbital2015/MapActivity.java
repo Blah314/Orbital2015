@@ -78,6 +78,9 @@ public class MapActivity extends Activity {
 		ColorMap.put(4,new PorterDuffColorFilter(Color.YELLOW, PorterDuff.Mode.OVERLAY));
 		ColorMap.put(5,new PorterDuffColorFilter(Color.CYAN, PorterDuff.Mode.OVERLAY));
 		ColorMap.put(6,new PorterDuffColorFilter(Color.MAGENTA, PorterDuff.Mode.OVERLAY));
+		ColorMap.put(7,new PorterDuffColorFilter(Color.rgb(255,165,0), PorterDuff.Mode.OVERLAY));
+		ColorMap.put(8,new PorterDuffColorFilter(Color.rgb(165,42,42), PorterDuff.Mode.OVERLAY));
+		ColorMap.put(9,new PorterDuffColorFilter(Color.rgb(160,32,240), PorterDuff.Mode.OVERLAY));
 		ColorMap.put(999, new PorterDuffColorFilter(Color.BLACK, PorterDuff.Mode.OVERLAY)); // 999 is for fog of war
 		
 		over = false;
@@ -452,7 +455,7 @@ public class MapActivity extends Activity {
 			
 			// if there is an improvement - save it
 			SharedPreferences.Editor editor = settings.edit();
-		    editor.putInt("level" + Integer.toString(level - 1), achievementLevel);
+		    editor.putInt("level" + Integer.toString(level), achievementLevel);
 		    editor.commit();
 		    
 			final FragmentManager fm = getFragmentManager();
@@ -461,7 +464,7 @@ public class MapActivity extends Activity {
 			over = true;
 		}
 		
-		if(lost){
+		if(!won & lost){
 			final FragmentManager fm = getFragmentManager();
 			EndGameFragment lose = new EndGameFragment(false, 0);
 			lose.show(fm, "endGame");
@@ -535,6 +538,13 @@ public class MapActivity extends Activity {
 			catch(Exception e){
 				e.printStackTrace();
 			}
+		}
+	}
+	
+	protected void onStop(){
+		super.onStop();
+		if(over){
+			this.finish();
 		}
 	}
 	

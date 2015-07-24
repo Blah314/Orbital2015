@@ -7,3 +7,4 @@ LEVELID,LEVELSET,LEVELNAME,OBJECTIVE,OBJECTIVEAMT,NUMPLAYERS,DESCRIPTION,NUMTERR
 5,2,The Red Hammer,2,10,2,Your opponent has landed a massive force on your shores and caught you by surprise. Hold out until your reinforcements arrive.,4,0,0
 6,2,The Blue Hammer,3,10,2,The roles are reversed now. Can you eliminate your enemy in time?,4,0,0
 7,1,Staking a Claim,1,15,6,You are one of six new nations. Stake a claim before your opponents gain the upper hand.,9,100,80,80,80,80,80
+8,0,Surrounded,0,0,7,Six invading forces surround you. Will you survive and prevail?,10,100,50,50,50,50,50,50,50
