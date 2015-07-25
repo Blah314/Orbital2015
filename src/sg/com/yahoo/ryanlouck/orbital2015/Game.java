@@ -484,6 +484,7 @@ public class Game implements Serializable {
 				ownedRegions[t.getRegion() - 1] = false;
 			}
 			else{
+				System.out.println(t.getValue());
 				res += t.getValue();
 			}
 		}
@@ -506,11 +507,14 @@ public class Game implements Serializable {
 		}
 	}
 	
-	// used during game resume to set research levels of players
+	// used during game resume to set research levels and activity status of players
 	public void setPlayerResearch(String[] values){
-		for(int i = 0; i < values.length; i += 3){
-			Player p = playersMap.get(i / 3 + 1);
-			p.setResearch(Integer.parseInt(values[i]), Integer.parseInt(values[i+1]), Integer.parseInt(values[i+2]));
+		for(int i = 0; i < values.length; i += 4){
+			Player p = playersMap.get(i / 4 + 1);
+			if(values[i].equals("false")){
+				p.deactivate();
+			}
+			p.setResearch(Integer.parseInt(values[i+1]), Integer.parseInt(values[i+2]), Integer.parseInt(values[i+3]));
 		}
 	}
 	
@@ -589,7 +593,7 @@ public class Game implements Serializable {
 		
 		sb.append("\n");
 		
-		// player research status on row 3
+		// player research & activity status on row 3
 		for(int i = 1; i <= playersMap.size(); i++){
 			sb.append(playersMap.get(i).toString());
 			if(i != playersMap.size()) sb.append(",");

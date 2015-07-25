@@ -512,6 +512,7 @@ public class MapActivity extends Activity {
 		// game saving code
 		if(!over & !hardcore){
 			String gameSave = game.toString();
+			System.out.println(gameSave);
 			FileOutputStream fos;
 			try{
 				fos = openFileOutput("savegame",Context.MODE_PRIVATE);

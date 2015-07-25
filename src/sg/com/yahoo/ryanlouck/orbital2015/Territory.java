@@ -86,7 +86,7 @@ public class Territory implements Serializable {
 	}
 	
 	public void capitalConquered(){
-		isCapital = false;
+		isCapital = false;	
 	}
 	
 	public void addUnits(int unit){
@@ -117,12 +117,20 @@ public class Territory implements Serializable {
 				break;
 			case 3:
 			case 4:
-			case 5:
 			case 7:	
 				sb.append(baseDetails[i]);
 				break;
+			case 5:
+				if(isCapital){
+					sb.append("1");
+				}
+				else{
+					sb.append("0");
+				}
+				break;
 			case 6:
 				sb.append(resValue);
+				break;
 			case 8:
 				sb.append(Integer.toString(owner));
 				break;

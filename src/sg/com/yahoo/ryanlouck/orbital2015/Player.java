@@ -87,6 +87,6 @@ public class Player implements Serializable {
 	}
 	
 	public String toString(){
-		return (Integer.toString(resourceRes) + "," + Integer.toString(attackRes) + "," + Integer.toString(defRes));
+		return (Boolean.toString(isActive) + "," + Integer.toString(resourceRes) + "," + Integer.toString(attackRes) + "," + Integer.toString(defRes));
 	}
 }
