@@ -3,10 +3,13 @@ LEVELID,LEVELSET,LEVELNAME,OBJECTIVE,OBJECTIVEAMT,NUMPLAYERS,DESCRIPTION,NUMTERR
 10,0,First Steps,0,0,2,An enemy landing party has arrived on the shore. We have the home advantage. Take them out.,4,50,100
 2,0,Distracted,0,0,3,You can't take both your opponents on at once. Let them fight among themselves first.,3,0,20,20
 11,0,Late Arrival,0,0,3,We have heard reports of fierce fighting in the area between two enemy forces. Break the stalemate and defeat them both.,6,0,0,0
+5,0,Expanse,0,0,2,We have arrived on an island ripe for conquering. Just one problem: the enemy is here as well.,7,0,0
+14,0,Reclamation,4,3,2,We recently lost our stronghold in this area. Go take it back.,7,100,0
+12,0,The Tower,5,54,6,It's a race to take the Tower of Power. Claim it before anyone else does.,10,100,100,100,100,100,100
+9,0,Surrounded,0,0,7,Six invading forces surround you - each aiming to claim the Tower of Power. Will you survive and prevail?,10,100,100,100,100,100,100,100,100
+8,1,Staking a Claim,1,15,6,You are one of six new nations. Stake a claim before your opponents gain the upper hand.,9,100,80,80,80,80,80
 3,2,Four Forts,0,0,4,All of you are quite evenly matched. Tactics matter here.,5,50,70,70,70
 4,2,Sandwiched,0,0,3,You're sandwiched between your enemies. Survive and defeat them both.,5,100,50,50
-5,0,Expanse,0,0,2,We have arrived on an island ripe for conquering. Just one problem: the enemy is here as well.,7,0,0
 6,2,The Red Hammer,2,10,2,Your opponent has landed a massive force on your shores and caught you by surprise. Hold out until your reinforcements arrive.,4,0,0
 7,2,The Blue Hammer,3,7,2,The roles are reversed now. Can you eliminate your enemy in time?,4,0,0
-8,1,Staking a Claim,1,15,6,You are one of six new nations. Stake a claim before your opponents gain the upper hand.,9,100,80,80,80,80,80
-9,0,Surrounded,0,0,7,Six invading forces surround you. Will you survive and prevail?,10,100,100,100,100,100,100,100,100
+13,2,Stacked Odds,0,0,3,Two great powers clash for dominance - and you're stuck in the middle. Defy the odds.,8,100,0,0
