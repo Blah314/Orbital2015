@@ -2,13 +2,14 @@ package sg.com.yahoo.ryanlouck.orbital2015;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.app.DialogFragment;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.app.DialogFragment;
+import android.text.InputType;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.SeekBar;
-import android.widget.TextView;
 
 public class ActionFragment extends DialogFragment {
 	
@@ -29,7 +30,9 @@ public class ActionFragment extends DialogFragment {
 	public Dialog onCreateDialog(Bundle savedInstanceState) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         SeekBar armySlider = new SeekBar(this.getActivity());
-        final TextView num = new TextView(this.getActivity());
+        final EditText num = new EditText(this.getActivity());
+        
+        num.setInputType(InputType.TYPE_CLASS_NUMBER);
         
         armySlider.setProgress(requested);
         num.setText(Integer.toString(requested));
@@ -84,6 +87,10 @@ public class ActionFragment extends DialogFragment {
         if(isAdd){
         	builder.setPositiveButton(R.string.add_units, new DialogInterface.OnClickListener() {
         		public void onClick(DialogInterface dialog, int id) {
+        			requested = Integer.parseInt(num.getText().toString());
+        			if(requested > limit){
+        				requested = limit;
+        			}
         			Intent moveLaunch = new Intent(getActivity().getApplicationContext(), MapActivity.class);
         			moveLaunch.putExtra("add", true);
         			moveLaunch.putExtra("request", requested);
@@ -99,6 +106,10 @@ public class ActionFragment extends DialogFragment {
         else if(isFriendly){
         	builder.setPositiveButton(R.string.move, new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int id) {
+                	requested = Integer.parseInt(num.getText().toString());
+        			if(requested > numArmies){
+        				requested = numArmies;
+        			}
                 	Intent moveLaunch = new Intent(getActivity().getApplicationContext(), MapActivity.class);
         			moveLaunch.putExtra("add", false);
         			moveLaunch.putExtra("request", requested);
@@ -114,6 +125,10 @@ public class ActionFragment extends DialogFragment {
         else{
         	builder.setPositiveButton(R.string.attack, new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int id) {
+                	requested = Integer.parseInt(num.getText().toString());
+        			if(requested > numArmies){
+        				requested = numArmies;
+        			}
                 	Intent moveLaunch = new Intent(getActivity().getApplicationContext(), MapActivity.class);
         			moveLaunch.putExtra("add", false);
         			moveLaunch.putExtra("request", requested);

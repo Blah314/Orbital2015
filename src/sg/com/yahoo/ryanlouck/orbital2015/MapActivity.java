@@ -117,14 +117,14 @@ public class MapActivity extends Activity {
 		regions = details.getBoolean("regions", false);
 		hardcore = details.getBoolean("hardcore", false);
 		levelDetails = details.getStringArray("levelDetails");
-
+ 
 		territoryDetails = new ArrayList<String[]>();
 		turnNum = 1;
 		
 		// loading up the map and getting the details of all territories
 		AssetManager am = this.getAssets();
 		try{
-			InputStream is = am.open("maps/" + Integer.toString(level) + ".txt");
+			InputStream is = am.open("maps/" + levelDetails[0] + ".txt");
 			InputStreamReader isr = new InputStreamReader(is);
 			BufferedReader br = new BufferedReader(isr);
 			while(br.ready()){
@@ -140,7 +140,6 @@ public class MapActivity extends Activity {
 		objective = Integer.parseInt(levelDetails[3]);
 		objectiveAmt = Integer.parseInt(levelDetails[4]);
 		
-		setFields();
 		loadTerritoryButtons();
 		
 		// create new game
@@ -154,6 +153,8 @@ public class MapActivity extends Activity {
 		game = new Game(false, numPlayers, numRegions,
 			diff, diceLike, armies, capital, regions, 
 			startingRes, territoryDetails);
+		
+		setFields();
 		
 		territories = game.getTerritories();
 		numTerritories = territories.size();
@@ -209,7 +210,6 @@ public class MapActivity extends Activity {
 		objective = Integer.parseInt(levelDetails[3]);
 		objectiveAmt = Integer.parseInt(levelDetails[4]);
 		
-		setFields();
 		loadTerritoryButtons();
 		
 		game = new Game(true, numPlayers, numRegions,
@@ -222,6 +222,7 @@ public class MapActivity extends Activity {
 		numTerritories = territories.size();
 		players = game.getPlayers();
 		
+		setFields();
 		assignTerritoryButtons();
 		setEndButton();
 		
@@ -246,6 +247,12 @@ public class MapActivity extends Activity {
 			break;
 		case 3:
 			obj.setText("Objective: Eliminate opponents in " + Integer.toString(objectiveAmt) + " turns.");
+			break;
+		case 4:
+			obj.setText("Objective: Conquer " + game.getTerritories().get(objectiveAmt).getName() + " (" + game.getTerritories().get(objectiveAmt).getAbbrvName() + ").");
+			break;
+		case 5:
+			obj.setText("Objective: Be the first to conquer " + game.getTerritories().get(objectiveAmt).getName() + " (" + game.getTerritories().get(objectiveAmt).getAbbrvName() + ").");
 			break;
 		}
 		obj.setGravity(17);
@@ -439,6 +446,21 @@ public class MapActivity extends Activity {
 		if(objective == 3){
 			if(turnNum >= objectiveAmt){
 				lost = true;
+			}
+		}
+		
+		if(objective == 5){
+			if(game.getTerritories().get(objectiveAmt).getOwner() == 1){
+				won = true;
+			}
+			else if(game.getTerritories().get(objectiveAmt).getOwner() != 0){
+				lost = true;
+			}
+		}
+		
+		if(objective == 4){
+			if(game.getTerritories().get(objectiveAmt).getOwner() == 1){
+				won = true;
 			}
 		}
 		

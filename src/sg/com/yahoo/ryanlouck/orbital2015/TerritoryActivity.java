@@ -21,7 +21,7 @@ import android.widget.TextView;
 
 public class TerritoryActivity extends Activity {
 	
-	private TextView tName;
+	private TextView tName, resDisplay, value;
 	private TableLayout actionButtons;
 	private Button backButton;
 	
@@ -45,6 +45,8 @@ public class TerritoryActivity extends Activity {
 		}
 		
 		tName = (TextView) findViewById(R.id.territoryName);
+		resDisplay = (TextView) findViewById(R.id.resources);
+		value = (TextView) findViewById(R.id.territoryValue);
 		actionButtons = (TableLayout) findViewById(R.id.actionButtons);
 		backButton = (Button) findViewById(R.id.backToMapButton);
 		
@@ -54,6 +56,9 @@ public class TerritoryActivity extends Activity {
 		else{
 			tName.setText(t.getName());
 		}
+		
+		resDisplay.setText("Resources:\n" + Integer.toString(res));
+		value.setText("Value:\n " + Integer.toString(t.getValue()));
 		
 		ColorTable.put(0,new PorterDuffColorFilter(Color.GRAY,PorterDuff.Mode.OVERLAY));
 		ColorTable.put(1,new PorterDuffColorFilter(Color.BLUE,PorterDuff.Mode.OVERLAY));
