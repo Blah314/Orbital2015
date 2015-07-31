@@ -113,6 +113,8 @@
         <item>Welcome!</item>
         <item>The Basics</item>
         <item>Customisation</item>
+        <item>Advanced Topics: Objectives</item>
+        <item>Advanced Topics: The Log</item>
     </string-array>
     <string-array name="instruction_messages">
         <item>Hello and welcome to Orbit Wars! This instructions page will contain all the info you will need to learn how to play the game.\n\n
@@ -129,10 +131,14 @@
             Capital Cities: One of your starting territories will be your capital. Lose it, and you lose the game. Same goes for your opponents. Capitals can be identified by asterisks on both sides of their name on the map.\n\n
             Upgrades: Enabling this will allow you to spend resources to upgrade your territories or armies.\n\n
             Multiple Army Types: Instead of just a single army unit type, why not have three? The 3 types have different stats and have differing effectiveness against each other. Just like a rock-paper-scissors game.\n\n
-            AI Personalities: Tired of playing against the same predicitable AI opponents? Spice it up by enabling this. Each AI will then react in it\'s own distinct way.\n\n
             Fog Of War: To make things super realistic, where you can\'t see what\'s happening beyond your borders, turn this on.\n\n
-            Turn Limit: Limits the number of actions you and your opponents can do within one turn. Make those moves count!\n\n
             Hardcore Mode: Your game is not saved in this mode. So no going back once you have left. Can you handle it?</item>
+		<item>Some levels do not require you to eliminate all your enemies, so pay attention to your objective above the map and work towards achieving it.\n\n
+		    Capture Objective: You are given a target number of territories to conquer. Do that an you win!\n\n
+		    Survival Objective: You opponents are much stronger than you. All you have to do is survive until a number of turns have passed.\n\n
+		    Speed Objective: You have a great advantage over your opponents, but very little time to eliminate them. Kill all your opponents within the set number of turns to win.</item>
+		<item>As your opponents move under the cover of darkness, it can be hard to figure out just how they achieved what they did during their turns. If you are not playing with fog-or-war on, your scouts can give you a briefing of what happened on previous turns.\n\n
+		    Just click the log button on the action bar above the map to see what your opponents have been up to.</item>
     </string-array>
 
     <string name="title_activity_instructions">Instructions</string>

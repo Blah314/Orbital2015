@@ -31,6 +31,7 @@ public class NewGameActivity extends Activity {
 	private View.OnClickListener levelButtonLoader;
 	private int selectedLevel = 0;
 	private int selectedPack = 0;
+	private ArrayList<Integer> packLevels;
 	private ArrayList<String[]> levelDetails;
 	private Hashtable<Integer, PorterDuffColorFilter> ColorMap;
 	private Hashtable<Button, Integer> LevelMap;
@@ -55,9 +56,11 @@ public class NewGameActivity extends Activity {
 		ColorMap.put(2, new PorterDuffColorFilter(Color.rgb(192, 192, 192), PorterDuff.Mode.OVERLAY));
 		ColorMap.put(3, new PorterDuffColorFilter(Color.rgb(255, 215, 0), PorterDuff.Mode.OVERLAY));
 		ColorMap.put(4, new PorterDuffColorFilter(Color.rgb(229, 228, 226), PorterDuff.Mode.OVERLAY));
+		ColorMap.put(999, new PorterDuffColorFilter(Color.RED, PorterDuff.Mode.OVERLAY));
 		
 		LevelMap = new Hashtable<Button, Integer>();
 		awards = new String[]{"Bronze", "Silver", "Gold", "Platinum"};
+		packLevels = new ArrayList<Integer>();
 		
 		// levelDetailsView displays level details when a level button is clicked
 		levelDetailsView = (TextView) findViewById(R.id.levelText);
@@ -119,10 +122,16 @@ public class NewGameActivity extends Activity {
 			@Override
 			public void onClick(View v) {
 				selectedLevel = LevelMap.get(v);
+				int i = packLevels.indexOf(selectedLevel);
 				if(levelAwards[selectedLevel] != 0){
 					levelDetailsView.setText(levelDetails.get(selectedLevel)[2] + ":\n" + 
 						levelDetails.get(selectedLevel)[6] + "\n\nYou have achieved the " + 
 						awards[levelAwards[selectedLevel] - 1] + " medal for this level.");
+				}
+				else if(i != 0 && selectedPack != 2 && levelAwards[packLevels.get(i-1)] == 0){
+					levelDetailsView.setText(levelDetails.get(selectedLevel)[2] + 
+						":\nThis level is locked, complete the previous level to unlock.");
+					selectedLevel = -1;
 				}
 				else{
 					levelDetailsView.setText(levelDetails.get(selectedLevel)[2] + ":\n" + 
@@ -138,6 +147,9 @@ public class NewGameActivity extends Activity {
 			public void onClick(View v){
 				if(selectedLevel == 0){
 					levelDetailsView.setText("Select a Level above first.");
+				}
+				else if(selectedLevel == -1){
+					levelDetailsView.setText("This level is locked. Complete the previous level to unlock it.");
 				}
 				else{
 					Intent customisationLaunch = new Intent(getApplicationContext(), CustomisationActivity.class);
@@ -155,6 +167,7 @@ public class NewGameActivity extends Activity {
 	public void loadPack(){
 		
 		levels.removeAllViews();
+		packLevels.clear();
 		
 		// setting the buttons text to the levelName as well as assigning levelButtonLoader to them
 		// only loads levels that are in the current pack
@@ -166,6 +179,7 @@ public class NewGameActivity extends Activity {
 				b.setOnClickListener(levelButtonLoader);
 				LevelMap.put(b, i);
 				levels.addView(b);
+				packLevels.add(i);
 			}
 		}
 	}

@@ -11,7 +11,7 @@ Each territory occupies one line, with each line having at least 14 parameters.
 5 - TerritoryType
 	0 - Normal Territory
 	1 - Capital
-6 - TerritoryValue (Not used yet)
+6 - TerritoryValue (How much resources the territory gives every turn)
 7 - TerritoryRegion (Determines which region this territory is part of)
 8 - TerritoryOwner (Who owns this territory at the start)
 	0 - Neutral
