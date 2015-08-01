@@ -41,6 +41,7 @@ public class MapActivity extends Activity {
 	private ViewGroup map;
 	private TextView res, obj, turnsLeft;
 	private Button endTurn;
+	private FragmentManager fm;
 	
 	private String[] levelDetails;
 	private ArrayList<String[]> territoryDetails;
@@ -68,6 +69,7 @@ public class MapActivity extends Activity {
 		obj = (TextView) findViewById(R.id.objectiveView);
 		turnsLeft = (TextView) findViewById(R.id.turnView);
 		endTurn = (Button) findViewById(R.id.endTurnButton);
+		fm = getFragmentManager();
 		
 		// color definitions - more to come
 		ColorMap = new Hashtable<Integer,PorterDuffColorFilter>();
@@ -166,6 +168,9 @@ public class MapActivity extends Activity {
 		game.startPlayerTurn(1, true);
 		
 		update();
+		
+		TipFragment t = new TipFragment();
+		t.show(fm, "totd");
 	}
 	
 	// reads the data given by MainActivity and creates an in-progress game
@@ -480,14 +485,12 @@ public class MapActivity extends Activity {
 		    editor.putInt("level" + Integer.toString(level), achievementLevel);
 		    editor.commit();
 		    
-			final FragmentManager fm = getFragmentManager();
 			EndGameFragment win = improved ? new EndGameFragment(true, diff + 1) : new EndGameFragment(true, 0);
 			win.show(fm, "endGame");
 			over = true;
 		}
 		
-		if(!won & lost){
-			final FragmentManager fm = getFragmentManager();
+		if(!won & lost){;
 			EndGameFragment lose = new EndGameFragment(false, 0);
 			lose.show(fm, "endGame");
 			over = true;
@@ -509,8 +512,7 @@ public class MapActivity extends Activity {
 			p.minusResources(cost);
 		}
 		
-		else{
-			
+		else{			
 			boolean add = details.getBoolean("add", false);
 			boolean move = details.getBoolean("move", false);
 			boolean attack = details.getBoolean("attack", false);
@@ -534,7 +536,6 @@ public class MapActivity extends Activity {
 		// game saving code
 		if(!over & !hardcore){
 			String gameSave = game.toString();
-			System.out.println(gameSave);
 			FileOutputStream fos;
 			try{
 				fos = openFileOutput("savegame",Context.MODE_PRIVATE);
@@ -595,7 +596,6 @@ public class MapActivity extends Activity {
 			else{
 				ls = new LogScreen(game.gameLog());
 			}
-			FragmentManager fm = getFragmentManager();
 			ls.show(fm, "log");
 			return true;
 		

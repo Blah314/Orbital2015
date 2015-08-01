@@ -29,6 +29,7 @@ public final class R {
         public static final int instruction_titles=0x7f0c0004;
         public static final int level_packs=0x7f0c0001;
         public static final int territory_sizes=0x7f0c0000;
+        public static final int tips=0x7f0c0006;
     }
     public static final class attr {
         /**  Custom divider drawable to use for elements in the action bar. 
@@ -2286,6 +2287,7 @@ containing a value of this type.
         /**  UpgradesActivity Strings 
          */
         public static final int title_activity_upgrades=0x7f0a0057;
+        public static final int totd=0x7f0a0062;
         public static final int unit1_desc=0x7f0a0040;
         public static final int unit1_name=0x7f0a003f;
         /**  Actions 

@@ -159,5 +159,30 @@
     <string name="def_upgrade_desc">Improve your defences slightly, giving your armies a 3% chance per level to survive an attack.</string>
 	<string name="upgrades_off">Turn on Upgrades to use this feature.</string>
 	<string name="upgrade_reject">You cannot afford this upgrade.</string>
+	
+	<string name="totd">Quick Tip</string>
+	<string-array name="tips">
+        <item>To see what your opponents have done on previous turns, check the log!</item>
+        <item>Some customisations can make a level much easier or much harder.</item>
+        <item>Replay levels on harder difficulties to earn better medals for that level.</item>
+        <item>Sometimes it\'s best to allow your enemies to fight each other.</item>
+        <item>Quickly wiping out someone will lessen the cost of the fight, but may pass the advantage to another opponent.</item>
+        <item>You need more territories to gain more resources, but that only works if you can keep hold of them.</item>
+        <item>Look for weak spots in the enemy front lines. That may distract them from their main assault.</item>
+        <item>Upgrades are mostly useful for long games.</item>
+        <item>Holding regions can be key to winning, despite a lower number of territories.</item>
+        <item>Sometimes it\'s best to just focus on your objective and nothing else.</item>
+        <item>Capitals can work both ways, you can terminate an otherwise indominatable opponent, or a smaller faction can unceremoniously kill you.</item>
+        <item>When playing with dice-like results, the defender has an advantage.</item>
+        <item>For some of the harder levels, it can all boil down to luck.</item>
+        <item>Capitals and certain territories are worth more resources per turn.</item>
+        <item>On higher difficulties, the AI is brutal, but you\'re smarter. Right?</item>
+        <item>Utilise chokepoints to limit your opoonents\' possible attacks.</item>
+        <item>When no one is near, conquer territories as fast as possible.</item>
+        <item>Expanding quickly but leaving newly conquered areas poorly defended is risky.</item>
+        <item>You can see how much a territory is worth per turn on the bottom-right of the actions menu.</item>
+        <item>Plan ahead. Place your armies where they are needed most.</item>
+        <item>Take a break every once in a while. Your game saves automatically. (Unless you\'re hardcore.)</item>
+    </string-array>
     
 </resources>

@@ -24,6 +24,7 @@ public class TerritoryActivity extends Activity {
 	private TextView tName, resDisplay, value;
 	private TableLayout actionButtons;
 	private Button backButton;
+	private FragmentManager fm;
 	
 	private int res, limit;
 	private Territory t;
@@ -49,6 +50,7 @@ public class TerritoryActivity extends Activity {
 		value = (TextView) findViewById(R.id.territoryValue);
 		actionButtons = (TableLayout) findViewById(R.id.actionButtons);
 		backButton = (Button) findViewById(R.id.backToMapButton);
+		fm = getFragmentManager();
 		
 		if(t.isCapital() & g.isCapital()){
 			tName.setText(t.getName() + "\nCAPITAL");
@@ -97,8 +99,6 @@ public class TerritoryActivity extends Activity {
 		
 		btn.setText(getResources().getString(R.string.unit1_name));
 		desc.setText(getResources().getString(R.string.unit1_desc));
-		
-		final FragmentManager fm = getFragmentManager();
 		
 		btn.setOnClickListener(new View.OnClickListener() {
 			
@@ -190,7 +190,6 @@ public class TerritoryActivity extends Activity {
 		switch(id){
 		case R.id.regions:
 			RegionsScreen rs = new RegionsScreen(g, t.getRegion());
-			FragmentManager fm = getFragmentManager();
 			rs.show(fm, "regions");
 			return true;
 		case android.R.id.home:
