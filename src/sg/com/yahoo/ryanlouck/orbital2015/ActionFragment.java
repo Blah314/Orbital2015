@@ -10,6 +10,7 @@ import android.text.InputType;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.SeekBar;
+import android.widget.TextView;
 
 public class ActionFragment extends DialogFragment {
 	
@@ -31,6 +32,7 @@ public class ActionFragment extends DialogFragment {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         SeekBar armySlider = new SeekBar(this.getActivity());
         final EditText num = new EditText(this.getActivity());
+        final TextView limited = new TextView(this.getActivity());
         
         num.setInputType(InputType.TYPE_CLASS_NUMBER);
         
@@ -40,11 +42,13 @@ public class ActionFragment extends DialogFragment {
         // setting the title depending on the situation
         if(isAdd){
         	armySlider.setMax(limit);
+        	limited.setText("You can added a maximum of " + Integer.toString(limit) + " units.");
         	builder.setTitle(getResources().getString(R.string.add_num));
         }
         
         else{
         	armySlider.setMax(numArmies);
+        	limited.setText("You have " + Integer.toString(numArmies) + " units at your disposal.");
         	if(isFriendly) builder.setTitle(getResources().getString(R.string.move_num));
         	else builder.setTitle(getResources().getString(R.string.attack_num));
         }
@@ -77,9 +81,11 @@ public class ActionFragment extends DialogFragment {
         LinearLayout l = new LinearLayout(this.getActivity());
         l.setOrientation(1);
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(-1,-2);
+        l.addView(limited, params);
         l.addView(armySlider, params);
         l.addView(num, params);
         num.setGravity(17);
+        limited.setGravity(17);
         
         builder.setView(l);
         
