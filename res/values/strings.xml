@@ -113,8 +113,6 @@
         <item>Welcome!</item>
         <item>The Basics</item>
         <item>Customisation</item>
-        <item>Advanced Topics: Objectives</item>
-        <item>Advanced Topics: The Log</item>
     </string-array>
     <string-array name="instruction_messages">
         <item>Hello and welcome to Orbit Wars! This instructions page will contain all the info you will need to learn how to play the game.\n\n
@@ -123,22 +121,16 @@
         <item>The most basic objective in Orbit Wars is to eliminate all your opponents, represented by other factions in different colours on the map. Your faction is blue on the map.\n\n
             To do that, you have to buy armies with your resources and conquer all their territories. The territories you hold at the start of each turn will grant you resources automatically, so defend them if you want to keep your income going.\n\n
             Clicking on any of your territories on the map will bring up another menu, where you can perform various actions with regard to that territory. This can range from adding armies to attacking neighbouring territories.\n\n
-            Once you are done with your turn, press the end turn button. The AI player(s) will then take their turns and then play passes back to you. (If you are still alive at the end of their wrath.)</item>
+            Once you are done with your turn, press the end turn button. The AI player(s) will then take their turns and then play passes back to you. (If you are still alive at the end of their wrath.)\n\n
+            If you want to know what happened in detail, check the game log.</item>
         <item>An Orbit Wars game is highly customisable, allowing you to choose which mechanics you want active and which you don\'t. This is done via the Game Customisation screen shown after selecting a level.\n\n
             A detailed description of each modifier can be found below:\n\n
             Difficulty: Determines the general difficulty of the AI players. Play higher difficulties to earn better medals for the level.\n\n
             Dice-Like: As with Risk, you can choose to have the outcomes of battles be determined by dice-rolls, adding a factor of luck into a battle. Battles are one-for-one by default.\n\n
             Capital Cities: One of your starting territories will be your capital. Lose it, and you lose the game. Same goes for your opponents. Capitals can be identified by asterisks on both sides of their name on the map.\n\n
             Upgrades: Enabling this will allow you to spend resources to upgrade your territories or armies.\n\n
-            Multiple Army Types: Instead of just a single army unit type, why not have three? The 3 types have different stats and have differing effectiveness against each other. Just like a rock-paper-scissors game.\n\n
             Fog Of War: To make things super realistic, where you can\'t see what\'s happening beyond your borders, turn this on.\n\n
             Hardcore Mode: Your game is not saved in this mode. So no going back once you have left. Can you handle it?</item>
-		<item>Some levels do not require you to eliminate all your enemies, so pay attention to your objective above the map and work towards achieving it.\n\n
-		    Capture Objective: You are given a target number of territories to conquer. Do that an you win!\n\n
-		    Survival Objective: You opponents are much stronger than you. All you have to do is survive until a number of turns have passed.\n\n
-		    Speed Objective: You have a great advantage over your opponents, but very little time to eliminate them. Kill all your opponents within the set number of turns to win.</item>
-		<item>As your opponents move under the cover of darkness, it can be hard to figure out just how they achieved what they did during their turns. If you are not playing with fog-or-war on, your scouts can give you a briefing of what happened on previous turns.\n\n
-		    Just click the log button on the action bar above the map to see what your opponents have been up to.</item>
     </string-array>
 
     <string name="title_activity_instructions">Instructions</string>
@@ -180,9 +172,13 @@
         <item>Utilise chokepoints to limit your opoonents\' possible attacks.</item>
         <item>When no one is near, conquer territories as fast as possible.</item>
         <item>Expanding quickly but leaving newly conquered areas poorly defended is risky.</item>
-        <item>You can see how much a territory is worth per turn on the bottom-right of the actions menu.</item>
+        <item>You can see how much a territory is worth per turn on the bottom-right of the territory menu.</item>
         <item>Plan ahead. Place your armies where they are needed most.</item>
         <item>Take a break every once in a while. Your game saves automatically. (Unless you\'re hardcore.)</item>
+        <item>Saving resources is good sometimes.</item>
+        <item>Some neutral territories are just not worth conquering.</item>
+        <item>Enable fog-of-war for a reality check.</item>
+        <item>You can see the region each territory belongs to via the action bar when viewing a territory.</item>
     </string-array>
     
 </resources>

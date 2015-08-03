@@ -137,14 +137,16 @@ public class Game implements Serializable {
 		territoriesMap.get(territoryID).addUnits(numUnits);
 		currPlayer.minusResources(numUnits*10);
 		
-		if(playerID == 1){
-			logTurn.append("You added " + Integer.toString(numUnits) + " units to " + 
-			territoriesMap.get(territoryID).getName() + ".\n");
-		}
+		if(numUnits > 0){
+			if(playerID == 1){
+				logTurn.append("You added " + Integer.toString(numUnits) + " units to " + 
+				territoriesMap.get(territoryID).getName() + ".\n");
+			}
 		
-		else{
-			logTurn.append("AI " + AINames.get(playerID) + " added " + Integer.toString(numUnits) + 
-			" units to " + territoriesMap.get(territoryID).getName() + ".\n");
+			else{
+				logTurn.append("AI " + AINames.get(playerID) + " added " + Integer.toString(numUnits) + 
+					" units to " + territoriesMap.get(territoryID).getName() + ".\n");
+			}
 		}
 	}
 
@@ -281,14 +283,16 @@ public class Game implements Serializable {
 		A.setNumUnits(A.getNumUnits() - numUnitsToMove);
 		B.setNumUnits(B.getNumUnits() + numUnitsToMove);
 		
-		if(playerID == 1){
-			logTurn.append("You moved " + Integer.toString(numUnitsToMove) + " units from " + 
-			A.getName() + " to " + B.getName() + ".\n");
-		}
+		if(numUnitsToMove > 0){
+			if(playerID == 1){
+				logTurn.append("You moved " + Integer.toString(numUnitsToMove) + " units from " + 
+				A.getName() + " to " + B.getName() + ".\n");
+			}
 		
-		else{
-			logTurn.append("AI " + AINames.get(playerID) + " moved " + Integer.toString(numUnitsToMove) + 
-			" units from " + A.getName() + " to " + B.getName() + ".\n");
+			else{
+				logTurn.append("AI " + AINames.get(playerID) + " moved " + Integer.toString(numUnitsToMove) + 
+					" units from " + A.getName() + " to " + B.getName() + ".\n");
+			}
 		}
 	}
 	

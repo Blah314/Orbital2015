@@ -13,17 +13,17 @@ LEVELID,LEVELSET,LEVELNAME,OBJECTIVE,OBJECTIVEAMT,NUMPLAYERS,DESCRIPTION,NUMTERR
 23,0,Tower Hunting,1,15,4,We have located a powerful source of energy seemingly located in a tower in the distance. This energy seems familiar... Before we launch an assault to take it - we need to establish a foothold here.,9,150,0,0,0
 12,0,The Tower,5,54,6,The Tower of Power lies ahead. The energy coming from it is the same that caused our demise years ago. We must secure it before anyone else.,10,100,100,100,100,100,100
 9,0,Surrounded,0,0,7,Six invading forces surround you - each aiming to claim the Tower of Power. Our survival depends on this battle.,10,100,100,100,100,100,100,100,100
-25,0,Finale,0,0,2,This is it. We have all the resources we need to take back what is rightfully ours. Today we take back our ancestral lands. We await your command.,9,500,250
+25,0,Finale,0,0,2,This is it. We have all the resources we need to take back what is rightfully ours. Today we take back our ancestral lands. We await your command.,9,1000,0
 8,1,Staking a Claim,1,15,6,You are one of six new nations. Stake a claim before your opponents gain the upper hand.,9,100,80,80,80,80,80
 15,1,Triforce,0,0,3,Six nations have become three. Let's make it one.,9,0,0,0
 17,1,Expansion,0,0,4,With our base secure - it's time to set our sights on new territory. Drive the three nations here from their lands.,8,0,100,100,100
-24,1,Close Quarters,0,0,3,We thought this small island would be easy pickings for us. Apparently that isn't the case.,4,100,100,100
+24,1,Close Quarters,0,0,3,We thought this small island would be easy pickings for us. Apparently that isn't the case.,4,120,0,0
 27,1,Strange Power,3,15,4,Our opponents are getting stronger as we move further abroad. Something is afoot. We need to finish them off quick before more arrive.,8,0,150,150,150
 28,1,Overreach,2,15,3,We pushed too far. These lands were seemingly unclaimed - before the original owners resurfaced in full force. Survive until we can coordinate a retreat.,8,0,300,300
 29,1,Desperation,0,0,3,The enemy is pushing closer to our homeland. As a precaution - we need to establish a new base here.,4,50,0,0
-26,1,Home Lost,4,24,2,The invaders have massed at our doorsteps. It's only a matter of time before they overrun us. Lead the remnants of our forces as we retreat to the shore - and safety.,9,250,0
+26,1,Home Lost,4,24,2,The invaders have massed at our doorsteps. It's only a matter of time before they overrun us. Lead the remnants of our forces as we retreat to the shore - and safety.,9,0,0
 3,2,Four Forts,0,0,4,All of you are quite evenly matched. Tactics matter here.,5,50,70,70,70
-30,2,Six Forts,0,0,6,Your enemies have a slight advantage. Choose your battles wisely.,X,0,50,50,50,50,50
+30,2,Six Forts,0,0,6,Your enemies have a slight advantage. Choose your battles wisely.,9,0,50,50,50,50,50
 4,2,Sandwiched,0,0,3,You're sandwiched between your enemies. Survive and defeat them both.,5,100,50,50
 6,2,The Red Hammer,2,10,2,Your opponent has landed a massive force on your shores and caught you by surprise. Hold out until your reinforcements arrive.,4,0,0
 7,2,The Blue Hammer,3,7,2,The roles are reversed now. Can you eliminate your enemy in time?,4,0,0

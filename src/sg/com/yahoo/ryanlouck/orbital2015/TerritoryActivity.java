@@ -130,6 +130,8 @@ public class TerritoryActivity extends Activity {
 			final Territory tNext = g.getTerritories().get(nextNeighbour);
 			b.setText(tNext.getAbbrvName());
 			b.getBackground().setColorFilter(ColorTable.get(tNext.getOwner()));
+			if(tNext.getOwner() >= 3 && t.getOwner() <= 5) b.setTextColor(Color.BLACK);
+			else b.setTextColor(Color.WHITE);
 			if(tNext.getOwner() == t.getOwner()){
 				d.setText(getResources().getString(R.string.move_desc));
 				b.setOnClickListener(new View.OnClickListener() {

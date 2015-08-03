@@ -85,7 +85,7 @@ public class CustomisationActivity extends Activity {
 				gameLaunch.putExtra("lvl", level);
 				gameLaunch.putExtra("diff", diff);
 				gameLaunch.putExtra("dice", diceLike);
-				gameLaunch.putExtra("armies", armies);
+//				gameLaunch.putExtra("armies", armies);
 				gameLaunch.putExtra("upgrades", upgrades);
 				gameLaunch.putExtra("capital", capital);
 				gameLaunch.putExtra("fow", fow);
@@ -116,9 +116,9 @@ public class CustomisationActivity extends Activity {
 		case R.id.upgradesCheckBox:
 			upgrades = checked;
 			break;
-		case R.id.armiesCheckBox:
-			armies = checked;
-			break;
+//		case R.id.armiesCheckBox:
+//			armies = checked;
+//			break;
 		case R.id.fowCheckBox:
 			fow = checked;
 			break;

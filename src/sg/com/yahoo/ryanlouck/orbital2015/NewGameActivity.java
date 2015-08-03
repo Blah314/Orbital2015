@@ -128,11 +128,11 @@ public class NewGameActivity extends Activity {
 						levelDetails.get(selectedLevel)[6] + "\n\nYou have achieved the " + 
 						awards[levelAwards[selectedLevel] - 1] + " medal for this level.");
 				}
-				else if(i != 0 && selectedPack != 2 && levelAwards[packLevels.get(i-1)] == 0){
-					levelDetailsView.setText(levelDetails.get(selectedLevel)[2] + 
-						":\nThis level is locked, complete the previous level to unlock.");
-					selectedLevel = -1;
-				}
+//				else if(i != 0 && selectedPack != 2 && levelAwards[packLevels.get(i-1)] == 0){
+//					levelDetailsView.setText(levelDetails.get(selectedLevel)[2] + 
+//						":\nThis level is locked, complete the previous level to unlock.");
+//					selectedLevel = -1;
+//				}
 				else{
 					levelDetailsView.setText(levelDetails.get(selectedLevel)[2] + ":\n" + 
 						levelDetails.get(selectedLevel)[6] + 
@@ -174,9 +174,12 @@ public class NewGameActivity extends Activity {
 		for(int i = 1; i <= numLevels; i++){
 			if(Integer.parseInt(levelDetails.get(i)[1]) == selectedPack){
 				Button b = new Button(this);
+				int award = levelAwards[i];
 				b.setText(levelDetails.get(i)[2]);
-				b.getBackground().setColorFilter(ColorMap.get(levelAwards[i]));
+				b.getBackground().setColorFilter(ColorMap.get(award));
 				b.setOnClickListener(levelButtonLoader);
+				if(award >= 2) b.setTextColor(Color.BLACK);
+				else b.setTextColor(Color.WHITE);
 				LevelMap.put(b, i);
 				levels.addView(b);
 				packLevels.add(i);

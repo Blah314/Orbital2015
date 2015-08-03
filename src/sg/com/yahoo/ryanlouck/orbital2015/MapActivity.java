@@ -380,11 +380,14 @@ public class MapActivity extends Activity {
 						b.setText(t.getAbbrvName() + "\n" + t.getNumUnits());
 					}
 					b.getBackground().setColorFilter(ColorMap.get(t.getOwner()));
+					if(t.getOwner() >= 3 && t.getOwner() <= 5) b.setTextColor(Color.BLACK);
+					else b.setTextColor(Color.WHITE);
 				}
 				
 				else { // invisible territories are black and have a ?
 					b.setText(t.getAbbrvName() + "\n" + "?");
 					b.getBackground().setColorFilter(ColorMap.get(999));
+					b.setTextColor(Color.WHITE);
 				}
 			
 				res.setText("Resources:\n" + players.get(1).getNumResources());
@@ -414,6 +417,8 @@ public class MapActivity extends Activity {
 				}
 				
 				b.getBackground().setColorFilter(ColorMap.get(t.getOwner()));
+				if(t.getOwner() >= 3 && t.getOwner() <= 5) b.setTextColor(Color.BLACK);
+				else b.setTextColor(Color.WHITE);
 			
 				res.setText("Resources:\n" + players.get(1).getNumResources());
 				turnsLeft.setText("Turn Number:\n" + Integer.toString(turnNum));
