@@ -128,11 +128,11 @@ public class NewGameActivity extends Activity {
 						levelDetails.get(selectedLevel)[6] + "\n\nYou have achieved the " + 
 						awards[levelAwards[selectedLevel] - 1] + " medal for this level.");
 				}
-//				else if(i != 0 && selectedPack != 2 && levelAwards[packLevels.get(i-1)] == 0){
-//					levelDetailsView.setText(levelDetails.get(selectedLevel)[2] + 
-//						":\nThis level is locked, complete the previous level to unlock.");
-//					selectedLevel = -1;
-//				}
+				else if(i != 0 && selectedPack != 2 && levelAwards[packLevels.get(i-1)] == 0){
+					levelDetailsView.setText(levelDetails.get(selectedLevel)[2] + 
+						":\nThis level is locked, complete the previous level to unlock.");
+					selectedLevel = -1;
+				}
 				else{
 					levelDetailsView.setText(levelDetails.get(selectedLevel)[2] + ":\n" + 
 						levelDetails.get(selectedLevel)[6] + 
