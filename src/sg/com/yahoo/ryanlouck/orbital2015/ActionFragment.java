@@ -42,7 +42,7 @@ public class ActionFragment extends DialogFragment {
         // setting the title depending on the situation
         if(isAdd){
         	armySlider.setMax(limit);
-        	limited.setText("You can added a maximum of " + Integer.toString(limit) + " units.");
+        	limited.setText("You can add a maximum of " + Integer.toString(limit) + " units.");
         	builder.setTitle(getResources().getString(R.string.add_num));
         }
         
